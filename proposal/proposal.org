@@ -1,0 +1,28 @@
+#+TITLE: CS 546 Final Project Proposal
+#+AUTHOR: Group 4, Section A
+#+DATE: February 28th, 2020
+#+OPTIONS: toc:nil num:nil
+
+* Group Members
+- Meghana Manikal
+- Kirsten Meidlinger
+- Ashish Negi
+- Paul Szenher
+
+
+* Project Idea
+{/Project Name Here/}
+
+** Description
+# Brief description of project idea
+
+** Core Features
+# These are in addition to the required features (i.e. user login, MongoDB, etc.)
+# These must be implemented
+
+** Extra Features
+# These can be implemented if time allows
+
+
+* Github Repository
+https://github.com/pszenher/cs546project
