@@ -1,2 +1,4 @@
 proposal/*.tex
 proposal/*.pdf
+package-lock.json
+node_modules
