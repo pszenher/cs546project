@@ -37,8 +37,34 @@ module.exports = {
         if (!age) throw `You must provide Age`;
         if (!password) throw `You must provide valid password`;
         if (!bio) throw `You must Provide Bio about Yourslef`;
-
         if (!Array.isArray(interested)) throw `interested must be an array`;
+        if (firstName) {
+            if(typeof firstName != 'string') throw `400 - Name is not a string`;            
+        };
+        if (lastName) {
+            if(typeof lastName != 'string') throw {errocode: 400, field:"lastName"}           
+        }
+        if (email) {
+            if(typeof email != 'string') throw {errocode: 400, field:"email"}           
+        }
+        if (gender) {
+            if(typeof gender != 'string') throw {errocode: 400, field:"gender"}           
+        }
+        if (city){
+            if(typeof city != 'string') throw {errocode: 400, field:"city"}            
+        }
+        if (state) {
+            if(typeof state != 'string') throw {errocode: 400, field:"state"}           
+        }
+        if (age) {
+            if(typeof age != 'string') throw {errocode: 400, field:"age"}            
+        }
+        if (password){ 
+            if(typeof password != 'string') throw {errocode: 400, field:"password"}            
+        }
+        if (bio){
+            if(typeof bio != 'string') throw {errocode: 400, field:"bio"}             
+        }
         
 
 		const userCollection = await users();
@@ -65,6 +91,63 @@ module.exports = {
 		const user = await this.getUserById(newId);
 		return user;
     },
+
+    async updateUser(id,firstName, lastName, email, gender, city, state, age, password,bio,interested){
+        if (!id) throw `id not found`
+		if(typeof id !== 'string' && typeof id != 'object')  throw `Id Invalid`;
+		if(typeof id == 'string'){
+			 id = ObjectId.createFromHexString(id);
+        }
+        let updateBody = {}
+
+        if (firstName) {
+            if(typeof firstName != 'string') throw `400 - Name is not a string`;
+            updateBody.firstName = firstName
+        };
+        if (lastName) {
+            if(typeof lastName != 'string') throw {errocode: 400, field:"lastName"}
+            updateBody.lastName = lastName;
+        }
+        if (email) {
+            if(typeof email != 'string') throw {errocode: 400, field:"email"}
+            updateBody.email = email;
+        }
+        if (gender) {
+            if(typeof gender != 'string') throw {errocode: 400, field:"gender"}
+            updateBody.gender = lastName;
+        }
+        if (city){
+            if(typeof city != 'string') throw {errocode: 400, field:"city"}
+            updateBody.city = city;
+        }
+        if (state) {
+            if(typeof state != 'string') throw {errocode: 400, field:"state"}
+            updateBody.state = state;
+        }
+        if (age) {
+            if(typeof age != 'string') throw {errocode: 400, field:"age"}
+            updateBody.age = age;
+        }
+        if (password){ 
+            if(typeof password != 'string') throw {errocode: 400, field:"password"}
+            updateBody.password = password;
+        }
+        if (bio){
+            if(typeof bio != 'string') throw {errocode: 400, field:"bio"}
+             updateBody.bio = bio;
+        }
+        if (Array.isArray(interested)) updateBody.interested = interested;
+        
+		const userCollection = await users();
+        const updatedInfo = await userCollection.updateOne({ _id: id }, { $set: updateBody });
+		if (updatedInfo.modifiedCount === 0) {
+            throw `could not Update Liked  song successfully`;
+        }
+        
+        return await this.getUserById(id);
+		
+    },
+
     async removeUser(id) {
 		
 		if (!id) throw `You must provide an id to search for`;
@@ -111,8 +194,7 @@ module.exports = {
         const updatePlaylist ={
         playlist: songId
        }
-       return await this.add_song(objId, updatePlaylist);
-   
+       return await this.add_song(objId, updatePlaylist);   
     },
     async removeSongFromPlaylist(id, songId){
         const { user, objId } = await this.check_valid(id, songId);
@@ -175,14 +257,11 @@ module.exports = {
     async removeSongFromUser(id, songId){
         const { user, objId } = await this.check_valid(id, songId);
 
-        if(!user.songs.includes(songId)) throw `Song is not present in the Songs`
-
-        
+        if(!user.songs.includes(songId)) throw `Song is not present in the Songs`        
         const updateSongs ={
             songs: songId
         }
-        return await this.remove_song(objId, updateSongs);
-   
+        return await this.remove_song(objId, updateSongs);   
     },
 
     async check_valid(id, songId) {

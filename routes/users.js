@@ -39,6 +39,22 @@ router.post("/", async (req, res) => {
     }
   
 });
+router.patch("/:id", async (req, res) => {
+  const userPostData = req.body;
+  let idFound = await ifUserPresent(req.params.id);
+  if(!idFound){ 
+    res.status(404).send({ error: "Id not Found Request" }); 
+    return
+  }
+  try {
+    const {firstName, lastName, email, gender, city, state, age, password,bio,interested } = userPostData; 
+    const updatedUser =  await userData.updateUser(req.params.id,firstName, lastName, email, gender, city, state, age, password,bio,interested)
+    res.json(updatedUser)
+  } catch (e ) {
+    res.status(500).send( { error: e } );
+    console.log(e);
+  }
+});
 
 
 router.post("/addSongToPlaylist", async (req, res) => {
