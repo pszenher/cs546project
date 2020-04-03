@@ -1,24 +1,28 @@
 {
-  "name": "music-sharing-service",
+  "name": "cs546project",
   "version": "1.0.0",
-  "description": "Module for Project",
+  "description": "CS 546 Final Project: Group 4, Section A",
   "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.5.5"
+  },
+  "devDependencies": {
+    "mocha": "^7.1.1"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "start": "node app.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pszenher/cs546project.git"
+    "url": "https://github.com//pszenher/cs546project"
   },
-  "author": "Group 4 Section A",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/pszenher/cs546project/issues"
-  },
-  "homepage": "https://github.com/pszenher/cs546project#readme",
-  "dependencies": {
-    "express": "^4.17.1",
-    "mongodb": "^3.5.5"
-  }
+  "author": "Meghana Bhat, Kirsten Meidlinger, Ashish Negi, Paul Szenher",
+  "license": "GPL-3.0"
 }

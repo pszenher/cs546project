@@ -220,9 +220,3 @@ module.exports = {
         return await this.getUserById(objId);
     }
 };
-
-
-
-
-
-

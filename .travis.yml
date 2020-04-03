@@ -1,0 +1,20 @@
+# Set language to node_js
+language: node_js
+
+# Use latest stable Node.js release to test
+node_js:
+  - node
+
+# Enable mongodb as a service for testing
+services: mongodb
+
+# Cache node_modules directory
+cache: npm
+
+# Instal dependencies
+install:
+  - npm install
+
+# Run tests
+script:
+  - npm test
