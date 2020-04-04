@@ -2,7 +2,7 @@
   "name": "cs546project",
   "version": "1.0.0",
   "description": "CS 546 Final Project: Group 4, Section A",
-  "main": "index.js",
+  "main": "app.js",
   "directories": {
     "test": "test"
   },
@@ -16,7 +16,8 @@
     "mocha": "^7.1.1"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",

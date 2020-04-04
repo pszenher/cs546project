@@ -1,6 +1,6 @@
 {
   "mongoConfig": {
     "serverUrl": "mongodb://localhost:27017/",
-    "database": "cs546project"
+    "database": "Music_Sharing_Service"
   }
 }

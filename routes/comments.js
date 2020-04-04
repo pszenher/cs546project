@@ -74,3 +74,5 @@ router.get("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   res.status(500).json({ error: "Not implemented" });
 });
+
+module.exports = router;

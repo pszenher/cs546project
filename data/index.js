@@ -1,6 +1,8 @@
-const mongo = require("mongodb");
+
+const userData = require("./users");
 const commentData = require("./comments");
 
 module.exports = {
-  comments: commentData
+  comments: commentData,
+  users: userData
 };
