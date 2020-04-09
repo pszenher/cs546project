@@ -61,12 +61,12 @@ describe("Comments DB Collection", function () {
 
   describe("getCommentById()", function () {
     it("should return comment object equal to one in database", async function () {
-      new_comment = await data.comments.addComment(
+      const new_comment = await data.comments.addComment(
         ObjectId(),
         ObjectId(),
         "comment"
       );
-      get_comment = await data.comments.getCommentById(new_comment._id);
+      const get_comment = await data.comments.getCommentById(new_comment._id);
       expect(get_comment).to.deep.equal(new_comment);
     });
     it("should reject promise with Error if commentId is not in collection", async function () {
@@ -80,5 +80,28 @@ describe("Comments DB Collection", function () {
       );
     });
   });
-  describe("removeComment()", function () {});
+  describe("removeComment()", function () {
+    it("should return comment object equal to one in database", async function () {
+      new_comment = await data.comments.addComment(
+        ObjectId(),
+        ObjectId(),
+        "comment"
+      );
+      const removed_comment = await data.comments.removeComment(
+        new_comment._id
+      );
+      expect(removed_comment).to.deep.equal(new_comment);
+    });
+
+    it("should reject promise with Error if commentId is not in collection", async function () {
+      await expect(data.comments.removeComment(ObjectId())).to.be.rejectedWith(
+        Error
+      );
+    });
+    it("should reject promise with TypeError on invalid commentId parameter", async function () {
+      await expect(data.comments.removeComment(NaN)).to.be.rejectedWith(
+        TypeError
+      );
+    });
+  });
 });
