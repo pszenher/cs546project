@@ -41,16 +41,12 @@ const exportedMethods = {
     
         const songCollection = await songs();
         const song = await songCollection.findOne({_id: id});
-        // console.log("x")
-        // console.log(song)
         if (!song) throw 'Song not found';
-        // console.log("y")
 
         return song;
     },
     
     async addSong(fileId, Title, genre, artistId) {
-      // console.log("x")
         if (!Title) throw 'You must provide a Title for the album'
         if (!genre) throw 'You must provide an array of genre for the song'
         if (!fileId) throw 'You must provide a id of the music file'
@@ -117,7 +113,6 @@ const exportedMethods = {
       const songCollection= await songs();
   
       if (updatedSong.title) {
-        // console.log(updatedSong.newSongs)
         if (typeof updatedSong.title != "string") throw "Please provide a song name as a string"
         await songCollection.updateOne({_id: id}, {$set: {title: updatedSong.title}})
       }

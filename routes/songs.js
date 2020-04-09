@@ -11,7 +11,6 @@ router.use(bodyParser.urlencoded({ extended: true }))
 
 router.get("/:id", async (req, res) => {
     try {
-      // console.log(req.params.id);
       const song = await songData.getSongById(req.params.id);
       res.status(200).json(song);
     } catch (e) {
@@ -31,7 +30,6 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
     let songInfo = req.body;
-    // console.log(songData)
 
     if (!songInfo) {
         res.status(400).json({error: 'You must provide data for the album'});
@@ -49,7 +47,6 @@ router.post("/", async (req, res) => {
         }
 
     if (!songInfo.file || typeof songInfo.file != "string" || !ObjectId.isValid(songInfo.file)){
-        // console.log("123 test")
         res.status(400).json({error: 'You must provide id of the file as a string or an object id'});
         return;
     }
@@ -63,19 +60,15 @@ router.post("/", async (req, res) => {
         user = await userData.getUserById(songInfo.user)
     }
     catch (e) {
-        // console.log(e);
         res.status(404).json({error: 'User not found'});
         return;
       }
 
     try {
-        // console.log("1")
         const newSong = await songData.addSong(songInfo.file, songInfo.title, songInfo.genre, songInfo.user)
-        // console.log("2")
         await userData.addSongToUser(songInfo.user, String(newSong._id))//changed
         res.status(200).json(newSong);
     } catch (e) {
-    // console.log(e)
         res.status(500).json({error: e.message});
     }
   });
@@ -85,7 +78,6 @@ router.patch('/:id', async (req, res) => {
 	try {
 		let x = await songData.getSongById(req.params.id);
 	} catch (e) {
-        // console.log(e)
 		res.status(404).json({ error: 'Song not found' });
 		return;
 	}
@@ -105,7 +97,6 @@ router.delete('/:id', async (req, res) => {
       output_record = {};
       output_record.deleted = true;
       output_record.data = deleted_record;  
-    // console.log(deleted_record)
     } catch (e) {
       console.log(e);
       res.status(404).json({error: 'Song not found'});
@@ -113,13 +104,8 @@ router.delete('/:id', async (req, res) => {
     }
   
     try {
-        // console.log("x")
         await songData.removeSong(req.params.id);
-        // console.log("y")
-        // console.log(deleted_record._id)
-        // console.log(typeof req.params.id)
         await userData.removeSongFromUser(deleted_record.author, req.params.id)
-        // console.log("z")
         res.json(output_record);
     } catch (e) {
         console.log(e)
