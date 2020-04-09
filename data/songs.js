@@ -1,18 +1,14 @@
 const mongoCollections = require('../config/mongoCollections');
 const songs = mongoCollections.songs;
-// const users_db = mongoCollections.users;
-// const users = require('./users');
 const {ObjectId} = require('mongodb')
 
 const id_check = async function(id){
 
     if (typeof id === "string"){
-      // console.log("string")
         const objId = ObjectId.createFromHexString(id);
         return objId;
     }
     else{
-      // console.log ("object")
         return id;
     }
   
