@@ -256,7 +256,6 @@ module.exports = {
     },
     async removeSongFromUser(id, songId){
         const { user, objId } = await this.check_valid(id, songId);
-
         if(!user.songs.includes(songId)) throw `Song is not present in the Songs`        
         const updateSongs ={
             songs: songId

@@ -5,7 +5,7 @@ app.use(express.json())
 
 configRoutes(app);
 
-app.listen(3000, () => {
+app.listen(27017, () => {
   console.log("We've now got a server!");
-  console.log("Your routes will be running on http://localhost:3000");
+  console.log("Your routes will be running on http://localhost:27017");
 });

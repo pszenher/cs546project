@@ -39,46 +39,157 @@ const exportedMethods = {
         
         id = await id_check(id)
     
-        const albumCollection = await albums();
-        const album = await albumCollection.findOne({_id: id});
-    
-        if (!album) throw 'Album not found';
+        const songCollection = await songs();
+        const song = await songCollection.findOne({_id: id});
+        // console.log("x")
+        // console.log(song)
+        if (!song) throw 'Song not found';
+        // console.log("y")
 
-        return album;
+        return song;
     },
     
-    async addAlbum(file, Title, genre, artistId, like_cnt, dislike_cnt) {
-        if (!title) throw 'You must provide a title for the album'
-        if (!songs) throw 'You must provide a array of songs from the albums'
-        if (!bandId) throw 'You must provide a id of the band'
+    async addSong(fileId, Title, genre, artistId) {
+      // console.log("x")
+        if (!Title) throw 'You must provide a Title for the album'
+        if (!genre) throw 'You must provide an array of genre for the song'
+        if (!fileId) throw 'You must provide a id of the music file'
+        if (!artistId) throw 'You must provide a id of the user'
   
-        if (typeof title !== 'string') throw 'Input of title of album should be string'; 
-        if(typeof bandId != "string" && typeof bandId !="object"){
-          throw 'Input Band Id should be string or object'
+        if (typeof Title !== 'string') throw 'Input of Title of album should be string';
+        if(typeof fileId != "string" && typeof fileId !="object"){
+          throw 'Input file Id should be string or object'
         }
-        if (typeof songs != "object" && !Array.isArray(songs)) throw "Please provide the list of songs in Array"
-        // console.log("1")
-        bandId = await id_check(bandId)
-        // console.log("2")
-        const albumCollection = await albums();
-        // console.log(bands.getAllBands);
-        const bandWithAlbum = await bands.getBand(bandId);
+        if(typeof artistId != "string" && typeof artistId !="object"){
+          throw 'Input user Id should be string or object'
+        }
+        if (typeof genre != "object" && !Array.isArray(genre)) throw "Please provide the list of genre in Array"
+
+        fileId = await id_check(fileId)
+        artistId = await id_check(artistId)
+
+        const songCollection = await songs();
+
     
-        const newPost = {
-          title: title,
-          author: bandId,
-          songs: songs,
+        const newSong = {
+          title: Title,
+          author: artistId,
+          file: fileId,
+          genre: genre,
+          like_cnt: 0,
+          dislike_cnt: 0,
+          comment_id:[]
         };
     
-        const newInsertInformation = await albumCollection.insertOne(newPost);
+        const newInsertInformation = await songCollection.insertOne(newSong);
         const newId = newInsertInformation.insertedId;
     
-        await bands.addAlbumToBand(bandId, newId, title, songs);
-    
-        return await this.getAlbumById(newId);
-      },
+        return await this.getSongById(newId);
+      },  
+
+    async removeSong(id) {
+        
+      if (!id) throw 'You must provide a id of the song'
+
+      if(typeof id != "string" && typeof id !="object") throw 'Input song Id should be string or object'
+      
+      id = await id_check(id)
+
+      const songCollection = await songs();
+      let song = null;
+
+      song = await this.getSongById(id);
+
+      const deletionInfo = await songCollection.removeOne({_id: id});
+      if (deletionInfo.deletedCount === 0) {
+        throw `Could not delete song with id of ${id}`;
+      }
+
+      return song;
+    },
+
+    async updateSong(id, updatedSong) {
+      
+      if (!id) throw 'You must provide an id of the song'
+      
+      id = await id_check(id)
+
+      const songCollection= await songs();
+  
+      if (updatedSong.title) {
+        // console.log(updatedSong.newSongs)
+        if (typeof updatedSong.title != "string") throw "Please provide a song name as a string"
+        await songCollection.updateOne({_id: id}, {$set: {title: updatedSong.title}})
+      }
+  
+      if (updatedSong.genre) {
+        if (typeof updatedSong.genre != "object" && !Array.isArray(updatedSong.genre)) throw "Please provide the list of genre in Array"
+        await songCollection.updateOne({_id: id}, {$set: {genre: updatedSong.genre}});
+      }
+  
+      return await this.getSongById(id);
+    },
+
+    async incrementLikeDislike(songId, reaction){
+
+      if (!songId) throw 'You must provide an id of the song'
+
+      songId = await id_check(songId)
+
+      const songCollection= await songs();
+
+      if (reaction === 'like'){
+        await songCollection.updateOne({_id: id}, {$inc: {like_cnt: 1}});
+      }
+      else{
+        await songCollection.updateOne({_id: id}, {$inc: {dislike_cnt: 1}});
+      }
+
+      return await this.getSongById(id);
+    },
+
+    async decrementLikeDislike(songId, reaction){
+
+      if (!songId) throw 'You must provide an id of the song'
+
+      songId = await id_check(songId)
+
+      const songCollection= await songs();
+
+      if (reaction === 'like'){
+        await songCollection.updateOne({_id: songId}, {$inc: {like_cnt: -1}});
+      }
+      else{
+        await songCollection.updateOne({_id: songId}, {$inc: {dislike_cnt: -1}});
+      }
+
+      return await this.getSongById(id);
+    },
+
+    async addRemoveCommentFromSong(songId, commentId, operation){
+      if (!songId) throw 'You must provide an id of the song'
+      if (!commentId) throw 'You must provide an id of the comment to remove'
+
+      songId = await id_check(songId)
+      commentId =  await id_check(commentId)
+
+      const songCollection= await songs();
+
+      if(operation === 'add'){
+        await songCollection.updateOne({_id: songId}, {$addToSet : {comment_id: commentId}})
+      }
+      else{
+        await songCollection.updateOne({_id: songId}, {$pull : {comment_id: commentId}})
+      }
+
+      return await this.getSongById(id);
+    }
+  };
+  
+module.exports = exportedMethods;
+
+
   
 
 
 
-}
