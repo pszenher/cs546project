@@ -71,8 +71,8 @@ async function removeComment(commentId) {
 
   const commentCollection = await comments();
   const deletedComment = await commentCollection.findOne({ _id: commentId });
-  if (deletionInfo.deletedCount === 0)
-    throw new Error("Failed to delete comment with id " + commentId);
+  if (deletedComment === null)
+    throw new Error("Failed to get comment to be deleted with id: " + commentId);
 
   const deletionInfo = await commentCollection.deleteOne({ _id: commentId });
   if (deletionInfo.deletedCount === 0)
