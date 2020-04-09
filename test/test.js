@@ -5,6 +5,9 @@ const expect = chai.expect;
 const chaiHttp = require("chai-http");
 chai.use(chaiHttp);
 
+const chaiAsPromised = require("chai-as-promised");
+chai.use(chaiAsPromised);
+
 const data = require("../data");
 const routes = require("../routes");
 
@@ -39,25 +42,49 @@ describe("Database Methods", function () {
         expect(newComment).to.have.keys("_id", "songId", "userId", "content");
       });
       it("should have return comment with passed songId", async function () {
-        songId = ObjectId();
-        userId = ObjectId();
+        const songId = ObjectId();
         newComment = await data.comments.addComment(
           songId,
-          userId,
+          ObjectId(),
           "This is a comment"
         );
         expect(newComment.songId.toString()).to.equal(songId.toString());
       });
       it("should have return comment with passed userId", async function () {
-        songId = ObjectId();
-        userId = ObjectId();
+        const userId = ObjectId();
         newComment = await data.comments.addComment(
-          songId,
+          ObjectId(),
           userId,
           "This is a comment"
         );
         expect(newComment.userId.toString()).to.equal(userId.toString());
       });
+      it("should have return comment with passed userId", async function () {
+        const test_comment = "Test comment body";
+        newComment = await data.comments.addComment(
+          ObjectId(),
+          ObjectId(),
+          test_comment
+        );
+        expect(newComment.content).to.equal(test_comment);
+      });
+      it("should reject promise with TypeError on invalid song parameter", async function () {
+        await expect(
+          data.comments.addComment(NaN, ObjectId(), "This is a comment.")
+        ).to.be.rejectedWith(TypeError);
+      });
+      it("should reject promise with TypeError on invalid user parameter", async function () {
+        await expect(
+          data.comments.addComment(ObjectId(), NaN, "This is a comment.")
+        ).to.be.rejectedWith(TypeError);
+      });
+      it("should reject promise with TypeError on invalid content parameter", async function () {
+        await expect(
+          data.comments.addComment(ObjectId(), ObjectId(), NaN)
+        ).to.be.rejectedWith(TypeError);
+      });
     });
+    describe("getCommentById()", function () {});
+    describe("removeComment()", function () {});
   });
 });
