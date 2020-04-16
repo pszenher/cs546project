@@ -16,8 +16,11 @@
     "mongodb": "^3.5.6"
   },
   "devDependencies": {
+    "husky": "^4.2.4",
     "mocha": "^7.1.1",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "prettier": "2.0.4",
+    "pretty-quick": "^2.0.1"
   },
   "scripts": {
     "test": "mocha --recursive",
@@ -26,6 +29,18 @@
   "repository": {
     "type": "git",
     "url": "https://github.com//pszenher/cs546project"
+  },
+  "prettier": {
+    "printWidth": 80,
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": false
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   },
   "author": "Meghana Bhat, Kirsten Meidlinger, Ashish Negi, Paul Szenher",
   "license": "GPL-3.0"
