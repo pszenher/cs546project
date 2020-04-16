@@ -42,17 +42,17 @@ async function addComment(songId, userId, content) {
 }
 
 async function getCommentById(commentId) {
-  if (typeof commentId !== "string" && typeof commentId !== "object")
+ /* if (typeof commentId !== "object")
     throw new TypeError(
       "Expeced string or object type for commentId, got " + typeof commentId
     );
-  /*if (!ObjectId.isValid(commentId))
+  if (!ObjectId.isValid(commentId))
     throw new TypeError(
       "Expeced valid mongodb Object for commentId, got " + commentId
     );
 */
   
-  if(typeof id != 'object') commentId = ObjectId.createFromHexString(commentId);
+  if(typeof commentId != 'object') commentId = ObjectId.createFromHexString(commentId);
 
 
   const commentCollection = await comments();
