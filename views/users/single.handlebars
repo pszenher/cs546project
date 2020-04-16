@@ -1,0 +1,10 @@
+<!-- users/single.handlebars -->
+<!-- Representation of a single user from our database -->
+
+<article class="user">
+    <!-- Needs to be reformatted, everything is shown just for testing purposes, FIX index.handlebars TOO -->
+    <h2>Name: {{user.firstName}} {{user.lastName}}</h2>
+    <p>_id: {{user._id}}, email: {{user.email}}, password: {{user.password}}</p>
+    <p>gender: {{user.gender}}, city: {{user.city}}, state: {{user.state}}, age: {{user.age}}, bio: {{user.bio}}, interested: {{user.interested}}</p>
+    <!-- might want to add 3 handlebars for bio depending on if we want to allow HTML in a bio? -->
+</article>

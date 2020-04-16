@@ -3,6 +3,21 @@ const router = express.Router();
 
 const data = require("../data");
 const commentData = data.comments;
+const userData = data.users;
+const songData = data.songs;
+
+router.get("/new", async (req,res) => {
+  try {
+    const userList = await userData.getAllUsers();
+    const songList = await songData.getAllSongs();
+    res.render('comments/new',{
+      users:userList,
+      songs:songList
+    });
+  } catch (e) {
+    res.status(500).json({error: e.message});
+  }
+});
 
 router.post("/", async (req, res) => {
   const newCommentData = req.body;
@@ -52,7 +67,7 @@ router.post("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   const id = req.params.id;
   try {
-    if (!id) throw new Error("Commment post request requires 'id' parameter");
+    if (!id) throw new Error("Commment get request requires 'id' parameter");
 
     if (typeof id !== "string")
       throw new TypeError(
@@ -65,7 +80,8 @@ router.get("/:id", async (req, res) => {
 
   try {
     const comment = await commentData.getCommentById(id);
-    res.json(comment);
+    res.render('comments/single',{comment:comment});
+    //res.json(comment);
   } catch (e) {
     res.status(404).json({ message: "Comment with id '" + id + "' not found" });
   }
