@@ -3,6 +3,21 @@ const router = express.Router();
 
 const data = require("../data");
 const commentData = data.comments;
+const userData = data.users;
+const songData = data.songs;
+
+router.get("/new", async (req,res) => {
+  try {
+    const userList = await userData.getAllUsers();
+    const songList = await songData.getAllSongs();
+    res.render('comments/new',{
+      users:userList,
+      songs:songList
+    });
+  } catch (e) {
+    res.status(500).json({error: e.message});
+  }
+});
 
 router.post("/", async (req, res) => {
   const newCommentData = req.body;

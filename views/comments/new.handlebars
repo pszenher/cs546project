@@ -1,0 +1,46 @@
+<!-- comments/new.handlebars -->
+<!-- For adding new comment to the database -->
+
+<article class="new-comment">
+  <h1>Make a Post</h1>
+  <form action="/comments" method="POST" class="new-comment-form">
+    <label for="songId">
+      Song Id
+        <select class="full-width-input" name="songId">
+        <option value="">Select Song...</option>
+        {{#each songs}}
+            <option value="{{_id}}">{{title}}</option>
+        {{/each}}
+        </select>
+    </label>
+    <label for="userId">
+      User Id
+    </label>
+    <!-- I assume we'll get the userId for the POST request by seeing which user is logged in, but this is for testing -->
+    <select class="full-width-input" name="userId">
+      <option value="">Select User...</option>
+      {{#each users}}
+        <option value="{{_id}}">{{firstName}} {{lastName}}</option>
+      {{/each}}
+    </select>
+    <label for="comment-content">
+      Comment Content
+    </label>
+    <textarea id="comment-content" name="content" rows="4" placeholder="Comment Content" class="full-width-input"></textarea>
+
+    <button type="submit">Create New Post</button>
+    <button type="reset">Clear Form</button>
+    <button type="button">Click me!</button>
+  </form>
+  <!-- implement error list later
+  {{#if hasErrors}}
+  <ul class="error-list">
+    {{#each errors}}
+    <li>
+      {{this}}
+    </li>
+    {{/each}}
+  </ul>
+  {{/if}}
+  -->
+</article>
