@@ -57,6 +57,9 @@ async function getCommentById(commentId) {
       "Expeced valid mongodb Object for commentId, got " + commentId
     );
 
+  if (typeof commentId != "object")
+    commentId = ObjectId.createFromHexString(commentId);
+
   const commentCollection = await comments();
   const thisComment = await commentCollection.findOne({ _id: commentId });
   if (thisComment === null)

@@ -1,3 +1,6 @@
+// Set global testing flag to true
+global.isTesting = true;
+
 // Configure local chai variables and plugins
 const chai = require("chai");
 const chaiHttp = require("chai-http");

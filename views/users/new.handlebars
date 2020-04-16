@@ -1,0 +1,75 @@
+<!-- users/new.handlebars -->
+<!-- For adding new user to the database -->
+
+<article class="new-user">
+  <h1>Create an Account</h1>
+  <form action="/users" method="POST" class="new-user-form">
+
+    <label for="firstName">
+      First Name
+      <input type="text" name="firstName" placeholder="First Name" class="full-width-input"/>
+    </label>
+
+    <label for="lastName">
+      Last Name
+      <input type="text" name="lastName" placeholder="Last Name" class="full-width-input"/>
+    </label>
+
+    <label for="email">
+      Email
+      <input type="text" name="email" placeholder="Email" class="full-width-input"/>
+    </label>
+
+    <label for="gender">
+      Gender
+      <input type="text" name="gender" placeholder="Gender" class="full-width-input"/>
+    </label>
+
+    <label for="city">
+      City
+      <input type="text" name="city" placeholder="City" class="full-width-input"/>
+    </label>
+
+    <label for="state">
+      State
+      <input type="text" name="state" placeholder="State" class="full-width-input"/>
+    </label>
+
+    <label for="age">
+      Age
+      <input type="number" name="age" placeholder="Age" class="full-width-input"/>
+    </label>
+
+    <label for="password">
+      Password
+      <input type="text" name="password" placeholder="Password" class="full-width-input"/>
+    </label>
+    <!-- Find a way to hide password, also encrypt? -->
+
+    <label for="Bio">
+      Biography
+    </label>
+    <textarea id="bio" name="bio" rows="4" placeholder="Biography" class="full-width-input"></textarea>
+
+    <label for="Interested">
+      Interested
+    </label>
+    <textarea id="interested" name="interested" rows="4" placeholder="Interested" class="full-width-input"></textarea>
+
+
+    <button type="submit">Create New Post</button>
+    <button type="reset">Clear Form</button>
+    <button type="button">Click me!</button>
+  </form>
+  <!-- implement error list later
+  {{#if hasErrors}}
+  <ul class="error-list">
+    {{#each errors}}
+    <li>
+      {{this}}
+    </li>
+    {{/each}}
+  </ul>
+  {{/if}}
+  -->
+</article>
