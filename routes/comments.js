@@ -4,6 +4,7 @@ const router = express.Router();
 const data = require("../data");
 const commentData = data.comments;
 
+// Post new comment
 router.post("/", async (req, res) => {
   const newCommentData = req.body;
   try {
@@ -49,6 +50,7 @@ router.post("/", async (req, res) => {
   }
 });
 
+// Get comment by id
 router.get("/:id", async (req, res) => {
   const id = req.params.id;
   try {
@@ -71,6 +73,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// Delete comment by id
 router.delete("/:id", async (req, res) => {
   res.status(500).json({ error: "Not implemented" });
 });
