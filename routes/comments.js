@@ -52,7 +52,7 @@ router.post("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   const id = req.params.id;
   try {
-    if (!id) throw new Error("Commment post request requires 'id' parameter");
+    if (!id) throw new Error("Commment get request requires 'id' parameter");
 
     if (typeof id !== "string")
       throw new TypeError(
@@ -65,7 +65,8 @@ router.get("/:id", async (req, res) => {
 
   try {
     const comment = await commentData.getCommentById(id);
-    res.json(comment);
+    res.render('comments/single',{comment:comment});
+    //res.json(comment);
   } catch (e) {
     res.status(404).json({ message: "Comment with id '" + id + "' not found" });
   }

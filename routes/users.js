@@ -6,7 +6,8 @@ const userData = data.users;
 router.get("/:id", async (req, res) => {
   try {
     const user = await userData.getUserById(req.params.id);
-    res.json(user);
+    res.render('users/single',{user:user});
+    //res.json(user);
   } catch (e) {
       res.status(404).json( { error: "User not found" } );
     }
@@ -15,7 +16,8 @@ router.get("/:id", async (req, res) => {
 router.get("/", async (req, res) => {
     try {
       const userList = await userData.getAllUsers();
-      res.json(userList);
+      res.render('users/index',{users:userList});
+      //res.json(userList);
     } catch (e) {
       // Something went wrong with the server!
       res.status(500).send( {error: e} );

@@ -46,10 +46,14 @@ async function getCommentById(commentId) {
     throw new TypeError(
       "Expeced string or object type for commentId, got " + typeof commentId
     );
-  if (!ObjectId.isValid(commentId))
+  /*if (!ObjectId.isValid(commentId))
     throw new TypeError(
       "Expeced valid mongodb Object for commentId, got " + commentId
     );
+*/
+  
+  if(typeof id != 'object') commentId = ObjectId.createFromHexString(commentId);
+
 
   const commentCollection = await comments();
   const thisComment = await commentCollection.findOne({ _id: commentId });
