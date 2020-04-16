@@ -12,7 +12,8 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.get("/:id", async (req, res) => {
   try {
     const song = await songData.getSongById(req.params.id);
-    res.status(200).json(song);
+    res.render('songs/single',{song:song});
+    //res.status(200).json(song);
   } catch (e) {
     console.log(e);
     res.status(404).json({ error: e });
@@ -22,7 +23,8 @@ router.get("/:id", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const songList = await songData.getAllSongs();
-    res.status(200).json(songList);
+    res.render('songs/index',{songs:songList});
+    //res.status(200).json(songList);
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
