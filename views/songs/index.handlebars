@@ -1,0 +1,13 @@
+<!-- songs/index.handlebars -->
+<!-- Representation of list of every song in our database -->
+
+<section>
+    {{#each songs}}
+    <article class="song">
+        <!-- Needs to be reformatted, everything is shown just for testing purposes, FIX single.handlebars TOO -->
+        <h2>Title: {{title}}</h2>
+        <p>_id: {{_id}}, author: {{author}}, genre: {{genre}}, like_cnt: {{like_cnt}}, dislike_cnt: {{dislike_cnt}}, comment_id: {{comment_id}}</p>
+        <p>File: {{file}}</p>
+    </article>
+    {{/each}}
+</section>

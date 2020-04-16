@@ -1,4 +1,6 @@
 const chai = require("chai");
+// Set global testing flag to true
+global.isTesting = true;
 
 const chaiHttp = require("chai-http");
 chai.use(chaiHttp);
