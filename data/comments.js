@@ -41,6 +41,12 @@ async function addComment(songId, userId, content) {
   return insertedComment;
 }
 
+async function getAllComments() {
+  const commentCollection = await comments();
+  const commentList = await commentCollection.find({}).toArray();
+  return commentList;
+}
+
 async function getCommentById(commentId) {
   if (typeof commentId !== "string" && typeof commentId !== "object")
     throw new TypeError(
@@ -72,7 +78,9 @@ async function removeComment(commentId) {
   const commentCollection = await comments();
   const deletedComment = await commentCollection.findOne({ _id: commentId });
   if (deletedComment === null)
-    throw new Error("Failed to get comment to be deleted with id: " + commentId);
+    throw new Error(
+      "Failed to get comment to be deleted with id: " + commentId
+    );
 
   const deletionInfo = await commentCollection.deleteOne({ _id: commentId });
   if (deletionInfo.deletedCount === 0)
@@ -81,4 +89,4 @@ async function removeComment(commentId) {
   return deletedComment;
 }
 
-module.exports = { addComment, getCommentById, removeComment };
+module.exports = { addComment, getAllComments, getCommentById, removeComment };

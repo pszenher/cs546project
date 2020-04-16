@@ -50,6 +50,16 @@ router.post("/", async (req, res) => {
   }
 });
 
+// Get all comments
+router.get("/", async (req, res) => {
+  try {
+    const commentList = await commentData.getAllComments();
+    res.json(commentList);
+  } catch (e) {
+    res.status(500).json({ error: e.toString() });
+  }
+});
+
 // Get comment by id
 router.get("/:id", async (req, res) => {
   const id = req.params.id;
