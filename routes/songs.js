@@ -9,10 +9,27 @@ const { ObjectId } = require("mongodb");
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
+async function convertStringToGenreArray(str){
+  // very quickly thrown together for testing purposes
+  let arr = [str];
+  return arr;
+}
+
+router.get("/new", async (req,res) => {
+  try {
+    const userList = await userData.getAllUsers();
+    res.render('songs/new',{users:userList});
+  } catch (e) {
+    res.status(500).json({error: e.message});
+  }
+});
+
+
 router.get("/:id", async (req, res) => {
   try {
     const song = await songData.getSongById(req.params.id);
-    res.status(200).json(song);
+    res.render('songs/single',{song:song});
+    //res.status(200).json(song);
   } catch (e) {
     console.log(e);
     res.status(404).json({ error: e });
@@ -22,7 +39,8 @@ router.get("/:id", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const songList = await songData.getAllSongs();
-    res.status(200).json(songList);
+    res.render('songs/index',{songs:songList});
+    //res.status(200).json(songList);
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
@@ -68,8 +86,11 @@ router.post("/", async (req, res) => {
       });
     return;
   }
+  
+  // super shady prototype string to array function, needs to be fixed lol
+  let genreList = await convertStringToGenreArray(songInfo.genre);
 
-  if (!songInfo.genre || !Array.isArray(songInfo.genre)) {
+  if (!songInfo.genre || !Array.isArray(genreList)) {
     res
       .status(400)
       .json({ error: "You must provide a array of genre in the song" });
@@ -87,7 +108,7 @@ router.post("/", async (req, res) => {
     const newSong = await songData.addSong(
       songInfo.file,
       songInfo.title,
-      songInfo.genre,
+      genreList,
       songInfo.user
     );
     await userData.addSongToUser(songInfo.user, String(newSong._id)); //changed

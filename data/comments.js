@@ -51,6 +51,9 @@ async function getCommentById(commentId) {
       "Expeced valid mongodb Object for commentId, got " + commentId
     );
 
+  if (typeof commentId != "object")
+    commentId = ObjectId.createFromHexString(commentId);
+
   const commentCollection = await comments();
   const thisComment = await commentCollection.findOne({ _id: commentId });
   if (thisComment === null)
@@ -72,7 +75,9 @@ async function removeComment(commentId) {
   const commentCollection = await comments();
   const deletedComment = await commentCollection.findOne({ _id: commentId });
   if (deletedComment === null)
-    throw new Error("Failed to get comment to be deleted with id: " + commentId);
+    throw new Error(
+      "Failed to get comment to be deleted with id: " + commentId
+    );
 
   const deletionInfo = await commentCollection.deleteOne({ _id: commentId });
   if (deletionInfo.deletedCount === 0)

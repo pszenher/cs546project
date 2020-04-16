@@ -1,0 +1,49 @@
+<!-- songs/new.handlebars -->
+<!-- For adding new songs to the database -->
+
+<article class="new-song">
+  <h1>Post a Song</h1>
+  <form action="/songs" method="POST" class="new-song-form">
+
+    <label>
+      Song Title
+      <input type="text" name="title" placeholder="Song Title" class="full-width-input"/>
+    </label>
+
+    <label for="userId">
+      User Id
+    </label>
+    <select class="full-width-input" name="user">
+      <option value="">Select User...</option>
+      {{#each users}}
+        <option value="{{_id}}">{{firstName}} {{lastName}}</option>
+      {{/each}}
+    </select>
+    
+    <label for="genre">
+      Genre
+    </label>
+    <textarea id="genre" name="genre" rows="4" placeholder="Genre List" class="full-width-input"></textarea>
+    <!-- how to convert string to array of strings for genres? -->
+    
+    <label>
+      File
+      <input type="text" name="file" placeholder="Song File" class="full-width-input"/>
+    </label>
+
+    <button type="submit">Create New Post</button>
+    <button type="reset">Clear Form</button>
+    <button type="button">Click me!</button>
+  </form>
+  <!-- implement error list later
+  {{#if hasErrors}}
+  <ul class="error-list">
+    {{#each errors}}
+    <li>
+      {{this}}
+    </li>
+    {{/each}}
+  </ul>
+  {{/if}}
+  -->
+</article>
