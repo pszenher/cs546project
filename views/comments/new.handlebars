@@ -2,8 +2,9 @@
 <!-- For adding new comment to the database -->
 
 <article class="new-comment">
-  <h1>Make a Post</h1>
+  <h1>Make a Comment</h1>
   <form action="/comments" method="POST" class="new-comment-form">
+
     <label for="songId">
       Song Id
         <select class="full-width-input" name="songId">
@@ -13,6 +14,7 @@
         {{/each}}
         </select>
     </label>
+
     <label for="userId">
       User Id
     </label>
@@ -23,6 +25,7 @@
         <option value="{{_id}}">{{firstName}} {{lastName}}</option>
       {{/each}}
     </select>
+    
     <label for="comment-content">
       Comment Content
     </label>

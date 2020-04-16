@@ -3,6 +3,20 @@ const router = express.Router();
 const data = require("../data");
 const userData = data.users;
 
+async function convertStringToInterestedArray(str){
+  // very quickly thrown together for testing purposes
+  let arr = [str];
+  return arr;
+}
+
+router.get("/new", async (req,res) => {
+  try {
+    res.render('users/new');
+  } catch (e) {
+    res.status(500).json({error: e.message});
+  }
+});
+
 router.get("/:id", async (req, res) => {
   try {
     const user = await userData.getUserById(req.params.id);
@@ -27,10 +41,11 @@ router.post("/", async (req, res) => {
     const userPostData = req.body;
 
     try {
-      const {firstName, lastName, email, gender, city, state, age, password,bio,interested } = userPostData; 
+      let {firstName, lastName, email, gender, city, state, age, password,bio,interested } = userPostData; 
+      interested = await convertStringToInterestedArray(interested);
       if( firstName && lastName && email &&  gender && city && state && age && password&& bio && Array.isArray(interested) ) {
-        const newUser =  await userData.addUser(firstName, lastName, email, gender, city, state, age, password,bio,interested)
-        res.json(newUser)
+        const newUser = await userData.addUser(firstName, lastName, email, gender, city, state, age, password,bio,interested)
+        res.json(newUser);
       } else {
         res.status(400).send({ error: "Bad Request" });
       }
