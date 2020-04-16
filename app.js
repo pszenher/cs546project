@@ -2,11 +2,12 @@ const express = require("express");
 const exphbs = require('express-handlebars');
 const app = express();
 const configRoutes = require("./routes");
+const path = require("path");
 
 app.use("/",express.static(__dirname + '/layouts'));
 
 app.get("/",(req,res) => {
-    res.sendFile(path.resolve("/layouts/index.html"));
+    res.sendFile(path.resolve("./static/index.html"));
 });
 
 app.use(express.json())
