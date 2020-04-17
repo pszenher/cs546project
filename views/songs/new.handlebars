@@ -1,6 +1,6 @@
 <!-- songs/new.handlebars -->
 <!-- For adding new songs to the database -->
-
+<section>
 <article class="new-song">
   <h1>Post a Song</h1>
   <form action="/songs" method="POST" class="new-song-form">
@@ -24,16 +24,15 @@
       Genre
     </label>
     <textarea id="genre" name="genre" rows="4" placeholder="Genre List" class="full-width-input"></textarea>
-    <!-- how to convert string to array of strings for genres? -->
+    <!-- cHANGE TO list of checkboxes -->
     
     <label>
       File
       <input type="text" name="file" placeholder="Song File" class="full-width-input"/>
     </label>
 
-    <button type="submit">Create New Post</button>
-    <button type="reset">Clear Form</button>
-    <button type="button">Click me!</button>
+    <button type="submit" id="postSong">Post Song</button>
+    <button type="reset" id="clearForm">Clear Form</button>
   </form>
   <!-- implement error list later
   {{#if hasErrors}}
@@ -47,3 +46,4 @@
   {{/if}}
   -->
 </article>
+</section>

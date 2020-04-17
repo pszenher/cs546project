@@ -3,12 +3,15 @@ const exphbs = require('express-handlebars');
 const app = express();
 const configRoutes = require("./routes");
 const path = require("path");
+const static = express.static(__dirname + '/public');
 
-app.use("/",express.static(__dirname + '/layouts'));
+app.use("/",static);
 
+/*
 app.get("/",(req,res) => {
     res.sendFile(path.resolve("./static/index.html"));
 });
+*/
 
 app.use(express.json())
 app.use(express.urlencoded({ extended:true }));

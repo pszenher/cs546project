@@ -4,10 +4,11 @@ const songRoutes = require("./songs")
 const constructorMethod = app => {
   app.use("/comments", commentRoutes);
   app.use("/users", userRoutes);
-  app.use("/songs", songRoutes)
+  app.use("/songs", songRoutes);
 
   app.use("*", (req, res) => {
-    res.status(404).json({ error: "Page not found" });
+    res.redirect("/");
+    //res.status(404).json({ error: "Page not found" });
   });
 };
 
