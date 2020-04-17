@@ -42,6 +42,6 @@
       "pre-commit": "pretty-quick --staged"
     }
   },
-  "author": "Meghana Bhat, Kirsten Meidlinger, Ashish Negi, Paul Szenher",
+  "author": "Meghana Bhat Manikal, Kirsten Meidlinger, Ashish Negi, Paul Szenher",
   "license": "GPL-3.0"
 }
