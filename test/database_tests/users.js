@@ -82,8 +82,27 @@ describe("Users DB Collection", function () {
     });
   });
 
+  describe("getAllUsers()", function () {
+    it("should return array", async function () {
+      await data.users.addUser(
+        "firstName",
+        "lastName",
+        "email",
+        "gender",
+        "city",
+        "state",
+        25,
+        "password",
+        "bio",
+        ["interested1", "interestes2"]
+      );
+      const all_users = await data.users.getAllUsers();
+      expect(all_users).to.be.an("array");
+    });
+  });
+
   describe("updateUser()", function () {
-    it("should return the added user object when passed user attributes", async function () {
+    it("should return the updated user object when passed valid attributes", async function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
@@ -251,7 +270,7 @@ describe("Users DB Collection", function () {
       expect(updatePassword.password.toString()).to.equal("NewPass");
     });
 
-    it("should reject promise with error on invalid user attribute", async function () {
+    it("should reject promise with error on empty password ", async function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
@@ -269,7 +288,7 @@ describe("Users DB Collection", function () {
       ).to.be.rejectedWith("Please provide new password");
     });
 
-    it("should reject promise with error on invalid user attribute", async function () {
+    it("should reject promise with error on invalid user id", async function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
@@ -289,7 +308,7 @@ describe("Users DB Collection", function () {
   });
 
   describe("addSongToPlaylist()", function () {
-    it("should return the added user object when passed user attributes", async function () {
+    it("should return the added user object with songs in playlist", async function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
@@ -326,7 +345,7 @@ describe("Users DB Collection", function () {
       ).to.be.rejectedWith("Song is already present in the Playlist");
     });
 
-    it("should return the added user object when passed user attributes", async function () {
+    it("should reject promise with error on ivalid user Id", async function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
@@ -391,7 +410,7 @@ describe("Users DB Collection", function () {
       ).to.be.rejectedWith("Song is not present in the Playlist");
     });
 
-    it("should return the added user object when passed user attributes", async function () {
+    it("should reject promise with error on ivalid user Id", async function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
@@ -412,7 +431,7 @@ describe("Users DB Collection", function () {
   });
 
   describe("addLikedSong()", function () {
-    it("should return the added user object when passed user attributes", async function () {
+    it("should return the added user object with updated liked songs", async function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
@@ -446,7 +465,7 @@ describe("Users DB Collection", function () {
       ).to.be.rejectedWith("Song is already present in the Liked_songs");
     });
 
-    it("should return the added user object when passed user attributes", async function () {
+    it("should reject promise with error on ivalid user id", async function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
@@ -508,7 +527,7 @@ describe("Users DB Collection", function () {
       ).to.be.rejectedWith("Song is not present in the Liked_songs");
     });
 
-    it("should return the added user object when passed user attributes", async function () {
+    it("should reject promise when passed an invalid user id", async function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
@@ -528,7 +547,7 @@ describe("Users DB Collection", function () {
     });
 
     describe("addDisLikedSong()", function () {
-      it("should return the added user object when passed user attributes", async function () {
+      it("should return the added user object with updated disliked songs", async function () {
         newUser = await data.users.addUser(
           "firstName",
           "lastName",
@@ -565,7 +584,7 @@ describe("Users DB Collection", function () {
         ).to.be.rejectedWith("Song is already present in the Disliked song");
       });
 
-      it("should return the added user object when passed user attributes", async function () {
+      it("should reject promise when passed an invalid id", async function () {
         newUser = await data.users.addUser(
           "firstName",
           "lastName",
@@ -631,7 +650,7 @@ describe("Users DB Collection", function () {
       ).to.be.rejectedWith("Song is not present in the DisLiked_songs");
     });
 
-    it("should return the added user object when passed user attributes", async function () {
+    it("should reject promise when passed an invalid id", async function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
@@ -652,7 +671,7 @@ describe("Users DB Collection", function () {
   });
 
   describe("addSongToUser()", function () {
-    it("should return the added user object when passed user attributes", async function () {
+    it("should return the added user object with updated songs", async function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
@@ -686,7 +705,7 @@ describe("Users DB Collection", function () {
       ).to.be.rejectedWith("Song is already present in the songs");
     });
 
-    it("should return the added user object when passed user attributes", async function () {
+    it("should reject promise with error when passed an invalid id", async function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
@@ -745,7 +764,7 @@ describe("Users DB Collection", function () {
       ).to.be.rejectedWith("Song is not present in the Songs");
     });
 
-    it("should return the added user object when passed user attributes", async function () {
+    it("should reject promise with error when passed an invalid id", async function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
