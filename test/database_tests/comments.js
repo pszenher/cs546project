@@ -5,7 +5,10 @@ after(async () => {
   await db.serverConfig.close();
 });
 
-afterEach(function () {});
+afterEach(async () => {
+  const db = await mongoConnection();
+  await db.dropDatabase();
+});
 
 describe("Comments DB Collection", function () {
   describe("addComment()", function () {

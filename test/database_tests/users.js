@@ -5,6 +5,11 @@ after(async () => {
   await db.serverConfig.close();
 });
 
+afterEach(async () => {
+  const db = await mongoConnection();
+  await db.dropDatabase();
+});
+
 describe("Users DB Collection", function () {
   describe("addUser()", function () {
     it("should return the added user object when passed user attributes", async function () {

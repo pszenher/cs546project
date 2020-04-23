@@ -5,6 +5,11 @@ after(async () => {
   await db.serverConfig.close();
 });
 
+afterEach(async () => {
+  const db = await mongoConnection();
+  await db.dropDatabase();
+});
+
 describe("Songs DB Collection", function () {
   describe("addSong()", function () {
     it("should return the added song object when passed details", async function () {
