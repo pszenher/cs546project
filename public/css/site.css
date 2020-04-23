@@ -24,10 +24,12 @@ h1 {
 /* The navigation bar */
 .navbar {
     overflow: hidden;
-    background-color: #333;
+    background-color: rebeccapurple;
     position: fixed; /* Set the navbar to fixed position */
     top: 0; /* Position the navbar at the top of the page */
     width: 100%; /* Full width */
+    height: 46px;
+    margin-bottom: 20px;
   }
   
   /* Links inside the navbar */
@@ -43,9 +45,9 @@ h1 {
   /* Change background on mouse-over */
   .navbar a:hover {
     background: #ddd;
-    color: black;
+    color: rebeccapurple;
   }
-  
-main {
-    margin-top: 20px;
+
+main{
+  margin-top:20px;
 }
