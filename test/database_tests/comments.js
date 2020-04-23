@@ -5,6 +5,11 @@ after(async () => {
   await db.serverConfig.close();
 });
 
+afterEach(async () => {
+  const db = await mongoConnection();
+  await db.dropDatabase();
+});
+
 describe("Comments DB Collection", function () {
   describe("addComment()", function () {
     it("should return the added comment object when passed ObjectId types", async function () {
