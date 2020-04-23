@@ -2,6 +2,10 @@ const mongoCollections = require("../config/mongoCollections");
 const { ObjectId } = require("mongodb");
 const users = mongoCollections.users;
 
+const bcrypt = require("bcrypt"); //Importing the NPM bcrypt package.
+const salt = 10; //We are setting salt rounds, higher is safer.
+// const myPlaintextPassword = 's0/\/\P4$$w0rD';
+
 module.exports = {
   // This is a fun new syntax that was brought forth in ES6, where we can define
   // methods on an object with this shorthand!
@@ -15,6 +19,14 @@ module.exports = {
 
     let user = await userCollection.findOne({ _id: id });
     if (user === null) throw `No User with that id`;
+    return user;
+  },
+  async getUserByEmail(email) {
+    if (!email) throw `Provide email id`;
+    if (typeof email !== "string") throw `Id Invalid`;
+
+    const userCollection = await users();
+    let user = await userCollection.findOne({ email: email });
 
     return user;
   },
@@ -46,7 +58,9 @@ module.exports = {
     if (!age) throw `You must provide Age`;
     if (!password) throw `You must provide valid password`;
     if (!bio) throw `You must Provide Bio about Yourslef`;
-    if (!Array.isArray(interested)) throw `interested must be an array`;
+    if (interested) {
+      if (!Array.isArray(interested)) throw `interested must be an array`;
+    }
     if (firstName) {
       if (typeof firstName != "string") throw `400 - Name is not a string`;
     }
@@ -57,6 +71,7 @@ module.exports = {
     if (email) {
       if (typeof email != "string") throw { errocode: 400, field: "email" };
     }
+
     if (gender) {
       if (typeof gender != "string") throw { errocode: 400, field: "gender" };
     }
@@ -67,12 +82,16 @@ module.exports = {
       if (typeof state != "string") throw { errocode: 400, field: "state" };
     }
     if (age) {
-      if (typeof age != "number") throw { errocode: 400, field: "age" };
+      if (typeof age == "string") age = Number(age);
+      if (age < 0)
+        throw { errocode: 400, field: "Age cannot be negative number" };
     }
     if (password) {
       if (typeof password != "string")
         throw { errocode: 400, field: "password" };
     }
+    password = await bcrypt.hash(password, salt);
+
     if (bio) {
       if (typeof bio != "string") throw { errocode: 400, field: "bio" };
     }
@@ -92,6 +111,10 @@ module.exports = {
       interested: interested,
     };
 
+    const existingUser = await this.getUserByEmail(email);
+    if (existingUser != null) {
+      throw `User with this Email ${email} already Exists`;
+    }
     const insertInfo = await userCollection.insertOne(newUSer);
     if (insertInfo.insertedCount === 0) throw `Could not add User`;
 
