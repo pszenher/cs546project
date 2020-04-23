@@ -1,19 +1,32 @@
 const express = require("express");
-const exphbs = require('express-handlebars');
+const exphbs = require("express-handlebars");
 const app = express();
 const configRoutes = require("./routes");
+const session = require("express-session");
+const static = express.static(__dirname + "/public");
 
-app.use("/",express.static(__dirname + '/layouts'));
+app.use(
+  session({
+    name: "UserCookie",
+    secret: "This is a secret.. shhh don't tell anyone",
+    saveUninitialized: true,
+    resave: false,
+  })
+);
 
-app.get("/",(req,res) => {
-    res.sendFile(path.resolve("/layouts/index.html"));
+app.use("/", express.static(__dirname + "/layouts"));
+app.use("/", express.static(__dirname + "/static"));
+app.use("/public", static);
+
+app.get("/", (req, res) => {
+  res.sendFile(path.resolve("/layouts/index.html"));
 });
 
-app.use(express.json())
-app.use(express.urlencoded({ extended:true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
-app.set('view engine', 'handlebars');
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 
 configRoutes(app);
 
