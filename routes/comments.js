@@ -19,6 +19,7 @@ router.get("/new", async (req,res) => {
   }
 });
 
+// Post new comment
 router.post("/", async (req, res) => {
   const newCommentData = req.body;
   try {
@@ -64,6 +65,17 @@ router.post("/", async (req, res) => {
   }
 });
 
+// Get all comments
+router.get("/", async (req, res) => {
+  try {
+    const commentList = await commentData.getAllComments();
+    res.json(commentList);
+  } catch (e) {
+    res.status(500).json({ error: e.toString() });
+  }
+});
+
+// Get comment by id
 router.get("/:id", async (req, res) => {
   const id = req.params.id;
   try {
@@ -87,6 +99,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// Delete comment by id
 router.delete("/:id", async (req, res) => {
   res.status(500).json({ error: "Not implemented" });
 });
