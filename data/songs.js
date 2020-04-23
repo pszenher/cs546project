@@ -183,7 +183,7 @@ const exportedMethods = {
       );
     }
 
-    return await this.getSongById(id);
+    return await this.getSongById(songId);
   },
 };
 
