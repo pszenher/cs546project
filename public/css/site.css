@@ -1,22 +1,102 @@
 html {
-  background:lavender;
+  background: lavender;
 }
 
 h1 {
-  color:rebeccapurple;
-  font-weight:bolder;
+  color: rebeccapurple;
+  font-weight: bolder;
+  text-align: center;
+}
+
+h2 {
+  color: rebeccapurple;
+  margin-left: 50px;
+  text-align: center;
+}
+
+form > button {
+  margin-top: 25px;
+  margin-bottom: 25px;
+  margin-left: 10px;
+}
+
+#questions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+
+#questions > .sub-entry {
+  width: 25%;
+  margin-top: 10px;
+  flex-basis: 
+}
+
+/* questions1 and questions2 are of the class .sub-entry */
+#questions1 { 
+  float: left;
+}
+
+#questions2 {
+  float: right;
+}
+
+#buttons {
+  width: 50%;
+  margin-left: 25%;
+  margin-right: 25%;
+  display:flex;
+  justify-content: center;
+}
+
+button#create-account {
+  margin-right:5px;
+}
+
+div#radio-container > p {
+  margin-bottom: 0px;
+  margin-top: 5px;
+}
+
+div#bio-container {
+  margin-top:5px;
+}
+
+input[type='radio'] + label{
+  display: inline-block;
+  clear: left;
+  width: 30%;
+  text-align: left;
+}
+
+.input-container > label {
+  display: inline-block;
+  clear: left;
+  width: 30%;
+  text-align: right;
+}
+
+.input-container > input {
+  display: inline-block;
+}
+
+div#new-user-container {
+  margin-left: 5%;
 }
 
 .song {
-  color:black;
+  color: black;
 }
 
 .user {
-  color:black;
+  color: black;
 }
 
 .comment {
-  color: black; 
+  color: black;
 }
 
 /* Copied from W3Schools */
@@ -47,6 +127,17 @@ h1 {
   color: rebeccapurple;
 }
 
-main{
-  margin-top:20px;
+
+/* margin: top right bottom left; clockwise */
+footer {
+  margin: 25px 0px 25px 25px;
+  text-align: center;
+}
+
+#home-descript {
+  text-align: center;
+}
+
+* {
+  font-family: monospace;
 }

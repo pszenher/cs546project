@@ -2,63 +2,79 @@
 <!-- For adding new user to the database -->
 
 <article class="new-user">
-  <h1>Create an Account</h1>
-  <form action="/users" method="POST" class="new-user-form">
+  <div class="container" id="new-user-container">
 
-    <label for="firstName">
-      First Name
-      <input type="text" name="firstName" placeholder="First Name" class="full-width-input"/>
-    </label>
+    <h2>Create an Account</h2>
+    <form action="/users" method="POST" id="new-user-form">
+      <div id="questions">
+        <div id="questions1" class="sub-entry">
+          <div class="input-container">
+            <label for="first-name">First Name</label>
+            <input type="text" id="first-na,e" name="firstName" placeholder="First Name" class="full-width-input" />
+          </div>
 
-    <label for="lastName">
-      Last Name
-      <input type="text" name="lastName" placeholder="Last Name" class="full-width-input"/>
-    </label>
+          <div class="input-container">
+            <label for="last-name">Last Name</label>
+            <input type="text" id="last-name" name="lastName" placeholder="Last Name" class="full-width-input" />
+          </div>
 
-    <label for="email">
-      Email
-      <input type="text" name="email" placeholder="Email" class="full-width-input"/>
-    </label>
+          <div class="input-container">
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email" placeholder="Email" class="full-width-input" />
+          </div>
 
-    <label for="gender">
-      Gender
-      <input type="text" name="gender" placeholder="Gender" class="full-width-input"/>
-    </label>
+          <div class="input-container">
+            <label for="password">Password</label>
+            <input type="text" id="password" name="password" placeholder="Password" class="full-width-input" />
+          </div>
 
-    <label for="city">
-      City
-      <input type="text" name="city" placeholder="City" class="full-width-input"/>
-    </label>
+          <div class="input-container" id='radio-container'>
+            <p>What music are you interested in?</p>
+            <input type="radio" id="rock-radio" name="interested" value="rock">
+            <label for="rock-radio">Rock</label><br>
+            <input type="radio" id="pop-radio" name="interested" value="pop">
+            <label for="pop-radio">Pop</label><br>
+            <input type="radio" id="indie-radio" name="interested" value="indie">
+            <label for="indie-radio">Indie</label><br>
+            <input type="radio" id="classical-radio" name="interested" value="classical">
+            <label for="classical-radio">Classical</label><br>
+          </div>
+        </div>
 
-    <label for="state">
-      State
-      <input type="text" name="state" placeholder="State" class="full-width-input"/>
-    </label>
+        <div id="questions2" class="sub-entry">
+          <div class="input-container">
+            <label for="gender">Gender</label>
+            <input type="text" id="gender" name="gender" placeholder="Gender" class="full-width-input" />
+          </div>
 
-    <label for="age">
-      Age
-      <input type="number" name="age" placeholder="Age" class="full-width-input"/>
-    </label>
+          <div class="input-container">
+            <label for="city">City</label>
+            <input type="text" id="state" name="city" placeholder="City" class="full-width-input" />
+          </div>
 
-    <label for="password">
-      Password
-      <input type="text" name="password" placeholder="Password" class="full-width-input"/>
-    </label>
-    <!-- Find a way to hide password, also encrypt? -->
+          <div class="input-container">
+            <label for="state">State</label>
+            <input type="text" id="state" name="state" placeholder="State" class="full-width-input" />
+          </div>
 
-    <label for="Bio">
-      Biography
-    </label>
-    <textarea id="bio" name="bio" rows="4" placeholder="Biography" class="full-width-input"></textarea>
+          <div class="input-container">
+            <label for="age">Age</label>
+            <input type="number" id="age" name="age" placeholder="Age" class="full-width-input" />
+          </div>
 
-    <label for="Interested">
-      Interested
-    </label>
-    <textarea id="interested" name="interested" rows="4" placeholder="Interested" class="full-width-input"></textarea>
+          <div class="input-container" id="bio-container">
+            <label for="bio">Biography</label>
+            <textarea id="bio" name="bio" rows="4" placeholder="Biography" class="full-width-input"></textarea>
+          </div>
+        </div>
+      </div>
 
+      <div id="buttons">
+        <button type="submit" id="create-account">Create Account</button>
+        <button type="reset">Clear Form</button>
+      </div>
+      <br>
+    </form>
+  </div>
 
-    <button type="submit">Create New Post</button>
-    <button type="reset">Clear Form</button>
-    <button type="button">Click me!</button>
-  </form>
 </article>
