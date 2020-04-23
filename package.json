@@ -23,6 +23,7 @@
     "pretty-quick": "^2.0.1"
   },
   "scripts": {
+    "seed": "node ./tasks/seed.js",
     "test": "mocha --recursive",
     "start": "node app.js"
   },
