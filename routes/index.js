@@ -11,7 +11,8 @@ const constructorMethod = (app) => {
   app.use("/logout", logoutRoutes);
 
   app.use("*", (req, res) => {
-    res.status(404).json({ error: "Page not found" });
+    res.redirect("/");
+    //res.status(404).json({ error: "Page not found" });
   });
 };
 

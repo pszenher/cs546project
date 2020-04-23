@@ -2,6 +2,14 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const app = express();
 const configRoutes = require("./routes");
+const path = require("path");
+const static = express.static(__dirname + '/public');
+
+app.use("/",static);
+
+/*
+app.get("/",(req,res) => {
+    res.sendFile(path.resolve("./static/index.html"));
 const session = require("express-session");
 const static = express.static(__dirname + "/public");
 
@@ -21,6 +29,7 @@ app.use("/public", static);
 app.get("/", (req, res) => {
   res.sendFile(path.resolve("/layouts/index.html"));
 });
+*/
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
