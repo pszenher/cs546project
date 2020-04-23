@@ -25,6 +25,9 @@ async function addComment(songId, userId, content) {
       "Expeced valid mongodb Object for userId, got " + userId
     );
 
+  songId = ObjectId(songId);
+  userId = ObjectId(userId);
+
   const commentCollection = await comments();
 
   let newComment = {
@@ -41,6 +44,12 @@ async function addComment(songId, userId, content) {
   return insertedComment;
 }
 
+async function getAllComments() {
+  const commentCollection = await comments();
+  const commentList = await commentCollection.find({}).toArray();
+  return commentList;
+}
+
 async function getCommentById(commentId) {
   if (typeof commentId !== "string" && typeof commentId !== "object")
     throw new TypeError(
@@ -51,8 +60,7 @@ async function getCommentById(commentId) {
       "Expeced valid mongodb Object for commentId, got " + commentId
     );
 
-  if (typeof commentId != "object")
-    commentId = ObjectId.createFromHexString(commentId);
+  commentId = ObjectId(commentId);
 
   const commentCollection = await comments();
   const thisComment = await commentCollection.findOne({ _id: commentId });
@@ -72,6 +80,8 @@ async function removeComment(commentId) {
       "Expeced valid mongodb Object for commentId, got " + commentId
     );
 
+  commentId = ObjectId(commentId);
+
   const commentCollection = await comments();
   const deletedComment = await commentCollection.findOne({ _id: commentId });
   if (deletedComment === null)
@@ -86,4 +96,4 @@ async function removeComment(commentId) {
   return deletedComment;
 }
 
-module.exports = { addComment, getCommentById, removeComment };
+module.exports = { addComment, getAllComments, getCommentById, removeComment };
