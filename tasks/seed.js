@@ -60,12 +60,15 @@ async function main() {
     ["Rock"],
     testUser1._id
   );
+  await users.addSongToUser(testUser1._id, testUser1Song1._id);
+
   const testUser1Song2 = await songs.addSong(
     ObjectId(),
     "Test Jam #2",
     ["Pop", "Rock"],
     testUser1._id
   );
+  await users.addSongToUser(testUser1._id, testUser1Song2._id);
 
   const testUser2Song1 = await songs.addSong(
     ObjectId(),
@@ -73,29 +76,44 @@ async function main() {
     ["Pop", "R&B"],
     testUser1._id
   );
+  await users.addSongToUser(testUser2._id, testUser2Song1._id);
+
   const testUser2Song2 = await songs.addSong(
     ObjectId(),
     "Good as Hell",
     ["Pop"],
     testUser1._id
   );
+  await users.addSongToUser(testUser2._id, testUser2Song2._id);
+
   const testUser2Song3 = await songs.addSong(
     ObjectId(),
     "7 rings",
     ["Pop"],
     testUser1._id
   );
+  await users.addSongToUser(testUser2._id, testUser2Song3._id);
 
   const testUser1Comment1 = await comments.addComment(
     testUser2Song1._id,
     testUser1._id,
     "I really like this song"
   );
+  await songs.addRemoveCommentFromSong(
+    testUser2Song1._id,
+    testUser1Comment1._id,
+    "add"
+  );
 
   const testUser3Comment1 = await comments.addComment(
     testUser2Song1._id,
     testUser3._id,
     "I am also a fan of this song"
+  );
+  await songs.addRemoveCommentFromSong(
+    testUser2Song1._id,
+    testUser3Comment1._id,
+    "add"
   );
 
   console.log("Database seeded successfully");
