@@ -25,6 +25,9 @@ async function addComment(songId, userId, content) {
       "Expeced valid mongodb Object for userId, got " + userId
     );
 
+  songId = ObjectId(songId);
+  userId = ObjectId(userId);
+
   const commentCollection = await comments();
 
   let newComment = {
@@ -57,8 +60,7 @@ async function getCommentById(commentId) {
       "Expeced valid mongodb Object for commentId, got " + commentId
     );
 
-  if (typeof commentId != "object")
-    commentId = ObjectId.createFromHexString(commentId);
+  commentId = ObjectId(commentId);
 
   const commentCollection = await comments();
   const thisComment = await commentCollection.findOne({ _id: commentId });
@@ -77,6 +79,8 @@ async function removeComment(commentId) {
     throw new TypeError(
       "Expeced valid mongodb Object for commentId, got " + commentId
     );
+
+  commentId = ObjectId(commentId);
 
   const commentCollection = await comments();
   const deletedComment = await commentCollection.findOne({ _id: commentId });
