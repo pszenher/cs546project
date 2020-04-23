@@ -7,6 +7,7 @@
     "test": "test"
   },
   "dependencies": {
+    "bcrypt": "^4.0.1",
     "body-parser": "^1.19.0",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
@@ -16,12 +17,18 @@
     "handlebars": "^4.7.6",
     "mongodb": "^3.5.6",
     "normalize.css": "^8.0.1"
+    "express-session": "^1.17.1",
+    "mongodb": "^3.5.6"
   },
   "devDependencies": {
+    "husky": "^4.2.4",
     "mocha": "^7.1.1",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "prettier": "2.0.4",
+    "pretty-quick": "^2.0.1"
   },
   "scripts": {
+    "seed": "node ./tasks/seed.js",
     "test": "mocha --recursive",
     "start": "node app.js"
   },
@@ -29,6 +36,18 @@
     "type": "git",
     "url": "https://github.com//pszenher/cs546project"
   },
-  "author": "Meghana Bhat, Kirsten Meidlinger, Ashish Negi, Paul Szenher",
+  "prettier": {
+    "printWidth": 80,
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": false
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "author": "Meghana Bhat Manikal, Kirsten Meidlinger, Ashish Negi, Paul Szenher",
   "license": "GPL-3.0"
 }
