@@ -112,6 +112,16 @@ ul.song-info, ul.user-info {
   margin-top: 5px;
 }
 
+#song-radio-container {
+  width:20%;
+  margin-left: 25%;
+  margin-right:40%;
+}
+
+#radio-container > * {
+  
+}
+
 /* Create an Account */
 
 #user-questions {

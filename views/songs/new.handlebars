@@ -21,10 +21,16 @@
             </select>
           </div>
 
-          <div class="input-container">
-            <label for="genre">Genre</label>
-            <textarea id="genre" name="genre" rows="4" placeholder="Genre List" class="full-width-input"></textarea>
-            <!-- cHANGE TO list of checkboxes -->
+          <div class="input-container" id='song-radio-container'>
+            <p id="genre-input-label">Genre</p>
+            <input type="radio" id="rock-radio" name="interested" value="rock">
+            <label for="rock-radio">Rock</label><br>
+            <input type="radio" id="pop-radio" name="interested" value="pop">
+            <label for="pop-radio">Pop</label><br>
+            <input type="radio" id="indie-radio" name="interested" value="indie">
+            <label for="indie-radio">Indie</label><br>
+            <input type="radio" id="classical-radio" name="interested" value="classical">
+            <label for="classical-radio">Classical</label><br>
           </div>
 
           <div id="file-container" class="input-container">
