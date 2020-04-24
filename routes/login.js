@@ -5,11 +5,19 @@ const userData = data.users;
 const bcrypt = require("bcrypt");
 
 router.get("/", async (req, res) => {
+  if(req.session) {
+    if (req.session.user) {
+      res.redirect("users/single", { user: req.session.user });
+    }
+  } else {
+    res.render("users/login", { title: "Login Page" });
+  }
+  /*
   if (req.session.user) {
     return res.redirect("users/single", { user: req.session.user });
   } else {
     res.render("users/login", { title: "Login Page" });
-  }
+  }*/
 });
 
 router.post("/", async (req, res) => {
