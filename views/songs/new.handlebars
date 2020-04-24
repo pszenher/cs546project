@@ -1,40 +1,44 @@
 <!-- songs/new.handlebars -->
 <!-- For adding new songs to the database -->
 <section>
-<article class="new-song">
-  <h1>Post a Song</h1>
-  <form action="/songs" method="POST" class="new-song-form">
+  <article class="new-song">
+    <h2>Post a Song</h2>
+    <form action="/songs" method="POST" class="new-song-form">
+      <div id="song-questions">
+        <div class="sub-entry">
+          <div class="input-container">
+            <label>Song Title</label>
+            <input type="text" name="title" placeholder="Song Title" class="full-width-input" />
+          </div>
 
-    <label>
-      Song Title
-      <input type="text" name="title" placeholder="Song Title" class="full-width-input"/>
-    </label>
+          <div class="input-container">
+            <label for="userId">User Id</label>
+            <select class="full-width-input" name="user">
+              <option value="">Select User...</option>
+              {{#each users}}
+              <option value="{{_id}}">{{firstName}} {{lastName}}</option>
+              {{/each}}
+            </select>
+          </div>
 
-    <label for="userId">
-      User Id
-    </label>
-    <select class="full-width-input" name="user">
-      <option value="">Select User...</option>
-      {{#each users}}
-        <option value="{{_id}}">{{firstName}} {{lastName}}</option>
-      {{/each}}
-    </select>
-    
-    <label for="genre">
-      Genre
-    </label>
-    <textarea id="genre" name="genre" rows="4" placeholder="Genre List" class="full-width-input"></textarea>
-    <!-- cHANGE TO list of checkboxes -->
-    
-    <label>
-      File
-      <input type="text" name="file" placeholder="Song File" class="full-width-input"/>
-    </label>
+          <div class="input-container">
+            <label for="genre">Genre</label>
+            <textarea id="genre" name="genre" rows="4" placeholder="Genre List" class="full-width-input"></textarea>
+            <!-- cHANGE TO list of checkboxes -->
+          </div>
 
-    <button type="submit" id="postSong">Post Song</button>
-    <button type="reset" id="clearForm">Clear Form</button>
-  </form>
-  <!-- implement error list later
+          <div id="file-container" class="input-container">
+            <label for="song-file">File</label>
+            <input type="file" id="song-file" class="full-width-input" accept=".mp3"/>
+          </div>
+        </div>
+      </div>
+      <div class="button-container">
+        <button type="submit" class="submit">Post Song</button>
+        <button type="reset" id="clearForm">Clear Form</button>
+      </div>
+    </form>
+    <!-- implement error list later
   {{#if hasErrors}}
   <ul class="error-list">
     {{#each errors}}
@@ -45,5 +49,5 @@
   </ul>
   {{/if}}
   -->
-</article>
+  </article>
 </section>

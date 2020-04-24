@@ -1,50 +1,43 @@
+/* site.css */
+
+* {
+  font-family: monospace;
+}
+
 html {
   background: lavender;
+}
+
+section {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
 h1 {
   color: rebeccapurple;
   font-weight: bolder;
   text-align: center;
+  margin-top:56px;
 }
 
 h2 {
   color: rebeccapurple;
-  margin-left: 50px;
   text-align: center;
 }
 
-form > button {
-  margin-top: 25px;
-  margin-bottom: 25px;
-  margin-left: 10px;
+label, input {
+
 }
 
-#questions {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
-  width: 100%;
+/* Forms */
+
+.input-container {
+  margin-top: 5px;
 }
 
-#questions > .sub-entry {
-  width: 25%;
-  margin-top: 10px;
-  flex-basis: 
-}
-
-/* questions1 and questions2 are of the class .sub-entry */
-#questions1 { 
-  float: left;
-}
-
-#questions2 {
-  float: right;
-}
-
-#buttons {
+.button-container {
+  margin-top:25px;
   width: 50%;
   margin-left: 25%;
   margin-right: 25%;
@@ -52,17 +45,13 @@ form > button {
   justify-content: center;
 }
 
-button#create-account {
+button.submit {
   margin-right:5px;
 }
 
 div#radio-container > p {
   margin-bottom: 0px;
   margin-top: 5px;
-}
-
-div#bio-container {
-  margin-top:5px;
 }
 
 input[type='radio'] + label{
@@ -83,12 +72,81 @@ input[type='radio'] + label{
   display: inline-block;
 }
 
-div#new-user-container {
-  margin-left: 5%;
+/* Songs */
+
+div.song {
+  background-color: white;
+  border-width: 5px;
+  border-radius: 10px;
+  border-style: solid;
+  border-color:rebeccapurple;
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  margin-left: 32.5%;
+  margin-right: 32.5%;
+  margin-bottom: 10px;
+  padding-left: 10px;
 }
 
-.song {
-  color: black;
+ul.song-info {
+  width: 250px;
+  word-wrap: normal;
+  list-style-type: circle;
+  margin-left:20px;
+  padding: 0;
+}
+
+
+/* Post a Song */
+
+#song-questions {
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+
+#song-questions > .sub-entry {
+  width: 40%;
+}
+
+#file-container {
+  margin-top: 5px;
+}
+
+/* Create an Account */
+
+#user-questions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+
+#user-questions > .sub-entry {
+  width: 25%;
+  margin-top: 10px;
+}
+
+/* questions1 and questions2 are of the class .sub-entry */
+#user-questions1 { 
+  float: left;
+}
+
+#user-questions2 {
+  float: right;
+}
+
+div#bio-container {
+  margin-top:5px;
+}
+article#new-user {
+  margin-left: 5%;
 }
 
 .user {
@@ -130,14 +188,11 @@ div#new-user-container {
 
 /* margin: top right bottom left; clockwise */
 footer {
-  margin: 25px 0px 25px 25px;
+  margin: 25px 0px 25px 0px;
   text-align: center;
+  color: rebeccapurple;
 }
 
 #home-descript {
   text-align: center;
-}
-
-* {
-  font-family: monospace;
 }
