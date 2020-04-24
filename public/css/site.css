@@ -72,9 +72,7 @@ input[type='radio'] + label{
   display: inline-block;
 }
 
-/* Songs */
-
-div.song {
+div.song, div.user {
   background-color: white;
   border-width: 5px;
   border-radius: 10px;
@@ -89,7 +87,7 @@ div.song {
   padding-left: 10px;
 }
 
-ul.song-info {
+ul.song-info, ul.user-info {
   width: 250px;
   word-wrap: normal;
   list-style-type: circle;
