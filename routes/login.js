@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
     }
   } else {
     res.render("users/login", { title: "Login Page" });
-  }
+  } 
 });
 
 router.post("/", async (req, res) => {
