@@ -26,9 +26,6 @@ h2 {
   text-align: center;
 }
 
-label, input {
-
-}
 
 /* Forms */
 
@@ -143,8 +140,29 @@ ul.song-info, ul.user-info {
 div#bio-container {
   margin-top:5px;
 }
+
 article#new-user {
   margin-left: 5%;
+}
+
+/* Log In */
+
+#login-questions {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+#login-questions > .input-container {
+  width: 25%;
+  margin-top: 10px;
+  align-self:center;
+}
+
+#sign-up-link {
+  text-align: center;
 }
 
 .user {
