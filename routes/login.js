@@ -12,12 +12,6 @@ router.get("/", async (req, res) => {
   } else {
     res.render("users/login", { title: "Login Page" });
   }
-  /*
-  if (req.session.user) {
-    return res.redirect("users/single", { user: req.session.user });
-  } else {
-    res.render("users/login", { title: "Login Page" });
-  }*/
 });
 
 router.post("/", async (req, res) => {
