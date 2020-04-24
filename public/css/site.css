@@ -165,6 +165,9 @@ article#new-user {
   width: 100%; /* Full width */
   height: 46px;
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 /* Links inside the navbar */
