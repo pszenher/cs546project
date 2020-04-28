@@ -50,14 +50,14 @@ router.post("/", async (req, res) => {
   let songInfo = req.body;
 
   if (!songInfo) {
-    res.status(400).json({ error: "You must provide data for the album" });
+    res.status(400).json({ error: "You must provide data for the song" });
     return;
   }
 
   if (!songInfo.title || typeof songInfo.title != "string") {
     res
       .status(400)
-      .json({ error: "You must provide a title of the album as string" });
+      .json({ error: "You must provide a title of the song as string" });
     return;
   }
 
