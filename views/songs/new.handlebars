@@ -3,7 +3,7 @@
 
 <article class="new-song">
   <h1>Post a Song</h1>
-  <form action="/songs" method="POST" class="new-song-form">
+  <form action="/songs" method="POST" class="new-song-form" enctype="multipart/form-data">
 
     <label>
       Song Title
@@ -28,7 +28,7 @@
     
     <label>
       File
-      <input type="file" name="file" enctype="multipart/form-data" placeholder="Song File" class="full-width-input"/>
+      <input type="file" name="file" placeholder="Song File" class="full-width-input"/>
     </label>
 
     <button type="submit">Create New Post</button>

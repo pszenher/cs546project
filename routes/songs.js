@@ -10,7 +10,7 @@ const GridFsStorage = require("multer-gridfs-storage");
 const url = "mongodb://localhost:27017/database";
 
 // Create a storage object with a given configuration
-const storage = new GridFsStorage({ url });
+const storage = new GridFsStorage({ url: url });
 
 // Set multer storage engine to the newly created object
 const upload = multer({ storage });
@@ -58,6 +58,8 @@ router.post("/", upload.single("file"), async (req, res) => {
   console.log(req);
   let songInfo = req.body;
   let file = req.file; //file
+
+  console.log(req.body);
 
   if (!file) {
     res.status(400).json({ error: "you must provide song file" });
