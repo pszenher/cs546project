@@ -2,12 +2,21 @@
 <!-- Representation of list of every song in our database -->
 
 <section>
+    <h2>Songs</h2>
     {{#each songs}}
-    <article class="song">
+    <article class="song-list">
         <!-- Needs to be reformatted, everything is shown just for testing purposes, FIX single.handlebars TOO -->
-        <h2>Title: {{title}}</h2>
-        <p>_id: {{_id}}, author: {{author}}, genre: {{genre}}, like_cnt: {{like_cnt}}, dislike_cnt: {{dislike_cnt}}, comment_id: {{comment_id}}</p>
-        <p>File: {{file}}</p>
+        <div class="song">
+            <h3 class="song-title">{{title}} uploaded by {{author}}</h3> <!-- how to get author name -->
+            <ul class="song-info">
+                <li>Id: {{_id}}</li>
+                <li>File: {{file}}</li>
+                <li>Genres: {{genre}}</li>
+                <li>Likes: {{like_cnt}}</li>
+                <li>Dislikes: {{dislike_cnt}}</li>
+                <li>Comments: {{comment_id}}</li>
+            </ul>
+        </div>
     </article>
     {{/each}}
 </section>
