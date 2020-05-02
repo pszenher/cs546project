@@ -43,7 +43,7 @@ const exportedMethods = {
     
     let songList = [];
     for(let x=0;x<genresList.length;x++){
-      songList = songList.concat(await songCollection.find({ genre: { $all : [genresList[x]] } }).toArray(););
+      songList = songList.concat(await songCollection.find({ genre: { $all : [genresList[x]] } }).toArray());
     }
 
     return songList;
