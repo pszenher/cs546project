@@ -33,7 +33,7 @@ const exportedMethods = {
 
     return song;
   },
-  
+
   // gets all songs that contain the genres in genresList
   async getSongsByGenres(genresList){
     if(!genresList) throw "You must provide a list of genres!";
@@ -43,8 +43,7 @@ const exportedMethods = {
     
     let songList = [];
     for(let x=0;x<genresList.length;x++){
-      let arr = await songCollection.find({ genre: { $all : [genresList[x]] } }).toArray();
-      songList = songList.concat(arr);
+      songList = songList.concat(await songCollection.find({ genre: { $all : [genresList[x]] } }).toArray(););
     }
 
     return songList;
