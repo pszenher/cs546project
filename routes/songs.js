@@ -44,9 +44,7 @@ router.get("/:id", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const genres = ["rock","pop"];
-    const songList = await songData.getSongsByGenres(genres);
-    // const songList = await songData.getAllSongs();
+    const songList = await songData.getAllSongs();
     res.render('songs/index',{songs:songList});
   } catch (e) {
     res.status(500).json({ error: e.message });
