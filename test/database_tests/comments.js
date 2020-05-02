@@ -5,6 +5,11 @@ after(async () => {
   await db.serverConfig.close();
 });
 
+afterEach(async () => {
+  const db = await mongoConnection();
+  await db.dropDatabase();
+});
+
 describe("Comments DB Collection", function () {
   describe("addComment()", function () {
     it("should return the added comment object when passed ObjectId types", async function () {
@@ -58,7 +63,13 @@ describe("Comments DB Collection", function () {
       ).to.be.rejectedWith(TypeError);
     });
   });
-
+  describe("getAllComments()", function () {
+    it("should return array", async function () {
+      await data.comments.addComment(ObjectId(), ObjectId(), "comment");
+      const all_comments = await data.comments.getAllComments();
+      expect(all_comments).to.be.an("array");
+    });
+  });
   describe("getCommentById()", function () {
     it("should return comment object equal to one in database", async function () {
       const new_comment = await data.comments.addComment(

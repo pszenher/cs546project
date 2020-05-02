@@ -1,41 +1,51 @@
 <!-- songs/new.handlebars -->
 <!-- For adding new songs to the database -->
+<section>
+  <article class="new-song">
+    <h2>Post a Song</h2>
+    <form action="/songs" method="POST" class="new-song-form" enctype="multipart/form-data">
+      <div id="song-questions">
+        <div class="sub-entry">
+          <div class="input-container">
+            <label>Song Title</label>
+            <input type="text" name="title" placeholder="Song Title" class="full-width-input" />
+          </div>
 
-<article class="new-song">
-  <h1>Post a Song</h1>
-  <form action="/songs" method="POST" class="new-song-form" enctype="multipart/form-data">
+          <div class="input-container">
+            <label for="userId">User Id</label>
+            <select class="full-width-input" name="user">
+              <option value="">Select User...</option>
+              {{#each users}}
+              <option value="{{_id}}">{{firstName}} {{lastName}}</option>
+              {{/each}}
+            </select>
+          </div>
 
-    <label>
-      Song Title
-      <input type="text" name="title" placeholder="Song Title" class="full-width-input"/>
-    </label>
+          <div class="input-container" id='song-radio-container'>
+            <p id="genre-input-label">Genre</p>
+            <input type="radio" id="rock-radio" name="interested" value="rock">
+            <label for="rock-radio">Rock</label><br>
+            <input type="radio" id="pop-radio" name="interested" value="pop">
+            <label for="pop-radio">Pop</label><br>
+            <input type="radio" id="indie-radio" name="interested" value="indie">
+            <label for="indie-radio">Indie</label><br>
+            <input type="radio" id="classical-radio" name="interested" value="classical">
+            <label for="classical-radio">Classical</label><br>
+          </div>
 
-    <label for="userId">
-      User Id
-    </label>
-    <select class="full-width-input" name="user">
-      <option value="">Select User...</option>
-      {{#each users}}
-        <option value="{{_id}}">{{firstName}} {{lastName}}</option>
-      {{/each}}
-    </select>
-    
-    <label for="genre">
-      Genre
-    </label>
-    <textarea id="genre" name="genre" rows="4" placeholder="Genre List" class="full-width-input"></textarea>
-    <!-- how to convert string to array of strings for genres? -->
-    
-    <label>
-      File
-      <input type="file" name="file" placeholder="Song File" class="full-width-input"/>
-    </label>
+          <div id="file-container" class="input-container">
+            <label for="song-file">File</label>
+            <input type="file" id="song-file" class="full-width-input" accept=".mp3"/>
+          </div>
+        </div>
+      </div>
+      <div class="button-container">
+        <button type="submit" class="submit">Post Song</button>
+        <button type="reset" id="clearForm">Clear Form</button>
+      </div>
+    </form>
+    <!-- implement error list later
 
-    <button type="submit">Create New Post</button>
-    <button type="reset">Clear Form</button>
-    <button type="button">Click me!</button>
-  </form>
-  <!-- implement error list later
   {{#if hasErrors}}
   <ul class="error-list">
     {{#each errors}}
@@ -46,4 +56,5 @@
   </ul>
   {{/if}}
   -->
-</article>
+  </article>
+</section>

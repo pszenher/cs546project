@@ -5,13 +5,18 @@ after(async () => {
   await db.serverConfig.close();
 });
 
+afterEach(async () => {
+  const db = await mongoConnection();
+  await db.dropDatabase();
+});
+
 describe("Users DB Collection", function () {
   describe("addUser()", function () {
     it("should return the added user object when passed user attributes", async function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
-        "email",
+        "emaill",
         "gender",
         "city",
         "state",
@@ -40,7 +45,7 @@ describe("Users DB Collection", function () {
         data.users.addUser(
           NaN,
           "lastName",
-          "email",
+          "email1",
           "gender",
           "city",
           "state",
@@ -58,7 +63,7 @@ describe("Users DB Collection", function () {
       new_user = await data.users.addUser(
         "firstName",
         "lastName",
-        "email",
+        "email2",
         "gender",
         "city",
         "state",
@@ -87,7 +92,7 @@ describe("Users DB Collection", function () {
       await data.users.addUser(
         "firstName",
         "lastName",
-        "email",
+        "email3",
         "gender",
         "city",
         "state",
@@ -106,7 +111,7 @@ describe("Users DB Collection", function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
-        "email",
+        "email4",
         "gender",
         "city",
         "state",
@@ -147,7 +152,7 @@ describe("Users DB Collection", function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
-        "email",
+        "email5",
         "gender",
         "city",
         "state",
@@ -176,7 +181,7 @@ describe("Users DB Collection", function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
-        "email",
+        "email6",
         "gender",
         "city",
         "state",
@@ -207,7 +212,7 @@ describe("Users DB Collection", function () {
       new_user = await data.users.addUser(
         "firstName",
         "lastName",
-        "email",
+        "email7",
         "gender",
         "city",
         "state",
@@ -224,7 +229,7 @@ describe("Users DB Collection", function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
-        "email",
+        "email8",
         "gender",
         "city",
         "state",
@@ -244,7 +249,7 @@ describe("Users DB Collection", function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
-        "email",
+        "email9",
         "gender",
         "city",
         "state",
@@ -274,7 +279,7 @@ describe("Users DB Collection", function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
-        "email",
+        "email11",
         "gender",
         "city",
         "state",
@@ -292,7 +297,7 @@ describe("Users DB Collection", function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
-        "email",
+        "email12",
         "gender",
         "city",
         "state",
@@ -312,7 +317,7 @@ describe("Users DB Collection", function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
-        "email",
+        "email13",
         "gender",
         "city",
         "state",
@@ -349,7 +354,7 @@ describe("Users DB Collection", function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
-        "email",
+        "email15",
         "gender",
         "city",
         "state",
@@ -370,7 +375,7 @@ describe("Users DB Collection", function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
-        "email",
+        "email16",
         "gender",
         "city",
         "state",
@@ -414,7 +419,7 @@ describe("Users DB Collection", function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
-        "email",
+        "email18",
         "gender",
         "city",
         "state",
@@ -435,7 +440,7 @@ describe("Users DB Collection", function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
-        "email",
+        "email19",
         "gender",
         "city",
         "state",
@@ -469,7 +474,7 @@ describe("Users DB Collection", function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
-        "email",
+        "email20",
         "gender",
         "city",
         "state",
@@ -490,7 +495,7 @@ describe("Users DB Collection", function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
-        "email",
+        "email21",
         "gender",
         "city",
         "state",
@@ -531,7 +536,7 @@ describe("Users DB Collection", function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
-        "email",
+        "email23",
         "gender",
         "city",
         "state",
@@ -551,7 +556,7 @@ describe("Users DB Collection", function () {
         newUser = await data.users.addUser(
           "firstName",
           "lastName",
-          "email",
+          "email24",
           "gender",
           "city",
           "state",
@@ -588,7 +593,7 @@ describe("Users DB Collection", function () {
         newUser = await data.users.addUser(
           "firstName",
           "lastName",
-          "email",
+          "email26",
           "gender",
           "city",
           "state",
@@ -610,7 +615,7 @@ describe("Users DB Collection", function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
-        "email",
+        "email27",
         "gender",
         "city",
         "state",
@@ -654,7 +659,7 @@ describe("Users DB Collection", function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
-        "email",
+        "email28",
         "gender",
         "city",
         "state",
@@ -675,7 +680,7 @@ describe("Users DB Collection", function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
-        "email",
+        "email29",
         "gender",
         "city",
         "state",
@@ -709,7 +714,7 @@ describe("Users DB Collection", function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
-        "email",
+        "email30",
         "gender",
         "city",
         "state",
@@ -730,7 +735,7 @@ describe("Users DB Collection", function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
-        "email",
+        "email31",
         "gender",
         "city",
         "state",
@@ -768,7 +773,7 @@ describe("Users DB Collection", function () {
       newUser = await data.users.addUser(
         "firstName",
         "lastName",
-        "email",
+        "email32",
         "gender",
         "city",
         "state",

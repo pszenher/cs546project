@@ -1,0 +1,227 @@
+/* site.css */
+
+* {
+  font-family: monospace;
+}
+
+html {
+  background: lavender;
+}
+
+section {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+h1 {
+  color: rebeccapurple;
+  font-weight: bolder;
+  text-align: center;
+  margin-top:56px;
+}
+
+h2 {
+  color: rebeccapurple;
+  text-align: center;
+}
+
+
+/* Forms */
+
+.input-container {
+  margin-top: 5px;
+}
+
+.button-container {
+  margin-top:25px;
+  width: 50%;
+  margin-left: 25%;
+  margin-right: 25%;
+  display:flex;
+  justify-content: center;
+}
+
+button.submit {
+  margin-right:5px;
+}
+
+div#radio-container > p {
+  margin-bottom: 0px;
+  margin-top: 5px;
+}
+
+input[type='radio'] + label{
+  display: inline-block;
+  clear: left;
+  width: 30%;
+  text-align: left;
+}
+
+.input-container > label {
+  display: inline-block;
+  clear: left;
+  width: 30%;
+  text-align: right;
+}
+
+.input-container > input {
+  display: inline-block;
+}
+
+div.song, div.user {
+  background-color: white;
+  border-width: 5px;
+  border-radius: 10px;
+  border-style: solid;
+  border-color:rebeccapurple;
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  margin-left: 32.5%;
+  margin-right: 32.5%;
+  margin-bottom: 10px;
+  padding-left: 10px;
+}
+
+ul.song-info, ul.user-info {
+  width: 250px;
+  word-wrap: normal;
+  list-style-type: circle;
+  margin-left:20px;
+  padding: 0;
+}
+
+
+/* Post a Song */
+
+#song-questions {
+  display:flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+
+#song-questions > .sub-entry {
+  width: 40%;
+}
+
+#file-container {
+  margin-top: 5px;
+}
+
+#song-radio-container {
+  width:20%;
+  margin-left: 25%;
+  margin-right:40%;
+}
+
+#radio-container > * {
+  
+}
+
+/* Create an Account */
+
+#user-questions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+
+#user-questions > .sub-entry {
+  width: 25%;
+  margin-top: 10px;
+}
+
+/* questions1 and questions2 are of the class .sub-entry */
+#user-questions1 { 
+  float: left;
+}
+
+#user-questions2 {
+  float: right;
+}
+
+div#bio-container {
+  margin-top:5px;
+}
+
+article#new-user {
+  margin-left: 5%;
+}
+
+/* Log In */
+
+#login-questions {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+#login-questions > .input-container {
+  width: 25%;
+  margin-top: 10px;
+  align-self:center;
+}
+
+#sign-up-link {
+  text-align: center;
+}
+
+.user {
+  color: black;
+}
+
+.comment {
+  color: black;
+}
+
+/* Copied from W3Schools */
+/* The navigation bar */
+.navbar {
+  overflow: hidden;
+  background-color: rebeccapurple;
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  width: 100%; /* Full width */
+  height: 46px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+/* Links inside the navbar */
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change background on mouse-over */
+.navbar a:hover {
+  background: #ddd;
+  color: rebeccapurple;
+}
+
+
+/* margin: top right bottom left; clockwise */
+footer {
+  margin: 25px 0px 25px 0px;
+  text-align: center;
+  color: rebeccapurple;
+}
+
+#home-descript {
+  text-align: center;
+}

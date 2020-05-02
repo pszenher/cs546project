@@ -2,13 +2,23 @@
 <!-- Representation of list of entire database of users -->
 
 <section>
+    <h2>Users</h2>
     {{#each users}}
     <article class="user">
-        <!-- Needs to be reformatted, everything is shown just for testing purposes, FIX single.handlebars TOO -->
-        <h2>Name: {{firstName}} {{lastName}}</h2>
-        <p>_id: {{_id}}, email: {{email}}, password: {{password}}</p>
-        <p>gender: {{gender}}, city: {{city}}, state: {{state}}, age: {{age}}, bio: {{bio}}, interested: {{interested}}</p>
-        <!-- might want to add 3 handlebars for bio depending on if we want to allow HTML in a bio? -->
+        <div class="user">
+            <h3 class="user-title">{{firstName}} {{lastName}}</h3> <!-- how to get author name -->
+            <ul class="user-info">
+                <li>Id: {{_id}}</li>
+                <li>Email: {{email}}</li>
+                <li>Password: {{password}}</li>
+                <li>Gender: {{gender}}</li>
+                <li>City: {{city}}</li>
+                <li>State: {{state}}</li>
+                <li>Age: {{age}}</li>
+                <li>Interests: {{interested}}</li>
+                <li>Biography: {{bio}}</li>
+            </ul>
+        </div>
+        {{/each}}
     </article>
-    {{/each}}
 </section>

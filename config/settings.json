@@ -3,5 +3,6 @@
     "serverUrl": "mongodb://localhost:27017/",
     "database": "Music_Sharing_Service",
     "testDatabase": "test_Music_Sharing_Service"
-  }
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }

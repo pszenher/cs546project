@@ -1,0 +1,13 @@
+<!-- comments/index.handlebars -->
+<!-- Representation of a list of comments -->
+<section>
+    <h2>Comments</h2>
+    {{#each comments}}
+    <article class="comment">
+        <!-- Needs to be reformatted, everything is shown just for testing purposes, FIX single.handlebars TOO -->
+        <p>songId: {{songId}}, userId: {{userId}}</p>
+        <p>content: {{content}}</p>
+        <!-- Might want to add 3 handlebars for content if we want to allow HTML in comment content -->
+    </article>
+    {{/each}}
+</section>
