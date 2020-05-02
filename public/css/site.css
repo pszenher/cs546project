@@ -118,9 +118,20 @@ ul.song-info, ul.user-info {
   margin-right:40%;
 }
 
-#radio-container > * {
-  
+/* Comments Form */
+
+.comment-questions {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+
+.comment-container {
+  display:flex;
+  flex-direction: column;
+}
+
 
 /* Create an Account */
 

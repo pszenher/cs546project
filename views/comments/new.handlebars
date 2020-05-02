@@ -2,21 +2,20 @@
 <!-- For adding new comment to the database -->
 
 <article class="new-comment">
-  <h1>Make a Comment</h1>
+  <h1 id="comment-page-title">Leave a Comment on {{song.title}}</h1>
   <form action="/comments" method="POST" class="new-comment-form">
+    <div class="comment-questions">
 
-    <p id="new-comment-description">Leave a comment on {{song.title}}</p>
-
-    
-    <input type="hidden" id="userId" name="userId" value="{{user._id}}">
-    <input type="hidden" id="songId" name="songId" value="{{song._id}}">
-    
-    <label for="comment-content">Comment Content</label>
-    <textarea id="comment-content" name="content" rows="4" placeholder="Comment Content" class="full-width-input"></textarea>
-
-    <button type="submit">Create New Post</button>
-    <button type="reset">Clear Form</button>
-    <button type="button">Click me!</button>
+      <input type="hidden" id="userId" name="userId" value="{{user._id}}">
+      <input type="hidden" id="songId" name="songId" value="{{song._id}}">
+      
+      <div class="comment-container">
+        <textarea id="comment-content" name="content" rows="4" placeholder="Comment Content" class="full-width-input"></textarea>
+      </div>
+      <div class="button-container">
+        <button type="submit" class="submit">Create New Post</button>
+      </div>
+    </div>
   </form>
   <!-- implement error list later
   {{#if hasErrors}}
