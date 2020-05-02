@@ -15,7 +15,12 @@ async function newUserCreated(req,res) {
 
 router.get("/new", async (req, res) => {
   try {
-    res.render("users/new");
+    if(req.session && req.session.user){
+      console.log(req.session.user._id);
+      res.redirect("./"+req.session.user._id);
+    } else {
+      res.render("users/new");
+    }
   } catch (e) {
     res.status(500).json({ error: e.message });
   }

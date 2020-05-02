@@ -20,23 +20,6 @@ app.use(
 
 app.use(cookieParser());
 
-/*
-app.get("/",(req,res) => {
-    res.sendFile(path.resolve("./static/index.html"));
-const session = require("express-session");
-const static = express.static(__dirname + "/public");
-
-
-
-app.use("/", express.static(__dirname + "/layouts"));
-app.use("/", express.static(__dirname + "/static"));
-app.use("/public", static);
-
-app.get("/", (req, res) => {
-  res.sendFile(path.resolve("/layouts/index.html"));
-});
-*/
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

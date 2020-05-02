@@ -17,8 +17,12 @@ async function convertStringToGenreArray(str){
 
 router.get("/new", async (req,res) => {
   try {
-    const userList = await userData.getAllUsers();
-    res.render('songs/new',{users:userList});
+    if(req.session && req.session.user){
+      let user = await userData.getUserById(req.session.user._id)
+      res.render("users/new",{user: user});
+    } else {
+      res.redirect("/login");
+    }
   } catch (e) {
     res.status(500).json({error: e.message});
   }
