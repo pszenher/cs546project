@@ -1,5 +1,7 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
 const app = express();
 const configRoutes = require("./routes");
 const path = require("path");
@@ -7,20 +9,24 @@ const static = express.static(__dirname + '/public');
 
 app.use("/",static);
 
+app.use(
+  session({
+    name: "session",
+    secret: "This is a secret.. shhh don't tell anyone",
+    saveUninitialized: true,
+    resave: false,
+  })
+);
+
+app.use(cookieParser());
+
 /*
 app.get("/",(req,res) => {
     res.sendFile(path.resolve("./static/index.html"));
 const session = require("express-session");
 const static = express.static(__dirname + "/public");
 
-app.use(
-  session({
-    name: "UserCookie",
-    secret: "This is a secret.. shhh don't tell anyone",
-    saveUninitialized: true,
-    resave: false,
-  })
-);
+
 
 app.use("/", express.static(__dirname + "/layouts"));
 app.use("/", express.static(__dirname + "/static"));

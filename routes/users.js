@@ -9,6 +9,10 @@ async function convertStringToInterestedArray(str) {
   return arr;
 }
 
+async function newUserCreated(req,res) {
+  res.render("users/single",)
+}
+
 router.get("/new", async (req, res) => {
   try {
     res.render("users/new");
@@ -78,8 +82,7 @@ router.post("/", async (req, res) => {
         bio,
         interested
       );
-      newUser.password = "*****";
-      res.json(newUser);
+      res.render("users/single",{user:newUser});
     } else {
       res.status(400).send({ error: "Bad Request" });
     }

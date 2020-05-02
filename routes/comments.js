@@ -6,13 +6,15 @@ const commentData = data.comments;
 const userData = data.users;
 const songData = data.songs;
 
-router.get("/new", async (req, res) => {
+router.get("/new/:id", async (req, res) => {
   try {
-    const userList = await userData.getAllUsers();
-    const songList = await songData.getAllSongs();
+    let userId = null;
+    if(req.session && req.session.user){
+      userId = user.id;
+    }
     res.render("comments/new", {
-      users: userList,
-      songs: songList,
+      userId: userList,
+      song: await songData.getSongById(req.params.id),
     });
   } catch (e) {
     res.status(500).json({ error: e.message });
