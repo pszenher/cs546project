@@ -15,6 +15,7 @@ router.get("/new/:id", async (req, res) => {
         song: await songData.getSongById(req.params.id),
       });
     } else {
+      res.backURL = "comments/new"+req.params.id;
       res.redirect("/login");
     }
   } catch (e) {
@@ -24,6 +25,10 @@ router.get("/new/:id", async (req, res) => {
 
 // Post new comment
 router.post("/", async (req, res) => {
+  if(!req.session || !req.session.user){
+    res.redirect("login");
+  }
+
   const newCommentData = req.body;
   try {
     if (!newCommentData.songId)
@@ -62,6 +67,8 @@ router.post("/", async (req, res) => {
   try {
     const { songId, userId, content } = newCommentData;
     const newComment = await commentData.addComment(songId, userId, content);
+
+    await songData.addRemoveCommentFromSong(songId,newComment._id,"add");
     res.redirect("songs/"+newComment.songId);
   } catch (e) {
     res.status(500).json({ error: e.toString() });

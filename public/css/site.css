@@ -118,7 +118,7 @@ ul.song-info, ul.user-info {
   margin-right:40%;
 }
 
-/* Comments Form */
+/* Comments  */
 
 .comment-questions {
   display:flex;
@@ -132,7 +132,9 @@ ul.song-info, ul.user-info {
   flex-direction: column;
 }
 
-
+label#comment-label {
+  margin-left:20px;
+}
 /* Create an Account */
 
 #user-questions {

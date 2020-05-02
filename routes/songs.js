@@ -4,6 +4,7 @@ const router = express.Router();
 const data = require("../data");
 const songData = data.songs;
 const userData = data.users;
+const commentData = data.comments;
 const { ObjectId } = require("mongodb");
 
 router.use(bodyParser.json());
@@ -21,6 +22,7 @@ router.get("/new", async (req,res) => {
       let user = await userData.getUserById(req.session.user._id)
       res.render("users/new",{user: user});
     } else {
+      res.backURL = "songs/new";
       res.redirect("/login");
     }
   } catch (e) {
@@ -32,8 +34,14 @@ router.get("/new", async (req,res) => {
 router.get("/:id", async (req, res) => {
   try {
     const song = await songData.getSongById(req.params.id);
-    res.render('songs/single',{song:song});
-    //res.status(200).json(song);
+
+    let commentIds = song.comment_id;
+    let comments = [];
+    for(let x=0;x<commentIds.length;x++){
+      comments[x] = await commentData.getCommentById(commentIds[x]);
+    }
+
+    res.render('songs/single',{song:song,comments:comments});
   } catch (e) {
     console.log(e);
     res.status(404).json({ error: e });
@@ -44,7 +52,6 @@ router.get("/", async (req, res) => {
   try {
     const songList = await songData.getAllSongs();
     res.render('songs/index',{songs:songList});
-    //res.status(200).json(songList);
   } catch (e) {
     res.status(500).json({ error: e.message });
   }

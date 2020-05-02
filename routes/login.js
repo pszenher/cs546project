@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt");
 const url = require("url");
 
 router.get("/", async (req, res) => {
+  // if logged in, redirect to user's profile
   if(req.session && req.session.user) {
     res.redirect("users/"+req.session.user._id);
   } else {

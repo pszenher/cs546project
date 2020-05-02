@@ -9,10 +9,6 @@ async function convertStringToInterestedArray(str) {
   return arr;
 }
 
-async function newUserCreated(req,res) {
-  res.render("users/single",)
-}
-
 router.get("/new", async (req, res) => {
   try {
     if(req.session && req.session.user){
