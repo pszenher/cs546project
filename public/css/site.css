@@ -26,6 +26,14 @@ h2 {
   text-align: center;
 }
 
+a:link {
+  color: blue;
+}
+
+a:visited {
+  color: purple;
+}
+
 
 /* Forms */
 
@@ -168,7 +176,7 @@ article#new-user {
   margin-left: 5%;
 }
 
-/* Log In */
+/* Log In/Log Out */
 
 #login-questions {
   display: flex;
@@ -186,6 +194,16 @@ article#new-user {
 
 #sign-up-link {
   text-align: center;
+}
+
+article.logout {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+a#log-out-redirect {
+  align-self: center;
 }
 
 #comment-button {
