@@ -10,17 +10,11 @@ const { ObjectId } = require("mongodb");
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
-async function convertStringToGenreArray(str){
-  // very quickly thrown together for testing purposes
-  let arr = [str];
-  return arr;
-}
-
 router.get("/new", async (req,res) => {
   try {
     if(req.session && req.session.user){
       let user = await userData.getUserById(req.session.user._id)
-      res.render("users/new",{user: user});
+      res.render("songs/new",{user: user});
     } else {
       res.backURL = "songs/new";
       res.redirect("/login");

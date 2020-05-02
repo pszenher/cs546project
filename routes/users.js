@@ -3,16 +3,9 @@ const router = express.Router();
 const data = require("../data");
 const userData = data.users;
 
-async function convertStringToInterestedArray(str) {
-  // very quickly thrown together for testing purposes
-  let arr = [str];
-  return arr;
-}
-
 router.get("/new", async (req, res) => {
   try {
     if(req.session && req.session.user){
-      console.log(req.session.user._id);
       res.redirect("./"+req.session.user._id);
     } else {
       res.render("users/new");
@@ -44,7 +37,6 @@ router.get("/", async (req, res) => {
 });
 router.post("/", async (req, res) => {
   const userPostData = req.body;
-
   try {
     let {
       firstName,
@@ -58,7 +50,6 @@ router.post("/", async (req, res) => {
       bio,
       interested,
     } = userPostData;
-    interested = await convertStringToInterestedArray(interested);
     if (
       firstName &&
       lastName &&

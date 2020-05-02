@@ -5,7 +5,6 @@
   <h1 id="comment-page-title">Leave a Comment on {{song.title}}</h1>
   <form action="/comments" method="POST" class="new-comment-form">
     <div class="comment-questions">
-      <p>{{user._id}}</p>
       <input type="hidden" id="userId" name="userId" value="{{user._id}}">
       <input type="hidden" id="songId" name="songId" value="{{song._id}}">
       
