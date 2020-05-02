@@ -15,7 +15,7 @@ const exportedMethods = {
   async getAllSongs() {
     const songCollection = await songs();
 
-    songList = await songCollection.find({}).toArray();
+    const songList = await songCollection.find({}).toArray();
 
     return songList;
   },
@@ -33,7 +33,24 @@ const exportedMethods = {
 
     return song;
   },
+  
+  // gets all songs that contain the genres in genresList
+  async getSongsByGenres(genresList){
+    if(!genresList) throw "You must provide a list of genres!";
+    if(!Array.isArray(genresList)) throw "You must provide an array of genres!";
 
+    const songCollection = await songs();
+    
+    let songList = [];
+    for(let x=0;x<genresList.length;x++){
+      let arr = await songCollection.find({ genre: { $all : [genresList[x]] } }).toArray();
+      songList = songList.concat(arr);
+    }
+
+    return songList;
+  },
+
+  
   async addSong(fileId, Title, genre, artistId) {
     if (!Title) throw "You must provide a Title for the album";
     if (!genre) throw "You must provide an array of genre for the song";
