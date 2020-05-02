@@ -16,9 +16,9 @@
                 <li>Dislikes: {{dislike_cnt}}</li>
                 <li>Comments: {{comment_id}}</li>
             </ul>
+            <button type="button" id="comment-button" onclick="location.href='./comments/new/{{_id}}'">Add a Comment</button>
         </div>
         <!-- Will redirect to comments/new/{{_id}} -->
-        <button type="button">Add a Comment</button>
     </article>
     {{/each}}
 </section>

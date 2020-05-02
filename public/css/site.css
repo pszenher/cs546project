@@ -175,6 +175,11 @@ article#new-user {
   text-align: center;
 }
 
+#comment-button {
+  margin-bottom: 10px;
+  align-self: center;
+}
+
 .user {
   color: black;
 }
