@@ -7,10 +7,12 @@ const userData = data.users;
 const { ObjectId } = require("mongodb");
 const multer = require("multer");
 const GridFsStorage = require("multer-gridfs-storage");
-const url = "mongodb://localhost:27017/database";
+// const url = "mongodb://localhost:27017/database";
+const client = await MongoClient.connect('"mongodb://localhost:27017');
+const database = client.db("database");
 
 // Create a storage object with a given configuration
-const storage = new GridFsStorage({ url: url });
+const storage = new GridFsStorage({ db: database });
 
 // Set multer storage engine to the newly created object
 const upload = multer({ storage });
