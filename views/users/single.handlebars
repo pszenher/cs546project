@@ -3,8 +3,18 @@
 
 <article class="user">
     <!-- Needs to be reformatted, everything is shown just for testing purposes, FIX index.handlebars TOO -->
-    <h2>Name: {{user.firstName}} {{user.lastName}}</h2>
-    <p>_id: {{user._id}}, email: {{user.email}}, password: {{user.password}}</p>
-    <p>gender: {{user.gender}}, city: {{user.city}}, state: {{user.state}}, age: {{user.age}}, bio: {{user.bio}}, interested: {{user.interested}}</p>
-    <!-- might want to add 3 handlebars for bio depending on if we want to allow HTML in a bio? -->
+    <div class="user">
+        <h3 class="user-title">{{user.firstName}}  {{user.lastName}}</h3> <!-- how to get author name -->
+        <ul class="user-info">
+            <li>Id: {{user._id}}</li>
+            <li>Email: {{user.email}}</li>
+            <li>Password: {{user.password}}</li>
+            <li>Gender: {{user.gender}}</li>
+            <li>City: {{user.city}}</li>
+            <li>State: {{user.state}}</li>
+            <li>Age: {{user.age}}</li>
+            <li>Interests: {{user.interested}}</li>
+            <li>Biography: {{user.bio}}</li>
+        </ul>
+    </div>
 </article>

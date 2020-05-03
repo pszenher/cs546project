@@ -3,7 +3,15 @@
 
 <article class="song">
     <!-- Needs to be reformatted, everything is shown just for testing purposes, FIX index.handlebars TOO -->
-    <h2>Title: {{song.title}}</h2>
-    <p>_id: {{song._id}}, author: {{song.author}}, genre: {{song.genre}}, like_cnt: {{song.like_cnt}}, dislike_cnt: {{song.dislike_cnt}}, comment_id: {{song.comment_id}}</p>
-    <p>File: {{song.file}}</p>
+    <div class="song">
+        <h3 class="song-title">{{song.title}} uploaded by {{song.author}}</h3> <!-- how to get author name -->
+        <ul class="song-info">
+            <li>Id: {{song._id}}</li>
+            <li>File: {{song.file}}</li>
+            <li>Genres: {{song.genre}}</li>
+            <li>Likes: {{song.like_cnt}}</li>
+            <li>Dislikes: {{song.dislike_cnt}}</li>
+            <li>Comments: {{song.comment_id}}</li>
+        </ul>
+    </div>
 </article>

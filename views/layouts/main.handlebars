@@ -3,17 +3,22 @@
     <head>
         <meta charset="utf-8">
         <title>Music Sharing Platform</title>
-        <!-- <link rel="stylesheet" type="text/css" href="../public/style.css"> -->
+        <link type="text/css" rel="stylesheet" href="/css/normalize.css" />
+        <link rel="stylesheet" type="text/css" href="/css/site.css">
     </head>
     <body>
         <header>
             <div class="navbar">
                 <a href="../">Home</a>
-                <a href="">Profile</a>
-                <a href="">Sign out</a>
+                <a href="/users">Users</a>
+                <a href="/songs">Songs</a>
+                <a href="/users/new">Create an Account</a>
+                <a href="/songs/new">Post a Song</a>
+                <a href="/login">Sign in</a>
+                <a href="/logout">Sign out</a>
             </div>
         </header>
-        <p>I will be on every page of the site: main.handlebars</p>
+        <h1>Music Sharing Platform</h1>
         <main>
             {{{body}}}
             <!-- 3 handlebars for including html rendering, 2 handlebars for raw text -->
