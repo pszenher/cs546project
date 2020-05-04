@@ -6,14 +6,18 @@ const commentData = data.comments;
 const userData = data.users;
 const songData = data.songs;
 
-router.get("/new", async (req, res) => {
+// :id in this case will be id of SONG being commented on not id of comment
+router.get("/new/:id", async (req, res) => {
   try {
-    const userList = await userData.getAllUsers();
-    const songList = await songData.getAllSongs();
-    res.render("comments/new", {
-      users: userList,
-      songs: songList,
-    });
+    if(req.session && req.session.user){
+      res.render("comments/new", {
+        user: await userData.getUserById(req.session.user._id),
+        song: await songData.getSongById(req.params.id),
+      });
+    } else {
+      res.backURL = "comments/new"+req.params.id;
+      res.redirect("/login");
+    }
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
@@ -21,6 +25,10 @@ router.get("/new", async (req, res) => {
 
 // Post new comment
 router.post("/", async (req, res) => {
+  if(!req.session || !req.session.user){
+    res.redirect("login");
+  }
+
   const newCommentData = req.body;
   try {
     if (!newCommentData.songId)
@@ -59,7 +67,9 @@ router.post("/", async (req, res) => {
   try {
     const { songId, userId, content } = newCommentData;
     const newComment = await commentData.addComment(songId, userId, content);
-    res.json(newComment);
+
+    await songData.addRemoveCommentFromSong(songId,newComment._id,"add");
+    res.redirect("songs/"+newComment.songId);
   } catch (e) {
     res.status(500).json({ error: e.toString() });
   }
@@ -69,7 +79,7 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const commentList = await commentData.getAllComments();
-    res.json(commentList);
+    res.render("comments/index",{comments: commentList});
   } catch (e) {
     res.status(500).json({ error: e.toString() });
   }

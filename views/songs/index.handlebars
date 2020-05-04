@@ -7,6 +7,7 @@
     <article class="song-list">
         <!-- Needs to be reformatted, everything is shown just for testing purposes, FIX single.handlebars TOO -->
         <div class="song">
+            <!-- Make this a link that redirects to single song page -->
             <h3 class="song-title">{{title}} uploaded by {{author}}</h3> <!-- how to get author name -->
             <ul class="song-info">
                 <li>Id: {{_id}}</li>
@@ -14,8 +15,8 @@
                 <li>Genres: {{genre}}</li>
                 <li>Likes: {{like_cnt}}</li>
                 <li>Dislikes: {{dislike_cnt}}</li>
-                <li>Comments: {{comment_id}}</li>
             </ul>
+            <button type="button" id="comment-button" onclick="location.href='./comments/new/{{_id}}'">Add a Comment</button>
         </div>
     </article>
     {{/each}}

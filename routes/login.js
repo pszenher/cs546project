@@ -3,12 +3,12 @@ const router = express.Router();
 const data = require("../data");
 const userData = data.users;
 const bcrypt = require("bcrypt");
+const url = require("url");
 
 router.get("/", async (req, res) => {
-  if(req.session) {
-    if (req.session.user) {
-      res.redirect("users/single", { user: req.session.user });
-    }
+  // if logged in, redirect to user's profile
+  if(req.session && req.session.user) {
+    res.redirect("users/"+req.session.user._id);
   } else {
     res.render("users/login", { title: "Login Page" });
   } 
@@ -28,7 +28,8 @@ router.post("/", async (req, res) => {
         newUser.password
       );
       if (passwordMatch) {
-        res.render("users/single", { user: newUser });
+        req.session.user = newUser;
+        res.redirect("users/"+newUser._id);
         // res.json(newUser);
       } else {
         res.status(401).send({ error: "Email or password is wrong" });

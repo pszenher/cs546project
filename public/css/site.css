@@ -26,6 +26,14 @@ h2 {
   text-align: center;
 }
 
+a:link {
+  color: blue;
+}
+
+a:visited {
+  color: purple;
+}
+
 
 /* Forms */
 
@@ -46,12 +54,12 @@ button.submit {
   margin-right:5px;
 }
 
-div#radio-container > p {
+div#checkbox-container > p {
   margin-bottom: 0px;
   margin-top: 5px;
 }
 
-input[type='radio'] + label{
+input[type='checkbox'] + label{
   display: inline-block;
   clear: left;
   width: 30%;
@@ -112,16 +120,29 @@ ul.song-info, ul.user-info {
   margin-top: 5px;
 }
 
-#song-radio-container {
+#song-checkbox-container {
   width:20%;
   margin-left: 25%;
   margin-right:40%;
 }
 
-#radio-container > * {
-  
+/* Comments  */
+
+.comment-questions {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
+.comment-container {
+  display:flex;
+  flex-direction: column;
+}
+
+label#comment-label {
+  margin-left:20px;
+}
 /* Create an Account */
 
 #user-questions {
@@ -155,7 +176,7 @@ article#new-user {
   margin-left: 5%;
 }
 
-/* Log In */
+/* Log In/Log Out */
 
 #login-questions {
   display: flex;
@@ -173,6 +194,21 @@ article#new-user {
 
 #sign-up-link {
   text-align: center;
+}
+
+article.logout {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+a#log-out-redirect {
+  align-self: center;
+}
+
+#comment-button {
+  margin-bottom: 10px;
+  align-self: center;
 }
 
 .user {
