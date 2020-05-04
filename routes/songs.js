@@ -55,7 +55,7 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", upload.single("file"), async (req, res) => {
-  console.log(req);
+  console.log(req.file);
   let songInfo = req.body;
   let file = req.file; //file
 
