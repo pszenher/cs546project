@@ -5,30 +5,38 @@ const data = require("../data");
 const songData = data.songs;
 const userData = data.users;
 const { ObjectId } = require("mongodb");
+const multer = require("multer");
+const GridFsStorage = require("multer-gridfs-storage");
+const url = "mongodb://localhost:27017/database";
+
+// Create a storage object with a given configuration
+const storage = new GridFsStorage({ url: url });
+
+// Set multer storage engine to the newly created object
+const upload = multer({ storage });
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
-async function convertStringToGenreArray(str){
+async function convertStringToGenreArray(str) {
   // very quickly thrown together for testing purposes
   let arr = [str];
   return arr;
 }
 
-router.get("/new", async (req,res) => {
+router.get("/new", async (req, res) => {
   try {
     const userList = await userData.getAllUsers();
-    res.render('songs/new',{users:userList});
+    res.render("songs/new", { users: userList });
   } catch (e) {
-    res.status(500).json({error: e.message});
+    res.status(500).json({ error: e.message });
   }
 });
-
 
 router.get("/:id", async (req, res) => {
   try {
     const song = await songData.getSongById(req.params.id);
-    res.render('songs/single',{song:song});
+    res.render("songs/single", { song: song });
     //res.status(200).json(song);
   } catch (e) {
     console.log(e);
@@ -39,15 +47,23 @@ router.get("/:id", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const songList = await songData.getAllSongs();
-    res.render('songs/index',{songs:songList});
+    res.render("songs/index", { songs: songList });
     //res.status(200).json(songList);
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", upload.single("file"), async (req, res) => {
+  console.log(req);
   let songInfo = req.body;
+  let file = req.file; //file
+
+  console.log(req.body);
+
+  if (!file) {
+    res.status(400).json({ error: "you must provide song file" });
+  }
 
   if (!songInfo) {
     res.status(400).json({ error: "You must provide data for the song" });
@@ -66,27 +82,19 @@ router.post("/", async (req, res) => {
     typeof songInfo.user != "string" ||
     !ObjectId.isValid(songInfo.user)
   ) {
-    res
-      .status(400)
-      .json({
-        error: "You must provide id of the artist as a string or an object id",
-      });
+    res.status(400).json({
+      error: "You must provide id of the artist as a string or an object id",
+    });
     return;
   }
 
-  if (
-    !songInfo.file ||
-    typeof songInfo.file != "string" ||
-    !ObjectId.isValid(songInfo.file)
-  ) {
-    res
-      .status(400)
-      .json({
-        error: "You must provide id of the file as a string or an object id",
-      });
+  if (!file.id || !(typeof file.id == "string" || ObjectId.isValid(file.id))) {
+    res.status(400).json({
+      error: "You must provide id of the file as a string or an object id",
+    });
     return;
   }
-  
+
   // super shady prototype string to array function, needs to be fixed lol
   let genreList = await convertStringToGenreArray(songInfo.genre);
 
@@ -106,7 +114,7 @@ router.post("/", async (req, res) => {
 
   try {
     const newSong = await songData.addSong(
-      songInfo.file,
+      file.id,
       songInfo.title,
       genreList,
       songInfo.user
