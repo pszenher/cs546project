@@ -16,10 +16,14 @@
     "express": "^4.17.1",
     "express-handlebars": "^4.0.3",
     "express-session": "^1.17.1",
+    "gridfs-stream": "^1.1.1",
     "handlebars": "^4.7.6",
     "mongodb": "^3.5.6",
     "normalize.css": "^8.0.1",
-    "url": "^0.11.0"
+    "url": "^0.11.0",
+    "multer": "^1.4.2",
+    "multer-gridfs-storage": "^4.0.3",
+    "normalize.css": "^8.0.1"
   },
   "devDependencies": {
     "husky": "^4.2.4",
@@ -31,7 +35,8 @@
   "scripts": {
     "seed": "node ./tasks/seed.js",
     "test": "mocha --recursive",
-    "start": "node app.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "repository": {
     "type": "git",
