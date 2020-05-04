@@ -3,15 +3,13 @@ const router = express.Router();
 const data = require("../data");
 const userData = data.users;
 
-async function convertStringToInterestedArray(str) {
-  // very quickly thrown together for testing purposes
-  let arr = [str];
-  return arr;
-}
-
 router.get("/new", async (req, res) => {
   try {
-    res.render("users/new");
+    if(req.session && req.session.user){
+      res.redirect("./"+req.session.user._id);
+    } else {
+      res.render("users/new");
+    }
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
@@ -39,7 +37,6 @@ router.get("/", async (req, res) => {
 });
 router.post("/", async (req, res) => {
   const userPostData = req.body;
-
   try {
     let {
       firstName,
@@ -53,7 +50,6 @@ router.post("/", async (req, res) => {
       bio,
       interested,
     } = userPostData;
-    interested = await convertStringToInterestedArray(interested);
     if (
       firstName &&
       lastName &&
@@ -78,8 +74,7 @@ router.post("/", async (req, res) => {
         bio,
         interested
       );
-      newUser.password = "*****";
-      res.json(newUser);
+      res.render("users/single",{user:newUser});
     } else {
       res.status(400).send({ error: "Bad Request" });
     }

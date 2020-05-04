@@ -11,7 +11,16 @@
             <li>Genres: {{song.genre}}</li>
             <li>Likes: {{song.like_cnt}}</li>
             <li>Dislikes: {{song.dislike_cnt}}</li>
-            <li>Comments: {{song.comment_id}}</li>
-        </ul>
+        </ul>       
+        <button type="button" id="comment-button" onclick="location.href='../comments/new/{{song._id}}'">Add a Comment</button>
+        {{#each comments}}
+        <article class="comment">
+            <!-- Needs to be reformatted, everything is shown just for testing purposes, FIX single.handlebars TOO -->
+            <hr>
+            <p id="comment-content">"{{content}}"</p>
+            <label for="comment-content" id="comment-label">from {{userId}}</label>
+        </article>
+        {{/each}}
+        <hr>   
     </div>
 </article>
