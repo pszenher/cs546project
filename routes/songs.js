@@ -82,16 +82,16 @@ router.post("/", upload.single("file"), async (req, res) => {
     return;
   }
 
-  if (
-    !songInfo.user ||
-    typeof songInfo.user != "string" ||
-    !ObjectId.isValid(songInfo.user)
-  ) {
-    res.status(400).json({
-      error: "You must provide id of the artist as a string or an object id",
-    });
-    return;
-  }
+  // if (
+  //   !songInfo.user ||
+  //   typeof songInfo.user != "string" ||
+  //   !ObjectId.isValid(songInfo.user)
+  // ) {
+  //   res.status(400).json({
+  //     error: "You must provide id of the artist as a string or an object id",
+  //   });
+  //   return;
+  // }
 
   if (!file.id || !(typeof file.id == "string" || ObjectId.isValid(file.id))) {
     res.status(400).json({
@@ -100,8 +100,13 @@ router.post("/", upload.single("file"), async (req, res) => {
     return;
   }
 
+  let genreList = [];
   // super shady prototype string to array function, needs to be fixed lol
-  let genreList = await convertStringToGenreArray(songInfo.genre);
+  if (!Array.isArray(songInfo.genre)) {
+    genreList.push(songInfo.genre);
+  } else {
+    genreList = songInfo.genre;
+  }
 
   if (!songInfo.genre || !Array.isArray(genreList)) {
     res
@@ -110,21 +115,22 @@ router.post("/", upload.single("file"), async (req, res) => {
     return;
   }
 
-  try {
-    user = await userData.getUserById(songInfo.user);
-  } catch (e) {
-    res.status(404).json({ error: "User not found" });
-    return;
-  }
-
+  // try {
+  //   user = await userData.getUserById(req.session.user._id);
+  // } catch (e) {
+  //   res.status(404).json({ error: "User not found" });
+  //   return;
+  // }
+  console.log(req.session.user);
   try {
     const newSong = await songData.addSong(
       file.id,
       songInfo.title,
       genreList,
-      songInfo.user
+      req.session.user._id
     );
-    await userData.addSongToUser(songInfo.user, String(newSong._id)); //changed
+    await userData.addSongToUser(req.session.user._id, String(newSong._id)); //changed
+    console.log(newSong);
     res.status(200).json(newSong);
   } catch (e) {
     res.status(500).json({ error: e.message });
