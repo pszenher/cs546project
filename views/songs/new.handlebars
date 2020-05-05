@@ -11,7 +11,7 @@
             <input type="text" name="title" placeholder="Song Title" class="full-width-input" />
           </div>
 
-          <div class="input-container">
+          {{!-- <div class="input-container">
             <label for="userId">User Id</label>
             <select class="full-width-input" name="user">
               <option value="">Select User...</option>
@@ -19,23 +19,23 @@
               <option value="{{_id}}">{{firstName}} {{lastName}}</option>
               {{/each}}
             </select>
-          </div>
+          </div> --}}
 
           <div class="input-container" id='song-checkbox-container'>
             <p id="genre-input-label">Genre</p>
-            <input type="checkbox" id="rock-checkbox" name="interested" value="rock">
+            <input type="checkbox" id="rock-checkbox" name="genre" value="rock">
             <label for="rock-checkbox">Rock</label><br>
-            <input type="checkbox" id="pop-checkbox" name="interested" value="pop">
+            <input type="checkbox" id="pop-checkbox" name="genre" value="pop">
             <label for="pop-checkbox">Pop</label><br>
-            <input type="checkbox" id="indie-checkbox" name="interested" value="indie">
+            <input type="checkbox" id="indie-checkbox" name="genre" value="indie">
             <label for="indie-checkbox">Indie</label><br>
-            <input type="checkbox" id="classical-checkbox" name="interested" value="classical">
+            <input type="checkbox" id="classical-checkbox" name="genre" value="classical">
             <label for="classical-checkbox">Classical</label><br>
           </div>
 
           <div id="file-container" class="input-container">
             <label for="song-file">File</label>
-            <input type="file" id="song-file" class="full-width-input" accept=".mp3"/>
+            <input type="file" name="file" id="song-file" class="full-width-input" accept=".mp3"/>
           </div>
         </div>
       </div>
