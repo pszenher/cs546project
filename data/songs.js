@@ -1,5 +1,7 @@
 const mongoCollections = require("../config/mongoCollections");
 const songs = mongoCollections.songs;
+const files = mongoCollections.files;
+const gridChunks = mongoCollections.chunks;
 const { ObjectId } = require("mongodb");
 
 const id_check = async function (id) {
@@ -33,23 +35,52 @@ const exportedMethods = {
 
     return song;
   },
+  async getSongMeta(id) {
+    if (!id) throw "You must provide a id of the album";
+    if (typeof id != "string" && typeof id != "object")
+      throw "Input Album Id should be string or object";
+    const filesCollection = await files();
+    const songFile = await filesCollection.findOne({ _id: id });
+    return songFile;
+  },
+  async getSongFile(id) {
+    if (!id) throw "You must provide a id of the album";
+    if (typeof id != "string" && typeof id != "object")
+      throw "Input Album Id should be string or object";
+
+    id = await id_check(id);
+    const gridCollection = await gridChunks();
+    const fileDataArr = await gridCollection
+      .find({ files_id: id })
+      .sort({ n: 1 });
+
+    return fileDataArr
+      .map((fileData) => {
+        return fileData.data.toString("base64");
+      })
+      .toArray();
+  },
 
   // gets all songs that contain the genres in genresList
-  async getSongsByGenres(genresList){
-    if(!genresList) throw "You must provide a list of genres!";
-    if(!Array.isArray(genresList)) throw "You must provide an array of genres!";
+  async getSongsByGenres(genresList) {
+    if (!genresList) throw "You must provide a list of genres!";
+    if (!Array.isArray(genresList))
+      throw "You must provide an array of genres!";
 
     const songCollection = await songs();
-    
+
     let songList = [];
-    for(let x=0;x<genresList.length;x++){
-      songList = songList.concat(await songCollection.find({ genre: { $all : [genresList[x]] } }).toArray());
+    for (let x = 0; x < genresList.length; x++) {
+      songList = songList.concat(
+        await songCollection
+          .find({ genre: { $all: [genresList[x]] } })
+          .toArray()
+      );
     }
 
     return songList;
   },
 
-  
   async addSong(fileId, Title, genre, artistId) {
     if (!Title) throw "You must provide a Title for the album";
     if (!genre) throw "You must provide an array of genre for the song";
