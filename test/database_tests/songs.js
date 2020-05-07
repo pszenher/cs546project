@@ -2,12 +2,12 @@ const common = require("../common.js");
 
 after(async () => {
   const db = await mongoConnection();
-  await db.serverConfig.close();
+  await db.music_db.serverConfig.close();
 });
 
 afterEach(async () => {
   const db = await mongoConnection();
-  await db.dropDatabase();
+  await db.music_db.dropDatabase();
 });
 
 describe("Songs DB Collection", function () {
