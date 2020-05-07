@@ -1,6 +1,7 @@
 <!-- songs/index.handlebars -->
 <!-- Representation of list of every song in our database -->
 
+
 <section>
     <h2>Songs</h2>
     {{#each songs}}
@@ -10,12 +11,14 @@
             <!-- Make this a link that redirects to single song page -->
             <h3 class="song-title">{{title}} uploaded by {{author}}</h3> <!-- how to get author name -->
             <ul class="song-info">
-                <li>Id: {{_id}}</li>
-                <li>File: {{file}}</li>
+                {{!-- <li>Id: {{_id}}</li> --}}
+                {{!-- {{!-- <li>File: {{file}}</li> --}} 
                 <li>Genres: {{genre}}</li>
                 <li>Likes: {{like_cnt}}</li>
                 <li>Dislikes: {{dislike_cnt}}</li>
             </ul>
+            <a href= "/songs/{{_id}}""> Play </a>
+            
             <button type="button" id="comment-button" onclick="location.href='./comments/new/{{_id}}'">Add a Comment</button>
         </div>
     </article>

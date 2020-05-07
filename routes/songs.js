@@ -1,5 +1,7 @@
 const express = require("express");
 var bodyParser = require("body-parser");
+const mongoCollections = require("../config/mongoCollections");
+const files = mongoCollections.files;
 const router = express.Router();
 const data = require("../data");
 const songData = data.songs;
@@ -36,6 +38,17 @@ router.get("/new", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const song = await songData.getSongById(req.params.id);
+    const fileObjId = song.file;
+
+    const songFile = await songData.getSongMeta(fileObjId);
+    const fileDataArr = await songData.getSongFile(fileObjId);
+
+    const url =
+      "data:" +
+      songFile.contentType +
+      ";charset=utf-8;base64," +
+      (await fileDataArr.join(""));
+    song._url = url;
 
     let commentIds = song.comment_id;
     let comments = [];
@@ -44,6 +57,26 @@ router.get("/:id", async (req, res) => {
     }
 
     res.render("songs/single", { song: song, comments: comments });
+  } catch (e) {
+    console.log(e);
+    res.status(404).json({ error: e });
+  }
+});
+
+router.get("/url/:id", async (req, res) => {
+  try {
+    const song = await songData.getSongById(req.params.id);
+    const fileObjId = song.file;
+    const songFile = await songData.getSongMeta(fileObjId);
+    const fileDataArr = await songData.getSongFile(fileObjId);
+
+    const url =
+      "data:" +
+      songFile.contentType +
+      ";charset=utf-8;base64," +
+      (await fileDataArr.join(""));
+    song._url = url;
+    res.json(song);
   } catch (e) {
     console.log(e);
     res.status(404).json({ error: e });
@@ -60,11 +93,8 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", upload.single("file"), async (req, res) => {
-  console.log(req.file);
   let songInfo = req.body;
   let file = req.file; //file
-
-  console.log(req.body);
 
   if (!file) {
     res.status(400).json({ error: "you must provide song file" });
@@ -115,13 +145,6 @@ router.post("/", upload.single("file"), async (req, res) => {
     return;
   }
 
-  // try {
-  //   user = await userData.getUserById(req.session.user._id);
-  // } catch (e) {
-  //   res.status(404).json({ error: "User not found" });
-  //   return;
-  // }
-  console.log(req.session.user);
   try {
     const newSong = await songData.addSong(
       file.id,
@@ -130,7 +153,7 @@ router.post("/", upload.single("file"), async (req, res) => {
       req.session.user._id
     );
     await userData.addSongToUser(req.session.user._id, String(newSong._id)); //changed
-    console.log(newSong);
+
     res.status(200).json(newSong);
   } catch (e) {
     res.status(500).json({ error: e.message });

@@ -4,5 +4,9 @@
     "database": "Music_Sharing_Service",
     "testDatabase": "test_Music_Sharing_Service"
   },
+  "mongoGridConfig": {
+    "serverUrl": "mongodb://localhost:27017/",
+    "database": "database"
+  },
   "editor.defaultFormatter": "esbenp.prettier-vscode"
 }
