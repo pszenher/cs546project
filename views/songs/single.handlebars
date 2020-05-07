@@ -1,13 +1,30 @@
 <!-- songs/single.handlebars -->
 <!-- Representation of a single song -->
-
+<script>
+$(document).ready(function(){
+    let x = document.getElementById("audio_tag");
+    
+    x.style.display = "none";
+    
+     $('#play_song').on('click', function (e) {
+        const song_id = $(this).data("value")
+     //alert("Your values are :"+ $(this).data("value"));
+      $.get("/songs/url/" + song_id.toString(), function(data, status){
+       x.style.display = "block";
+       
+       $("#audio_id").attr("src", data._url);
+    });        
+    }); 
+  
+});
+</script>
 <article class="song">
     <!-- Needs to be reformatted, everything is shown just for testing purposes, FIX index.handlebars TOO -->
     <div class="song">
         <h3 class="song-title">{{song.title}} uploaded by {{song.author}}</h3> <!-- how to get author name -->
         <ul class="song-info">
-            <li>Id: {{song._id}}</li>
-            <li>File: {{song.file}}</li>
+            {{!-- {{!-- <li>Id: {{song._id}}</li> --}} 
+            {{!-- <li>File: {{song.file}}</li> --}}
             <li>Genres: {{song.genre}}</li>
             <li>Likes: {{song.like_cnt}}</li>
             <li>Dislikes: {{song.dislike_cnt}}</li>
@@ -21,7 +38,12 @@
         <i onclick="location.href='../login'" class="fa fa-thumbs-up" ></i>
         <i onclick="location.href='../login'" class="fa fa-thumbs-o-down"></i>
         {{/if}}
-
+     
+        {{!-- <audio controls src={{song._url}} type="audio/mpeg" />  --}}
+        <button type="button" id="play_song" data-value="{{song._id}}" >Play</button>
+        <div id="audio_tag" >
+                <audio id ="audio_id"controls src="" type="audio/mpeg" /> 
+            </div>
         <button type="button" id="comment-button" onclick="location.href='../comments/new/{{song._id}}'">Add a Comment</button>
         {{#each comments}}
         <article class="comment">

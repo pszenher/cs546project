@@ -1,5 +1,7 @@
 const mongoCollections = require("../config/mongoCollections");
 const songs = mongoCollections.songs;
+const files = mongoCollections.files;
+const gridChunks = mongoCollections.chunks;
 const { ObjectId } = require("mongodb");
 
 const id_check = async function (id) {
@@ -32,6 +34,31 @@ const exportedMethods = {
     if (!song) throw "Song not found";
 
     return song;
+  },
+  async getSongMeta(id) {
+    if (!id) throw "You must provide a id of the album";
+    if (typeof id != "string" && typeof id != "object")
+      throw "Input Album Id should be string or object";
+    const filesCollection = await files();
+    const songFile = await filesCollection.findOne({ _id: id });
+    return songFile;
+  },
+  async getSongFile(id) {
+    if (!id) throw "You must provide a id of the album";
+    if (typeof id != "string" && typeof id != "object")
+      throw "Input Album Id should be string or object";
+
+    id = await id_check(id);
+    const gridCollection = await gridChunks();
+    const fileDataArr = await gridCollection
+      .find({ files_id: id })
+      .sort({ n: 1 });
+
+    return fileDataArr
+      .map((fileData) => {
+        return fileData.data.toString("base64");
+      })
+      .toArray();
   },
 
   // gets all songs that contain the genres in genresList
