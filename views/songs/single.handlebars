@@ -11,7 +11,17 @@
             <li>Genres: {{song.genre}}</li>
             <li>Likes: {{song.like_cnt}}</li>
             <li>Dislikes: {{song.dislike_cnt}}</li>
-        </ul>       
+        </ul>
+        <p>{{user}}</p>
+        {{#if user}}
+        <p>you are entered as users</p>
+        <i  onclick="location.href='../songs/like/{{song._id}}'" class="fa fa-thumbs-up"></i>
+        <i  onclick="location.href='../songs/dislike/{{song._id}}'" class="fa fa-thumbs-o-down"></i>
+        {{else}}
+        <i onclick="location.href='../login'" class="fa fa-thumbs-up" ></i>
+        <i onclick="location.href='../login'" class="fa fa-thumbs-o-down"></i>
+        {{/if}}
+
         <button type="button" id="comment-button" onclick="location.href='../comments/new/{{song._id}}'">Add a Comment</button>
         {{#each comments}}
         <article class="comment">

@@ -1,3 +1,5 @@
+const mongoCollections = require("../config/mongoCollections");
+const users_coll = mongoCollections.users;
 const express = require("express");
 var bodyParser = require("body-parser");
 const router = express.Router();
@@ -36,14 +38,27 @@ router.get("/new", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const song = await songData.getSongById(req.params.id);
+    // console.log(song)
 
     let commentIds = song.comment_id;
     let comments = [];
     for (let x = 0; x < commentIds.length; x++) {
       comments[x] = await commentData.getCommentById(commentIds[x]);
     }
-
-    res.render("songs/single", { song: song, comments: comments });
+    console.log(req.session.user == undefined);
+    if (req.session.user == undefined) {
+      res.render("songs/single", {
+        song: song,
+        comments: comments,
+        user: false,
+      });
+    } else {
+      res.render("songs/single", {
+        song: song,
+        comments: comments,
+        user: true,
+      });
+    }
   } catch (e) {
     console.log(e);
     res.status(404).json({ error: e });
@@ -53,7 +68,13 @@ router.get("/:id", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const songList = await songData.getAllSongs();
-    res.render("songs/index", { songs: songList });
+    // console.log(songList)
+    console.log(req.session.user == undefined);
+    if (req.session.user == undefined) {
+      res.render("songs/index", { songs: songList, user: false });
+    } else {
+      res.render("songs/index", { songs: songList, user: true });
+    }
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
@@ -135,6 +156,83 @@ router.post("/", upload.single("file"), async (req, res) => {
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
+});
+
+router.get("/like/:id", async (req, res) => {
+  console.log(req.session.user);
+  console.log(req.params.id);
+  console.log("hello");
+  console.log(typeof req.session.user._id);
+  console.log(typeof req.params.id);
+  const userCollection = await users_coll();
+  let user_liked = await userCollection.findOne({
+    $and: [
+      { _id: ObjectId.createFromHexString(req.session.user._id) },
+      { liked_songs: req.params.id },
+    ],
+  });
+
+  let user_disliked = await userCollection.findOne({
+    $and: [
+      { _id: ObjectId.createFromHexString(req.session.user._id) },
+      { disliked_songs: req.params.id },
+    ],
+  });
+
+  console.log(user_liked);
+  console.log(user_disliked);
+
+  if (user_liked) {
+    let x = "no change";
+  } else if (user_disliked) {
+    await userData.removeDisLikedSong(req.session.user._id, req.params.id);
+    await songData.decrementLikeDislike(req.params.id, "dislike");
+    await userData.addLikedSong(req.session.user._id, req.params.id);
+    let x = await songData.incrementLikeDislike(req.params.id, "like");
+  } else {
+    await userData.addLikedSong(req.session.user._id, req.params.id);
+    let x = await songData.incrementLikeDislike(req.params.id, "like");
+  }
+
+  res.redirect("/songs");
+});
+
+router.get("/dislike/:id", async (req, res) => {
+  console.log(req.session.user);
+  console.log(req.params.id);
+  console.log("not hello");
+
+  const userCollection = await users_coll();
+  let user_liked = await userCollection.findOne({
+    $and: [
+      { _id: ObjectId.createFromHexString(req.session.user._id) },
+      { liked_songs: req.params.id },
+    ],
+  });
+
+  let user_disliked = await userCollection.findOne({
+    $and: [
+      { _id: ObjectId.createFromHexString(req.session.user._id) },
+      { disliked_songs: req.params.id },
+    ],
+  });
+
+  console.log(user_liked);
+  console.log(user_disliked);
+
+  if (user_disliked) {
+    let x = "no change";
+  } else if (user_liked) {
+    await userData.removeLikedSong(req.session.user._id, req.params.id);
+    await songData.decrementLikeDislike(req.params.id, "like");
+    await userData.addDisLikedSong(req.session.user._id, req.params.id);
+    let x = await songData.incrementLikeDislike(req.params.id, "dislike");
+  } else {
+    await userData.addDisLikedSong(req.session.user._id, req.params.id);
+    let x = await songData.incrementLikeDislike(req.params.id, "dislike");
+  }
+
+  res.redirect("/songs");
 });
 
 router.patch("/:id", async (req, res) => {

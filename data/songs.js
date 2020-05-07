@@ -35,21 +35,25 @@ const exportedMethods = {
   },
 
   // gets all songs that contain the genres in genresList
-  async getSongsByGenres(genresList){
-    if(!genresList) throw "You must provide a list of genres!";
-    if(!Array.isArray(genresList)) throw "You must provide an array of genres!";
+  async getSongsByGenres(genresList) {
+    if (!genresList) throw "You must provide a list of genres!";
+    if (!Array.isArray(genresList))
+      throw "You must provide an array of genres!";
 
     const songCollection = await songs();
-    
+
     let songList = [];
-    for(let x=0;x<genresList.length;x++){
-      songList = songList.concat(await songCollection.find({ genre: { $all : [genresList[x]] } }).toArray());
+    for (let x = 0; x < genresList.length; x++) {
+      songList = songList.concat(
+        await songCollection
+          .find({ genre: { $all: [genresList[x]] } })
+          .toArray()
+      );
     }
 
     return songList;
   },
 
-  
   async addSong(fileId, Title, genre, artistId) {
     if (!Title) throw "You must provide a Title for the album";
     if (!genre) throw "You must provide an array of genre for the song";
@@ -148,12 +152,18 @@ const exportedMethods = {
     const songCollection = await songs();
 
     if (reaction === "like") {
-      await songCollection.updateOne({ _id: id }, { $inc: { like_cnt: 1 } });
+      await songCollection.updateOne(
+        { _id: songId },
+        { $inc: { like_cnt: 1 } }
+      );
     } else {
-      await songCollection.updateOne({ _id: id }, { $inc: { dislike_cnt: 1 } });
+      await songCollection.updateOne(
+        { _id: songId },
+        { $inc: { dislike_cnt: 1 } }
+      );
     }
 
-    return await this.getSongById(id);
+    return await this.getSongById(songId);
   },
 
   async decrementLikeDislike(songId, reaction) {
@@ -175,7 +185,7 @@ const exportedMethods = {
       );
     }
 
-    return await this.getSongById(id);
+    return await this.getSongById(songId);
   },
 
   async addRemoveCommentFromSong(songId, commentId, operation) {
