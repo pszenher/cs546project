@@ -42,17 +42,12 @@ router.get("/new", async (req, res) => {
 
 router.get("/uploaded", async (req, res) => {
   try {
-    console.log("uploaded entered");
-    console.log(req.session.user);
     if (req.session.user == undefined) {
       res.render("users/login");
       return;
     }
 
-    console.log("not undefined");
     const songList = await songData.getSongByUser(req.session.user._id);
-    // console.log(songList)
-    console.log(req.session.user == undefined);
     if (req.session.user == undefined) {
       res.render("songs/index", {
         songs: songList,
@@ -73,7 +68,6 @@ router.get("/uploaded", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    console.log("B");
     const song = await songData.getSongById(req.params.id);
 
     const fileObjId = song.file;
@@ -94,7 +88,6 @@ router.get("/:id", async (req, res) => {
       comments[x] = await commentData.getCommentById(commentIds[x]);
     }
 
-    console.log(req.session.user == undefined);
     if (req.session.user == undefined) {
       res.render("songs/single", {
         song: song,
@@ -137,8 +130,6 @@ router.get("/url/:id", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const songList = await songData.getAllSongs();
-    console.log("A");
-    console.log(req.session.user == undefined);
     if (req.session.user == undefined) {
       res.render("songs/index", {
         songs: songList,
@@ -160,8 +151,7 @@ router.get("/", async (req, res) => {
 router.post("/", upload.single("file"), async (req, res) => {
   let songInfo = req.body;
   let file = req.file; //file
-  console.log(req.body);
-  console.log(req.file);
+
   if (!file) {
     res.status(400).json({ error: "you must provide song file" });
   }
@@ -217,12 +207,6 @@ router.post("/", upload.single("file"), async (req, res) => {
 });
 
 router.get("/like/:id", async (req, res) => {
-  // console.log(req.session.user);
-  // console.log(req.params.id);
-  // console.log("hello");
-  // console.log(typeof req.session.user._id);
-  // console.log(typeof req.params.id);
-
   let checkLikeDislike = await userData.checkLikeDislike(
     req.session.user._id,
     req.params.id
@@ -230,10 +214,6 @@ router.get("/like/:id", async (req, res) => {
   let user_liked = checkLikeDislike[0];
   let user_disliked = checkLikeDislike[1];
 
-  console.log("A");
-  console.log(user_liked);
-  console.log(user_disliked);
-  console.log("B");
   if (user_liked) {
     let x = "no change";
   } else if (user_disliked) {
@@ -250,19 +230,12 @@ router.get("/like/:id", async (req, res) => {
 });
 
 router.get("/dislike/:id", async (req, res) => {
-  // console.log(req.session.user);
-  // console.log(req.params.id);
-  // console.log("not hello");
   let checkLikeDislike = await userData.checkLikeDislike(
     req.session.user._id,
     req.params.id
   );
   let user_liked = checkLikeDislike[0];
   let user_disliked = checkLikeDislike[1];
-  console.log("A");
-  console.log(user_liked);
-  console.log(user_disliked);
-  console.log("B");
 
   if (user_disliked) {
     let x = "no change";
