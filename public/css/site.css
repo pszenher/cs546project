@@ -26,6 +26,14 @@ h2 {
   text-align: center;
 }
 
+.hidden-nav {
+  display: none;
+}
+
+.visible-nav {
+  display:block;
+}
+
 a:link {
   color: blue;
 }
@@ -200,6 +208,10 @@ article.logout {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+#log-in-link {
+  align-self: center;
 }
 
 a#log-out-redirect {

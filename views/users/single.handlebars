@@ -1,19 +1,34 @@
 <!-- users/single.handlebars -->
 <!-- Representation of a single user from our database -->
 
-<article class="user">
-    <!-- Needs to be reformatted, everything is shown just for testing purposes, FIX index.handlebars TOO -->
-    <div class="user">
-        <h3 class="user-title">{{user.firstName}}  {{user.lastName}}</h3> <!-- how to get author name -->
-        <ul class="user-info">
-            <li>Id: {{user._id}}</li>
-            <li>Email: {{user.email}}</li>
-            <li>Gender: {{user.gender}}</li>
-            <li>City: {{user.city}}</li>
-            <li>State: {{user.state}}</li>
-            <li>Age: {{user.age}}</li>
-            <li>Interests: {{user.interested}}</li>
-            <li>Biography: {{user.bio}}</li>
-        </ul>
+<header>
+    <div class="navbar">
+        <a href="/home">Home</a>
+        <a href="/songs">Songs</a>
+        <a {{#if logged_in}} href="/logout">Log Out {{else}} href="/login">Log In {{/if}} </a>
+        <a {{#if logged_in}} style="display:none;" {{/if}} href="/users/new">Create an Account</a>
+        <a {{#if logged_in}} style="display:inline;" {{else}} style="display:none;" {{/if}} href="/songs/new">Post a Song</a>
     </div>
-</article>
+</header>
+<h1>Grapevine</h1>
+<main>
+    <section>
+        <article class="user">
+            <!-- Needs to be reformatted, everything is shown just for testing purposes, FIX index.handlebars TOO -->
+            <div class="user">
+                <h3 class="user-title">{{user.firstName}}  {{user.lastName}}</h3> <!-- how to get author name -->
+                <ul class="user-info">
+                    <li>Id: {{user._id}}</li>
+                    <li>Email: {{user.email}}</li>
+                    <li>Gender: {{user.gender}}</li>
+                    <li>City: {{user.city}}</li>
+                    <li>State: {{user.state}}</li>
+                    <li>Age: {{user.age}}</li>
+                    <li>Interests: {{user.interested}}</li>
+                    <li>Biography: {{user.bio}}</li>
+                </ul>
+            </div>
+        </article>
+    </section>
+</main>
+<footer>Created by Meghana Bhat, Kirsten Meidlinger, Ashish Negi and Paul Szenher</footer>

@@ -1,23 +1,36 @@
 <!-- users/index.handlebars -->
 <!-- Representation of list of entire database of users -->
 
-<section>
-    <h2>Users</h2>
-    {{#each users}}
-    <article class="user">
-        <div class="user">
-            <h3 class="user-title">{{firstName}} {{lastName}}</h3> <!-- how to get author name -->
-            <ul class="user-info">
-                <li>Id: {{_id}}</li>
-                <li>Email: {{email}}</li>
-                <li>Gender: {{gender}}</li>
-                <li>City: {{city}}</li>
-                <li>State: {{state}}</li>
-                <li>Age: {{age}}</li>
-                <li>Interests: {{interested}}</li>
-                <li>Biography: {{bio}}</li>
-            </ul>
-        </div>
-        {{/each}}
-    </article>
-</section>
+<header>
+    <div class="navbar">
+        <a href="/home">Home</a>
+        <a href="/songs">Songs</a>
+        <a {{#if logged_in}} href="/logout">Log Out {{else}} href="/login">Log In {{/if}} </a>
+        <a {{#if logged_in}} style="display:none;" {{/if}} href="/users/new">Create an Account</a>
+        <a {{#if logged_in}} style="display:inline;" {{else}} style="display:none;" {{/if}} href="/songs/new">Post a Song</a>
+    </div>
+</header>
+<h1>Grapevine</h1>
+<main>
+    <section>
+        <h2>Users</h2>
+        {{#each users}}
+        <article class="user">
+            <div class="user">
+                <h3 class="user-title">{{firstName}} {{lastName}}</h3> <!-- how to get author name -->
+                <ul class="user-info">
+                    <li>Id: {{_id}}</li>
+                    <li>Email: {{email}}</li>
+                    <li>Gender: {{gender}}</li>
+                    <li>City: {{city}}</li>
+                    <li>State: {{state}}</li>
+                    <li>Age: {{age}}</li>
+                    <li>Interests: {{interested}}</li>
+                    <li>Biography: {{bio}}</li>
+                </ul>
+            </div>
+            {{/each}}
+        </article>
+    </section>
+</main>
+<footer>Created by Meghana Bhat, Kirsten Meidlinger, Ashish Negi and Paul Szenher</footer>

@@ -13,6 +13,7 @@ router.get("/new/:id", async (req, res) => {
       res.render("comments/new", {
         user: await userData.getUserById(req.session.user._id),
         song: await songData.getSongById(req.params.id),
+        logged_in : true
       });
     } else {
       res.backURL = "comments/new"+req.params.id;
@@ -79,7 +80,10 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const commentList = await commentData.getAllComments();
-    res.render("comments/index",{comments: commentList});
+    res.render("comments/index",{
+      comments: commentList,
+      logged_in : ((req.session && req.session.user) ? true : false)
+    });
   } catch (e) {
     res.status(500).json({ error: e.toString() });
   }
@@ -102,7 +106,10 @@ router.get("/:id", async (req, res) => {
 
   try {
     const comment = await commentData.getCommentById(id);
-    res.render("comments/single", { comment: comment });
+    res.render("comments/single", { 
+      comment: comment,
+      logged_in : ((req.session && req.session.user) ? true : false)
+    });
     //res.json(comment);
   } catch (e) {
     res.status(404).json({ message: "Comment with id '" + id + "' not found" });

@@ -9,8 +9,13 @@ const constructorMethod = (app) => {
   app.use("/songs", songRoutes);
   app.use("/login", loginRoutes);
   app.use("/logout", logoutRoutes);
-
+  
+  app.use("/home", (req, res) => {
+    res.render("layouts/home",{ logged_in: ((req.session && req.session.user) ? true : false) });
+  });
+  
   app.use("*", (req, res) => {
+
     res.redirect("/songs");
     //res.status(404).json({ error: "Page not found" });
   });

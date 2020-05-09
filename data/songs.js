@@ -70,6 +70,7 @@ const exportedMethods = {
     const songCollection = await songs();
 
     let songList = [];
+    
     for (let x = 0; x < genresList.length; x++) {
       songList = songList.concat(
         await songCollection

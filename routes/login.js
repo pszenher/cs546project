@@ -11,9 +11,11 @@ router.get("/", async (req, res) => {
     console.log("why i am i here");
     res.redirect("users/" + req.session.user._id);
   } else {
-    console.log("here I am");
-    res.render("users/login", { title: "Login Page" });
-  }
+    res.render("users/login", { 
+      title: "Login Page",
+      logged_in : ((req.session && req.session.user) ? true : false) 
+    });
+  } 
 });
 
 router.post("/", async (req, res) => {

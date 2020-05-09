@@ -23,9 +23,12 @@ router.use(bodyParser.urlencoded({ extended: true }));
 
 router.get("/new", async (req, res) => {
   try {
-    if (req.session && req.session.user) {
-      let user = await userData.getUserById(req.session.user._id);
-      res.render("songs/new", { user: user });
+    if(req.session && req.session.user){
+      let user = await userData.getUserById(req.session.user._id)
+      res.render("songs/new",{
+        user : user, 
+        logged_in : ((req.session && req.session.user) ? true : false) 
+      });
     } else {
       res.backURL = "songs/new";
       res.redirect("/login");
@@ -80,26 +83,27 @@ router.get("/:id", async (req, res) => {
     for (let x = 0; x < commentIds.length; x++) {
       comments[x] = await commentData.getCommentById(commentIds[x]);
     }
+
     console.log(req.session.user == undefined);
     if (req.session.user == undefined) {
       res.render("songs/single", {
         song: song,
         comments: comments,
         user: false,
+        logged_in : false
       });
     } else {
       res.render("songs/single", {
         song: song,
         comments: comments,
         user: true,
+        logged_in : true
       });
     }
   } catch (e) {
     console.log(e);
-    res.status(404).json({ error: e });
   }
 });
-
 router.get("/url/:id", async (req, res) => {
   try {
     const song = await songData.getSongById(req.params.id);
@@ -126,9 +130,9 @@ router.get("/", async (req, res) => {
     console.log("A");
     console.log(req.session.user == undefined);
     if (req.session.user == undefined) {
-      res.render("songs/index", { songs: songList, user: false });
+      res.render("songs/index", { songs: songList, user: false, logged_in: false });
     } else {
-      res.render("songs/index", { songs: songList, user: true });
+      res.render("songs/index", { songs: songList, user: true, logged_in: true });
     }
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -155,17 +159,6 @@ router.post("/", upload.single("file"), async (req, res) => {
     return;
   }
 
-  // if (
-  //   !songInfo.user ||
-  //   typeof songInfo.user != "string" ||
-  //   !ObjectId.isValid(songInfo.user)
-  // ) {
-  //   res.status(400).json({
-  //     error: "You must provide id of the artist as a string or an object id",
-  //   });
-  //   return;
-  // }
-
   if (!file.id || !(typeof file.id == "string" || ObjectId.isValid(file.id))) {
     res.status(400).json({
       error: "You must provide id of the file as a string or an object id",
@@ -174,14 +167,14 @@ router.post("/", upload.single("file"), async (req, res) => {
   }
 
   let genreList = [];
-  // super shady prototype string to array function, needs to be fixed lol
+
   if (!Array.isArray(songInfo.genre)) {
     genreList.push(songInfo.genre);
   } else {
     genreList = songInfo.genre;
   }
 
-  if (!songInfo.genre || !Array.isArray(genreList)) {
+  if (!songInfo.genre || !Array.isArray(songInfo.genre)) {
     res
       .status(400)
       .json({ error: "You must provide a array of genre in the song" });
