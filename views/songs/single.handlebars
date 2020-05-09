@@ -29,9 +29,9 @@ $(document).ready(function(){
             <li>Likes: {{song.like_cnt}}</li>
             <li>Dislikes: {{song.dislike_cnt}}</li>
         </ul>
-        <p>{{user}}</p>
+        {{!-- <p>{{user}}</p> --}}
         {{#if user}}
-        <p>you are entered as users</p>
+        {{!-- <p>you are entered as users</p> --}}
         <i  onclick="location.href='../songs/like/{{song._id}}'" class="fa fa-thumbs-up"></i>
         <i  onclick="location.href='../songs/dislike/{{song._id}}'" class="fa fa-thumbs-o-down"></i>
         {{else}}

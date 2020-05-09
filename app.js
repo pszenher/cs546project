@@ -1,13 +1,13 @@
 const express = require("express");
 const exphbs = require("express-handlebars");
-const session = require('express-session');
-const cookieParser = require('cookie-parser');
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
 const app = express();
 const configRoutes = require("./routes");
 const path = require("path");
-const static = express.static(__dirname + '/public');
+const static = express.static(__dirname + "/public");
 
-app.use("/",static);
+app.use("/", static);
 
 app.use(
   session({

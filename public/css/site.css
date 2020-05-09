@@ -264,3 +264,11 @@ footer {
 .song-title:hover {
   color: rebeccapurple;
 }
+
+.fa-thumbs-up:hover {
+  color: rebeccapurple;
+}
+
+.fa-thumbs-o-down:hover {
+  color: rebeccapurple;
+}

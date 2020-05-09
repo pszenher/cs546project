@@ -238,6 +238,19 @@ const exportedMethods = {
 
     return await this.getSongById(songId);
   },
+
+  async getSongByUser(userID) {
+    if (!userID) throw "You must provide a id of the author";
+    if (typeof userID != "string" && typeof userID != "object")
+      throw "Input User Id should be string or object";
+
+    id = await id_check(userID);
+    const songCollection = await songs();
+
+    const songList = await songCollection.find({ author: id }).toArray();
+
+    return songList;
+  },
 };
 
 module.exports = exportedMethods;
