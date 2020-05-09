@@ -260,6 +260,8 @@ module.exports = {
   },
   async addLikedSong(id, songId) {
     const { user, objId } = await this.check_valid(id, songId);
+    console.log(user);
+    console.log(songId);
     if (user.liked_songs != undefined && user.liked_songs.includes(songId))
       throw `Song is already present in the Liked_songs`;
     const updateLikedSong = {
@@ -355,5 +357,24 @@ module.exports = {
       throw `could not add Liked song successfully`;
     }
     return await this.getUserById(objId);
+  },
+  async checkLikeDislike(userId, songId) {
+    const userCollection = await users();
+    let user_liked = await userCollection.findOne({
+      $and: [
+        { _id: ObjectId.createFromHexString(userId) },
+        { liked_songs: songId },
+      ],
+    });
+
+    let user_disliked = await userCollection.findOne({
+      $and: [
+        { _id: ObjectId.createFromHexString(userId) },
+        { disliked_songs: songId },
+      ],
+    });
+
+    console.log(`user_like ${user_liked}, \n user_dislike ${user_disliked}`);
+    return [user_liked, user_disliked];
   },
 };

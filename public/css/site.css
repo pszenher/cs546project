@@ -18,7 +18,7 @@ h1 {
   color: rebeccapurple;
   font-weight: bolder;
   text-align: center;
-  margin-top:56px;
+  margin-top: 56px;
 }
 
 h2 {
@@ -34,7 +34,6 @@ a:visited {
   color: purple;
 }
 
-
 /* Forms */
 
 .input-container {
@@ -42,16 +41,16 @@ a:visited {
 }
 
 .button-container {
-  margin-top:25px;
+  margin-top: 25px;
   width: 50%;
   margin-left: 25%;
   margin-right: 25%;
-  display:flex;
+  display: flex;
   justify-content: center;
 }
 
 button.submit {
-  margin-right:5px;
+  margin-right: 5px;
 }
 
 div#checkbox-container > p {
@@ -59,7 +58,7 @@ div#checkbox-container > p {
   margin-top: 5px;
 }
 
-input[type='checkbox'] + label{
+input[type="checkbox"] + label {
   display: inline-block;
   clear: left;
   width: 30%;
@@ -77,12 +76,13 @@ input[type='checkbox'] + label{
   display: inline-block;
 }
 
-div.song, div.user {
+div.song,
+div.user {
   background-color: white;
   border-width: 5px;
   border-radius: 10px;
   border-style: solid;
-  border-color:rebeccapurple;
+  border-color: rebeccapurple;
   display: flex;
   flex-direction: column;
   align-items: baseline;
@@ -92,19 +92,19 @@ div.song, div.user {
   padding-left: 10px;
 }
 
-ul.song-info, ul.user-info {
+ul.song-info,
+ul.user-info {
   width: 250px;
   word-wrap: normal;
   list-style-type: circle;
-  margin-left:20px;
+  margin-left: 20px;
   padding: 0;
 }
-
 
 /* Post a Song */
 
 #song-questions {
-  display:flex;
+  display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
@@ -121,27 +121,27 @@ ul.song-info, ul.user-info {
 }
 
 #song-checkbox-container {
-  width:20%;
+  width: 20%;
   margin-left: 25%;
-  margin-right:40%;
+  margin-right: 40%;
 }
 
 /* Comments  */
 
 .comment-questions {
-  display:flex;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
 .comment-container {
-  display:flex;
+  display: flex;
   flex-direction: column;
 }
 
 label#comment-label {
-  margin-left:20px;
+  margin-left: 20px;
 }
 /* Create an Account */
 
@@ -160,7 +160,7 @@ label#comment-label {
 }
 
 /* questions1 and questions2 are of the class .sub-entry */
-#user-questions1 { 
+#user-questions1 {
   float: left;
 }
 
@@ -169,7 +169,7 @@ label#comment-label {
 }
 
 div#bio-container {
-  margin-top:5px;
+  margin-top: 5px;
 }
 
 article#new-user {
@@ -189,7 +189,7 @@ article#new-user {
 #login-questions > .input-container {
   width: 25%;
   margin-top: 10px;
-  align-self:center;
+  align-self: center;
 }
 
 #sign-up-link {
@@ -197,7 +197,7 @@ article#new-user {
 }
 
 article.logout {
-  display:flex;
+  display: flex;
   flex-direction: column;
   justify-content: center;
 }
@@ -250,7 +250,6 @@ a#log-out-redirect {
   color: rebeccapurple;
 }
 
-
 /* margin: top right bottom left; clockwise */
 footer {
   margin: 25px 0px 25px 0px;
@@ -260,4 +259,16 @@ footer {
 
 #home-descript {
   text-align: center;
+}
+
+.song-title:hover {
+  color: rebeccapurple;
+}
+
+.fa-thumbs-up:hover {
+  color: rebeccapurple;
+}
+
+.fa-thumbs-o-down:hover {
+  color: rebeccapurple;
 }
