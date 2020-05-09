@@ -27,3 +27,13 @@ const app = express();
 app.use(express.json());
 routes(app);
 global.app = app;
+
+after(async () => {
+  const db = await mongoConnection();
+  await db.serverConfig.close();
+});
+
+afterEach(async () => {
+  const db = await mongoConnection();
+  await db.dropDatabase();
+});

@@ -10,10 +10,12 @@ const commentData = data.comments;
 const { ObjectId } = require("mongodb");
 const multer = require("multer");
 const GridFsStorage = require("multer-gridfs-storage");
-const url = "mongodb://localhost:27017/database";
+
+// Use existing mongo connection for GridFS
+const mongoConnection = require("../config/mongoConnection");
 
 // Create a storage object with a given configuration
-const storage = new GridFsStorage({ url: url });
+const storage = new GridFsStorage({ db: mongoConnection() });
 
 // Set multer storage engine to the newly created object
 const upload = multer({ storage });

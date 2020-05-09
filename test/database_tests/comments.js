@@ -1,15 +1,5 @@
 const common = require("../common.js");
 
-after(async () => {
-  const db = await mongoConnection();
-  await db.music_db.serverConfig.close();
-});
-
-afterEach(async () => {
-  const db = await mongoConnection();
-  await db.music_db.dropDatabase();
-});
-
 describe("Comments DB Collection", function () {
   describe("addComment()", function () {
     it("should return the added comment object when passed ObjectId types", async function () {

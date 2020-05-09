@@ -8,20 +8,7 @@ const getCollectionFn = (collection) => {
   return async () => {
     if (!_col) {
       const db = await dbConnection();
-      _col = await db.music_db.collection(collection);
-    }
-
-    return _col;
-  };
-};
-
-const getGridCollectionFn = (collection) => {
-  let _col = undefined;
-
-  return async () => {
-    if (!_col) {
-      const db = await dbConnection();
-      _col = await db.grid.collection(collection);
+      _col = await db.collection(collection);
     }
 
     return _col;
@@ -33,6 +20,6 @@ module.exports = {
   users: getCollectionFn("users"),
   songs: getCollectionFn("songs"),
   comments: getCollectionFn("comments"),
-  files: getGridCollectionFn("fs.files"),
-  chunks: getGridCollectionFn("fs.chunks"),
+  files: getCollectionFn("fs.files"),
+  chunks: getCollectionFn("fs.chunks"),
 };

@@ -20,13 +20,5 @@ module.exports = async () => {
     _db = await _connection.db(mongoConfig.database);
   }
 
-  if (!_gridconnection) {
-    _gridconnection = await MongoClient.connect(mongoGridConfig.serverUrl, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    _gridDb = await _gridconnection.db(mongoGridConfig.database);
-  }
-
-  return { music_db: _db, grid: _gridDb };
+  return _db;
 };
