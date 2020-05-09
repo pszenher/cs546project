@@ -260,8 +260,6 @@ module.exports = {
   },
   async addLikedSong(id, songId) {
     const { user, objId } = await this.check_valid(id, songId);
-    console.log(user);
-    console.log(songId);
     if (user.liked_songs != undefined && user.liked_songs.includes(songId))
       throw `Song is already present in the Liked_songs`;
     const updateLikedSong = {
@@ -374,7 +372,6 @@ module.exports = {
       ],
     });
 
-    console.log(`user_like ${user_liked}, \n user_dislike ${user_disliked}`);
     return [user_liked, user_disliked];
   },
 };
