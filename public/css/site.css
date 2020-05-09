@@ -26,6 +26,14 @@ h2 {
   text-align: center;
 }
 
+.hidden-nav {
+  visibility: hidden;
+}
+
+.visible-nav {
+  visibility: visible;
+}
+
 a:link {
   color: blue;
 }

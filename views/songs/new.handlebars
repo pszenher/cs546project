@@ -1,59 +1,66 @@
 <!-- songs/new.handlebars -->
 <!-- For adding new songs to the database -->
-<section>
-  <article class="new-song">
-    <h2>Post a Song</h2>
-    <form action="/songs" method="POST" class="new-song-form">
-      <div id="song-questions">
-        <div class="sub-entry">
-          <div class="input-container">
-            <label>Song Title</label>
-            <input type="text" name="title" placeholder="Song Title" class="full-width-input" />
-          </div>
 
-          <div class="input-container">
-            <label for="userId">User Id</label>
-            <select class="full-width-input" name="user">
-              <option value="">Select User...</option>
-              {{#each users}}
-              <option value="{{_id}}">{{firstName}} {{lastName}}</option>
-              {{/each}}
-            </select>
-          </div>
+<header>
+    <div class="navbar">
+        <a href="/home">Home</a>
+        <a href="/songs">Songs</a>
+        <a {{#if logged_in}}class="hidden-nav"{{/if}} href="/login">Log In</a>
+        <a {{#if !logged_in}}class="hidden-nav"{{/if}} href="/logout">Log Out</a>
+        <a {{#if logged_in}}class="hidden-nav"{{/if}} href="/users/new">Create an Account</a>
+        <a {{#if !logged_in}}class="hidden-nav"{{/if}} href="/songs/new">Post a Song</a>
+    </div>
+</header>
+<h1>Grapevine</h1>
+<main>
+  <section>
+    <article class="new-song">
+      <h2>Post a Song</h2>
+      <form action="/songs" method="POST" class="new-song-form">
+        <div id="song-questions">
+          <div class="sub-entry">
+            <div class="input-container">
+              <label>Song Title</label>
+              <input type="text" name="title" placeholder="Song Title" class="full-width-input" />
+            </div>
 
-          <div class="input-container" id='song-checkbox-container'>
-            <p id="genre-input-label">Genre</p>
-            <input type="checkbox" id="rock-checkbox" name="interested" value="rock">
-            <label for="rock-checkbox">Rock</label><br>
-            <input type="checkbox" id="pop-checkbox" name="interested" value="pop">
-            <label for="pop-checkbox">Pop</label><br>
-            <input type="checkbox" id="indie-checkbox" name="interested" value="indie">
-            <label for="indie-checkbox">Indie</label><br>
-            <input type="checkbox" id="classical-checkbox" name="interested" value="classical">
-            <label for="classical-checkbox">Classical</label><br>
-          </div>
+            <input type="hidden" id="userId" name="userId" value={{user._id}}>
+            
+            <div class="input-container" id='song-checkbox-container'>
+              <p id="genre-input-label">Genre</p>
+              <input type="checkbox" id="rock-checkbox" name="interested" value="rock">
+              <label for="rock-checkbox">Rock</label><br>
+              <input type="checkbox" id="pop-checkbox" name="interested" value="pop">
+              <label for="pop-checkbox">Pop</label><br>
+              <input type="checkbox" id="indie-checkbox" name="interested" value="indie">
+              <label for="indie-checkbox">Indie</label><br>
+              <input type="checkbox" id="classical-checkbox" name="interested" value="classical">
+              <label for="classical-checkbox">Classical</label><br>
+            </div>
 
-          <div id="file-container" class="input-container">
-            <label for="song-file">File</label>
-            <input type="file" id="song-file" class="full-width-input" accept=".mp3"/>
+            <div id="file-container" class="input-container">
+              <label for="song-file">File</label>
+              <input type="file" id="song-file" class="full-width-input" accept=".mp3"/>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="button-container">
-        <button type="submit" class="submit">Post Song</button>
-        <button type="reset" id="clearForm">Clear Form</button>
-      </div>
-    </form>
-    <!-- implement error list later
-  {{#if hasErrors}}
-  <ul class="error-list">
-    {{#each errors}}
-    <li>
-      {{this}}
-    </li>
-    {{/each}}
-  </ul>
-  {{/if}}
-  -->
-  </article>
-</section>
+        <div class="button-container">
+          <button type="submit" class="submit">Post Song</button>
+          <button type="reset" id="clearForm">Clear Form</button>
+        </div>
+      </form>
+      <!-- implement error list later
+    {{#if hasErrors}}
+    <ul class="error-list">
+      {{#each errors}}
+      <li>
+        {{this}}
+      </li>
+      {{/each}}
+    </ul>
+    {{/if}}
+    -->
+    </article>
+  </section>
+</main>
+<footer>Created by Meghana Bhat, Kirsten Meidlinger, Ashish Negi and Paul Szenher</footer>

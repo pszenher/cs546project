@@ -1,26 +1,39 @@
 <!-- songs/single.handlebars -->
 <!-- Representation of a single song -->
-
-<article class="song">
-    <!-- Needs to be reformatted, everything is shown just for testing purposes, FIX index.handlebars TOO -->
-    <div class="song">
-        <h3 class="song-title">{{song.title}} uploaded by {{song.author}}</h3> <!-- how to get author name -->
-        <ul class="song-info">
-            <li>Id: {{song._id}}</li>
-            <li>File: {{song.file}}</li>
-            <li>Genres: {{song.genre}}</li>
-            <li>Likes: {{song.like_cnt}}</li>
-            <li>Dislikes: {{song.dislike_cnt}}</li>
-        </ul>       
-        <button type="button" id="comment-button" onclick="location.href='../comments/new/{{song._id}}'">Add a Comment</button>
-        {{#each comments}}
-        <article class="comment">
-            <!-- Needs to be reformatted, everything is shown just for testing purposes, FIX single.handlebars TOO -->
-            <hr>
-            <p id="comment-content">"{{content}}"</p>
-            <label for="comment-content" id="comment-label">from {{userId}}</label>
-        </article>
-        {{/each}}
-        <hr>   
+<header>
+    <div class="navbar">
+        <a href="/home">Home</a>
+        <a href="/songs">Songs</a>
+        <a {{#if logged_in}}class="hidden-nav"{{/if}} href="/login">Log In</a>
+        <a {{#if !logged_in}}class="hidden-nav"{{/if}} href="/logout">Log Out</a>
+        <a {{#if logged_in}}class="hidden-nav"{{/if}} href="/users/new">Create an Account</a>
+        <a {{#if !logged_in}}class="hidden-nav"{{/if}} href="/songs/new">Post a Song</a>
     </div>
-</article>
+</header>
+<h1>Grapevine</h1>
+<main>
+    <article class="song">
+        <!-- Needs to be reformatted, everything is shown just for testing purposes, FIX index.handlebars TOO -->
+        <div class="song">
+            <h3 class="song-title">{{song.title}} uploaded by {{song.author}}</h3> <!-- how to get author name -->
+            <ul class="song-info">
+                <li>Id: {{song._id}}</li>
+                <li>File: {{song.file}}</li>
+                <li>Genres: {{song.genre}}</li>
+                <li>Likes: {{song.like_cnt}}</li>
+                <li>Dislikes: {{song.dislike_cnt}}</li>
+            </ul>       
+            <button type="button" id="comment-button" onclick="location.href='../comments/new/{{song._id}}'">Add a Comment</button>
+            {{#each comments}}
+            <article class="comment">
+                <!-- Needs to be reformatted, everything is shown just for testing purposes, FIX single.handlebars TOO -->
+                <hr>
+                <p id="comment-content">"{{content}}"</p>
+                <label for="comment-content" id="comment-label">from {{userId}}</label>
+            </article>
+            {{/each}}
+            <hr>   
+        </div>
+    </article>
+</main>
+<footer>Created by Meghana Bhat, Kirsten Meidlinger, Ashish Negi and Paul Szenher</footer>

@@ -14,7 +14,10 @@ router.get("/new", async (req,res) => {
   try {
     if(req.session && req.session.user){
       let user = await userData.getUserById(req.session.user._id)
-      res.render("songs/new",{user: user});
+      res.render("songs/new",{
+        user : user, 
+        logged_in : ((req.session && req.session.user) ? true : false) 
+      });
     } else {
       res.backURL = "songs/new";
       res.redirect("/login");
@@ -35,7 +38,11 @@ router.get("/:id", async (req, res) => {
       comments[x] = await commentData.getCommentById(commentIds[x]);
     }
 
-    res.render('songs/single',{song:song,comments:comments});
+    res.render('songs/single',{
+      song:song,
+      comments:comments,
+      logged_in : ((req.session && req.session.user) ? true : false)
+    });
   } catch (e) {
     console.log(e);
     res.status(404).json({ error: e });
@@ -45,7 +52,10 @@ router.get("/:id", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const songList = await songData.getAllSongs();
-    res.render('songs/index',{songs:songList});
+    res.render('songs/index',{
+      songs:songList,
+      logged_in : ((req.session && req.session.user) ? true : false)
+    });
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
@@ -66,17 +76,8 @@ router.post("/", async (req, res) => {
     return;
   }
 
-  if (
-    !songInfo.user ||
-    typeof songInfo.user != "string" ||
-    !ObjectId.isValid(songInfo.user)
-  ) {
-    res
-      .status(400)
-      .json({
-        error: "You must provide id of the artist as a string or an object id",
-      });
-    return;
+  if(!req.session || !req.session.user){
+    res.redirect("/login");
   }
 
   if (
@@ -91,11 +92,8 @@ router.post("/", async (req, res) => {
       });
     return;
   }
-  
-  // super shady prototype string to array function, needs to be fixed lol
-  let genreList = await convertStringToGenreArray(songInfo.genre);
 
-  if (!songInfo.genre || !Array.isArray(genreList)) {
+  if (!songInfo.genre || !Array.isArray(songInfo.genre)) {
     res
       .status(400)
       .json({ error: "You must provide a array of genre in the song" });
@@ -113,7 +111,7 @@ router.post("/", async (req, res) => {
     const newSong = await songData.addSong(
       songInfo.file,
       songInfo.title,
-      genreList,
+      songInfo.genre,
       songInfo.user
     );
     await userData.addSongToUser(songInfo.user, String(newSong._id)); //changed

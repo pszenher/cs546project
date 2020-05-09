@@ -8,7 +8,7 @@ router.get("/new", async (req, res) => {
     if(req.session && req.session.user){
       res.redirect("./"+req.session.user._id);
     } else {
-      res.render("users/new");
+      res.render("users/new", { logged_in : ((req.session && req.session.user) ? true : false) });
     }
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -19,7 +19,10 @@ router.get("/:id", async (req, res) => {
   try {
     const user = await userData.getUserById(req.params.id);
     user.password = "*****";
-    res.render("users/single", { user: user });
+    res.render("users/single", { 
+      user: user,
+      logged_in : ((req.session && req.session.user) ? true : false) 
+    });
     //res.json(user);
   } catch (e) {
     res.status(404).json({ error: "User not found" });
@@ -28,7 +31,10 @@ router.get("/:id", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const userList = await userData.getAllUsers();
-    res.render("users/index", { users: userList });
+    res.render("users/index", { 
+      users: userList,
+      logged_in : ((req.session && req.session.user) ? true : false) 
+    });
     //res.json(userList);
   } catch (e) {
     // Something went wrong with the server!
@@ -74,7 +80,10 @@ router.post("/", async (req, res) => {
         bio,
         interested
       );
-      res.render("users/single",{user:newUser});
+      res.render("users/single",{
+        user:newUser,
+        logged_in : ((req.session && req.session.user) ? true : false)
+      });
     } else {
       res.status(400).send({ error: "Bad Request" });
     }

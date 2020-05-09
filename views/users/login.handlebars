@@ -1,21 +1,36 @@
-<section>
-    <article class="login">
-        <h2>Login Page</h2>
-        <form action="/login" method="POST" id="login-form">
-            <div id="login-questions">
-                <div class="input-container">
-                    <label for="email">Email</label>
-                    <input type="text" id="email" name="email" placeholder="email" class="full-width-input" />
+
+<header>
+    <div class="navbar">
+        <a href="/home">Home</a>
+        <a href="/songs">Songs</a>
+        <a {{#if logged_in}}class="hidden-nav"{{/if}} href="/login">Log In</a>
+        <a {{#if !logged_in}}class="hidden-nav"{{/if}} href="/logout">Log Out</a>
+        <a {{#if logged_in}}class="hidden-nav"{{/if}} href="/users/new">Create an Account</a>
+        <a {{#if !logged_in}}class="hidden-nav"{{/if}} href="/songs/new">Post a Song</a>
+    </div>
+</header>
+<h1>Grapevine</h1>
+<main>
+    <section>
+        <article class="login">
+            <h2>Login Page</h2>
+            <form action="/login" method="POST" id="login-form">
+                <div id="login-questions">
+                    <div class="input-container">
+                        <label for="email">Email</label>
+                        <input type="text" id="email" name="email" placeholder="email" class="full-width-input" />
+                    </div>
+                    <div class="input-container">
+                        <label>Password</label>
+                        <input type="text" id="password" name="password" placeholder="password" class="full-width-input" />
+                    </div>
                 </div>
-                <div class="input-container">
-                    <label>Password</label>
-                    <input type="text" id="password" name="password" placeholder="password" class="full-width-input" />
+                <div class="button-container">
+                    <button type="submit">Submit</button>
                 </div>
-            </div>
-            <div class="button-container">
-                <button type="submit">Submit</button>
-            </div>
-            <p id="sign-up-link">Don't have an account? <a href="users/new">Sign Up</a></p>
-        </form>
-    </article>
-</section>
+                <p id="sign-up-link">Don't have an account? <a href="users/new">Sign Up</a></p>
+            </form>
+        </article>
+    </section>
+</main>
+<footer>Created by Meghana Bhat, Kirsten Meidlinger, Ashish Negi and Paul Szenher</footer>

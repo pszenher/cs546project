@@ -10,7 +10,10 @@ router.get("/", async (req, res) => {
   if(req.session && req.session.user) {
     res.redirect("users/"+req.session.user._id);
   } else {
-    res.render("users/login", { title: "Login Page" });
+    res.render("users/login", { 
+      title: "Login Page",
+      logged_in : ((req.session && req.session.user) ? true : false) 
+    });
   } 
 });
 
