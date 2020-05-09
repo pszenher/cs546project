@@ -23,11 +23,11 @@ router.use(bodyParser.urlencoded({ extended: true }));
 
 router.get("/new", async (req, res) => {
   try {
-    if(req.session && req.session.user){
-      let user = await userData.getUserById(req.session.user._id)
-      res.render("songs/new",{
-        user : user, 
-        logged_in : ((req.session && req.session.user) ? true : false) 
+    if (req.session && req.session.user) {
+      let user = await userData.getUserById(req.session.user._id);
+      res.render("songs/new", {
+        user: user,
+        logged_in: req.session && req.session.user ? true : false,
       });
     } else {
       res.backURL = "songs/new";
@@ -52,9 +52,17 @@ router.get("/uploaded", async (req, res) => {
     // console.log(songList)
     console.log(req.session.user == undefined);
     if (req.session.user == undefined) {
-      res.render("songs/index", { songs: songList, user: false });
+      res.render("songs/index", {
+        songs: songList,
+        user: false,
+        logged_in: false,
+      });
     } else {
-      res.render("songs/index", { songs: songList, user: true });
+      res.render("songs/index", {
+        songs: songList,
+        user: true,
+        logged_in: true,
+      });
     }
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -90,14 +98,14 @@ router.get("/:id", async (req, res) => {
         song: song,
         comments: comments,
         user: false,
-        logged_in : false
+        logged_in: false,
       });
     } else {
       res.render("songs/single", {
         song: song,
         comments: comments,
         user: true,
-        logged_in : true
+        logged_in: true,
       });
     }
   } catch (e) {
@@ -130,9 +138,17 @@ router.get("/", async (req, res) => {
     console.log("A");
     console.log(req.session.user == undefined);
     if (req.session.user == undefined) {
-      res.render("songs/index", { songs: songList, user: false, logged_in: false });
+      res.render("songs/index", {
+        songs: songList,
+        user: false,
+        logged_in: false,
+      });
     } else {
-      res.render("songs/index", { songs: songList, user: true, logged_in: true });
+      res.render("songs/index", {
+        songs: songList,
+        user: true,
+        logged_in: true,
+      });
     }
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -142,7 +158,8 @@ router.get("/", async (req, res) => {
 router.post("/", upload.single("file"), async (req, res) => {
   let songInfo = req.body;
   let file = req.file; //file
-
+  console.log(req.body);
+  console.log(req.file);
   if (!file) {
     res.status(400).json({ error: "you must provide song file" });
   }
