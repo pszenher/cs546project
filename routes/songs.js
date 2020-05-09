@@ -1,16 +1,27 @@
 const express = require("express");
 var bodyParser = require("body-parser");
+const mongoCollections = require("../config/mongoCollections");
+const files = mongoCollections.files;
 const router = express.Router();
 const data = require("../data");
 const songData = data.songs;
 const userData = data.users;
 const commentData = data.comments;
 const { ObjectId } = require("mongodb");
+const multer = require("multer");
+const GridFsStorage = require("multer-gridfs-storage");
+const url = "mongodb://localhost:27017/database";
+
+// Create a storage object with a given configuration
+const storage = new GridFsStorage({ url: url });
+
+// Set multer storage engine to the newly created object
+const upload = multer({ storage });
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
-router.get("/new", async (req,res) => {
+router.get("/new", async (req, res) => {
   try {
     if(req.session && req.session.user){
       let user = await userData.getUserById(req.session.user._id)
@@ -23,26 +34,55 @@ router.get("/new", async (req,res) => {
       res.redirect("/login");
     }
   } catch (e) {
-    res.status(500).json({error: e.message});
+    res.status(500).json({ error: e.message });
   }
 });
-
 
 router.get("/:id", async (req, res) => {
   try {
     const song = await songData.getSongById(req.params.id);
+    const fileObjId = song.file;
+
+    const songFile = await songData.getSongMeta(fileObjId);
+    const fileDataArr = await songData.getSongFile(fileObjId);
+
+    const url =
+      "data:" +
+      songFile.contentType +
+      ";charset=utf-8;base64," +
+      (await fileDataArr.join(""));
+    song._url = url;
 
     let commentIds = song.comment_id;
     let comments = [];
-    for(let x=0;x<commentIds.length;x++){
+    for (let x = 0; x < commentIds.length; x++) {
       comments[x] = await commentData.getCommentById(commentIds[x]);
     }
+
 
     res.render('songs/single',{
       song:song,
       comments:comments,
       logged_in : ((req.session && req.session.user) ? true : false)
     });
+  } catch(e){
+    console.log(e);
+  }
+});
+router.get("/url/:id", async (req, res) => {
+  try {
+    const song = await songData.getSongById(req.params.id);
+    const fileObjId = song.file;
+    const songFile = await songData.getSongMeta(fileObjId);
+    const fileDataArr = await songData.getSongFile(fileObjId);
+
+    const url =
+      "data:" +
+      songFile.contentType +
+      ";charset=utf-8;base64," +
+      (await fileDataArr.join(""));
+    song._url = url;
+    res.json(song);
   } catch (e) {
     console.log(e);
     res.status(404).json({ error: e });
@@ -52,6 +92,7 @@ router.get("/:id", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const songList = await songData.getAllSongs();
+
     res.render('songs/index',{
       songs:songList,
       logged_in : ((req.session && req.session.user) ? true : false)
@@ -61,8 +102,13 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", upload.single("file"), async (req, res) => {
   let songInfo = req.body;
+  let file = req.file; //file
+
+  if (!file) {
+    res.status(400).json({ error: "you must provide song file" });
+  }
 
   if (!songInfo) {
     res.status(400).json({ error: "You must provide data for the song" });
@@ -76,21 +122,19 @@ router.post("/", async (req, res) => {
     return;
   }
 
-  if(!req.session || !req.session.user){
-    res.redirect("/login");
+  if (!file.id || !(typeof file.id == "string" || ObjectId.isValid(file.id))) {
+    res.status(400).json({
+      error: "You must provide id of the file as a string or an object id",
+    });
+    return;
   }
 
-  if (
-    !songInfo.file ||
-    typeof songInfo.file != "string" ||
-    !ObjectId.isValid(songInfo.file)
-  ) {
-    res
-      .status(400)
-      .json({
-        error: "You must provide id of the file as a string or an object id",
-      });
-    return;
+  let genreList = [];
+
+  if (!Array.isArray(songInfo.genre)) {
+    genreList.push(songInfo.genre);
+  } else {
+    genreList = songInfo.genre;
   }
 
   if (!songInfo.genre || !Array.isArray(songInfo.genre)) {
@@ -101,20 +145,14 @@ router.post("/", async (req, res) => {
   }
 
   try {
-    user = await userData.getUserById(songInfo.user);
-  } catch (e) {
-    res.status(404).json({ error: "User not found" });
-    return;
-  }
-
-  try {
     const newSong = await songData.addSong(
-      songInfo.file,
+      file.id,
       songInfo.title,
-      songInfo.genre,
-      songInfo.user
+      genreList,
+      req.session.user._id
     );
-    await userData.addSongToUser(songInfo.user, String(newSong._id)); //changed
+    await userData.addSongToUser(req.session.user._id, String(newSong._id)); //changed
+
     res.status(200).json(newSong);
   } catch (e) {
     res.status(500).json({ error: e.message });

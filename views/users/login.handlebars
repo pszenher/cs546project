@@ -3,10 +3,9 @@
     <div class="navbar">
         <a href="/home">Home</a>
         <a href="/songs">Songs</a>
-        <a {{#if logged_in}}class="hidden-nav"{{/if}} href="/login">Log In</a>
-        <a {{#if !logged_in}}class="hidden-nav"{{/if}} href="/logout">Log Out</a>
-        <a {{#if logged_in}}class="hidden-nav"{{/if}} href="/users/new">Create an Account</a>
-        <a {{#if !logged_in}}class="hidden-nav"{{/if}} href="/songs/new">Post a Song</a>
+        <a {{#if logged_in}} href="/logout">Log Out {{else}} href="/login">Log In {{/if}} </a>
+        <a {{#if logged_in}} style="display:none;" {{/if}} href="/users/new">Create an Account</a>
+        <a {{#if logged_in}} style="display:inline;" {{else}} style="display:none;" {{/if}} href="/songs/new">Post a Song</a>
     </div>
 </header>
 <h1>Grapevine</h1>

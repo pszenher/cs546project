@@ -27,11 +27,11 @@ h2 {
 }
 
 .hidden-nav {
-  visibility: hidden;
+  display: none;
 }
 
 .visible-nav {
-  visibility: visible;
+  display:block;
 }
 
 a:link {
@@ -208,6 +208,10 @@ article.logout {
   display:flex;
   flex-direction: column;
   justify-content: center;
+}
+
+#log-in-link {
+  align-self: center;
 }
 
 a#log-out-redirect {
