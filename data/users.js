@@ -111,7 +111,7 @@ module.exports = {
       interested: interested,
     };
 
-    const existingUser = await this.getUserByEmail(email);
+    const existingUser = await this.getUserByEmail(email.toLowerCase());
     if (existingUser != null) {
       throw `User with this Email already Exists`;
     }
