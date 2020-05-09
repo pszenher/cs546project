@@ -40,7 +40,17 @@
                 <li>Genres: {{song.genre}}</li>
                 <li>Likes: {{song.like_cnt}}</li>
                 <li>Dislikes: {{song.dislike_cnt}}</li>
-            </ul>       
+            </ul>
+            {{!-- <p>{{user}}</p> --}}
+            {{#if user}}
+            {{!-- <p>you are entered as users</p> --}}
+            <i  onclick="location.href='../songs/like/{{song._id}}'" class="fa fa-thumbs-up"></i>
+            <i  onclick="location.href='../songs/dislike/{{song._id}}'" class="fa fa-thumbs-o-down"></i>
+            {{else}}
+            <i onclick="location.href='../login'" class="fa fa-thumbs-up" ></i>
+            <i onclick="location.href='../login'" class="fa fa-thumbs-o-down"></i>
+            {{/if}}
+
             {{!-- <audio controls src={{song._url}} type="audio/mpeg" />  --}}
             <button type="button" id="play_song" data-value="{{song._id}}" >Play</button>
             <div id="audio_tag" >

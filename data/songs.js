@@ -180,12 +180,18 @@ const exportedMethods = {
     const songCollection = await songs();
 
     if (reaction === "like") {
-      await songCollection.updateOne({ _id: id }, { $inc: { like_cnt: 1 } });
+      await songCollection.updateOne(
+        { _id: songId },
+        { $inc: { like_cnt: 1 } }
+      );
     } else {
-      await songCollection.updateOne({ _id: id }, { $inc: { dislike_cnt: 1 } });
+      await songCollection.updateOne(
+        { _id: songId },
+        { $inc: { dislike_cnt: 1 } }
+      );
     }
 
-    return await this.getSongById(id);
+    return await this.getSongById(songId);
   },
 
   async decrementLikeDislike(songId, reaction) {
@@ -207,7 +213,7 @@ const exportedMethods = {
       );
     }
 
-    return await this.getSongById(id);
+    return await this.getSongById(songId);
   },
 
   async addRemoveCommentFromSong(songId, commentId, operation) {
@@ -232,6 +238,19 @@ const exportedMethods = {
     }
 
     return await this.getSongById(songId);
+  },
+
+  async getSongByUser(userID) {
+    if (!userID) throw "You must provide a id of the author";
+    if (typeof userID != "string" && typeof userID != "object")
+      throw "Input User Id should be string or object";
+
+    id = await id_check(userID);
+    const songCollection = await songs();
+
+    const songList = await songCollection.find({ author: id }).toArray();
+
+    return songList;
   },
 };
 

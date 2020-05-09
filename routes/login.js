@@ -7,8 +7,9 @@ const url = require("url");
 
 router.get("/", async (req, res) => {
   // if logged in, redirect to user's profile
-  if(req.session && req.session.user) {
-    res.redirect("users/"+req.session.user._id);
+  if (req.session && req.session.user) {
+    console.log("why i am i here");
+    res.redirect("users/" + req.session.user._id);
   } else {
     res.render("users/login", { 
       title: "Login Page",
@@ -32,7 +33,7 @@ router.post("/", async (req, res) => {
       );
       if (passwordMatch) {
         req.session.user = newUser;
-        res.redirect("users/"+newUser._id);
+        res.redirect("users/" + newUser._id);
         // res.json(newUser);
       } else {
         res.status(401).send({ error: "Email or password is wrong" });

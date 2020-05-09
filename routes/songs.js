@@ -38,9 +38,34 @@ router.get("/new", async (req, res) => {
   }
 });
 
+router.get("/uploaded", async (req, res) => {
+  try {
+    console.log("uploaded entered");
+    console.log(req.session.user);
+    if (req.session.user == undefined) {
+      res.render("users/login");
+      return;
+    }
+
+    console.log("not undefined");
+    const songList = await songData.getSongByUser(req.session.user._id);
+    // console.log(songList)
+    console.log(req.session.user == undefined);
+    if (req.session.user == undefined) {
+      res.render("songs/index", { songs: songList, user: false });
+    } else {
+      res.render("songs/index", { songs: songList, user: true });
+    }
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 router.get("/:id", async (req, res) => {
   try {
+    console.log("B");
     const song = await songData.getSongById(req.params.id);
+
     const fileObjId = song.file;
 
     const songFile = await songData.getSongMeta(fileObjId);
@@ -59,13 +84,23 @@ router.get("/:id", async (req, res) => {
       comments[x] = await commentData.getCommentById(commentIds[x]);
     }
 
-
-    res.render('songs/single',{
-      song:song,
-      comments:comments,
-      logged_in : ((req.session && req.session.user) ? true : false)
-    });
-  } catch(e){
+    console.log(req.session.user == undefined);
+    if (req.session.user == undefined) {
+      res.render("songs/single", {
+        song: song,
+        comments: comments,
+        user: false,
+        logged_in : false
+      });
+    } else {
+      res.render("songs/single", {
+        song: song,
+        comments: comments,
+        user: true,
+        logged_in : true
+      });
+    }
+  } catch (e) {
     console.log(e);
   }
 });
@@ -92,11 +127,13 @@ router.get("/url/:id", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const songList = await songData.getAllSongs();
-
-    res.render('songs/index',{
-      songs:songList,
-      logged_in : ((req.session && req.session.user) ? true : false)
-    });
+    console.log("A");
+    console.log(req.session.user == undefined);
+    if (req.session.user == undefined) {
+      res.render("songs/index", { songs: songList, user: false, logged_in: false });
+    } else {
+      res.render("songs/index", { songs: songList, user: true, logged_in: true });
+    }
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
@@ -152,11 +189,75 @@ router.post("/", upload.single("file"), async (req, res) => {
       req.session.user._id
     );
     await userData.addSongToUser(req.session.user._id, String(newSong._id)); //changed
+    res.redirect(`songs/${newSong._id}`);
 
     res.status(200).json(newSong);
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
+});
+
+router.get("/like/:id", async (req, res) => {
+  // console.log(req.session.user);
+  // console.log(req.params.id);
+  // console.log("hello");
+  // console.log(typeof req.session.user._id);
+  // console.log(typeof req.params.id);
+
+  let checkLikeDislike = await userData.checkLikeDislike(
+    req.session.user._id,
+    req.params.id
+  );
+  let user_liked = checkLikeDislike[0];
+  let user_disliked = checkLikeDislike[1];
+
+  console.log("A");
+  console.log(user_liked);
+  console.log(user_disliked);
+  console.log("B");
+  if (user_liked) {
+    let x = "no change";
+  } else if (user_disliked) {
+    await userData.removeDisLikedSong(req.session.user._id, req.params.id);
+    await songData.decrementLikeDislike(req.params.id, "dislike");
+    await userData.addLikedSong(req.session.user._id, req.params.id);
+    let x = await songData.incrementLikeDislike(req.params.id, "like");
+  } else {
+    await userData.addLikedSong(req.session.user._id, req.params.id);
+    let x = await songData.incrementLikeDislike(req.params.id, "like");
+  }
+
+  res.redirect(`/songs/${req.params.id}`);
+});
+
+router.get("/dislike/:id", async (req, res) => {
+  // console.log(req.session.user);
+  // console.log(req.params.id);
+  // console.log("not hello");
+  let checkLikeDislike = await userData.checkLikeDislike(
+    req.session.user._id,
+    req.params.id
+  );
+  let user_liked = checkLikeDislike[0];
+  let user_disliked = checkLikeDislike[1];
+  console.log("A");
+  console.log(user_liked);
+  console.log(user_disliked);
+  console.log("B");
+
+  if (user_disliked) {
+    let x = "no change";
+  } else if (user_liked) {
+    await userData.removeLikedSong(req.session.user._id, req.params.id);
+    await songData.decrementLikeDislike(req.params.id, "like");
+    await userData.addDisLikedSong(req.session.user._id, req.params.id);
+    let x = await songData.incrementLikeDislike(req.params.id, "dislike");
+  } else {
+    await userData.addDisLikedSong(req.session.user._id, req.params.id);
+    let x = await songData.incrementLikeDislike(req.params.id, "dislike");
+  }
+
+  res.redirect(`/songs/${req.params.id}`);
 });
 
 router.patch("/:id", async (req, res) => {
