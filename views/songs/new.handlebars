@@ -16,14 +16,14 @@
   <section>
     <article class="new-song">
       <h2>Post a Song</h2>
-      <form action="/songs" method="POST" class="new-song-form" enctype="multipart/form-data">
+      <form action="/songs" method="POST" class="new-song-form" id="new_song_form" enctype="multipart/form-data">
         <div id="song-questions">
           <div class="sub-entry">
             <div class="input-container">
               <label>Song Title</label>
-              <input type="text" name="title" placeholder="Song Title" class="full-width-input" />
+              <input type="text" name="title" id="song_title_value" placeholder="Song Title" class="full-width-input" />
             </div>
-
+            <div class="alert alert-danger title_error-container"></div>
             <input type="hidden" id="userId" name="userId" value={{user._id}}>
             
             <div class="input-container" id='song-checkbox-container'>
@@ -37,15 +37,16 @@
               <input type="checkbox" id="classical-checkbox" name="genre" value="classical">
               <label for="classical-checkbox">Classical</label><br>
             </div>
-
+            <div class="alert alert-danger genre_error-container"></div>
             <div id="file-container" class="input-container">
               <label for="song-file">File</label>
               <input type="file" name="file" id="song-file" class="full-width-input" accept=".mp3"/>
             </div>
+            <div class="alert alert-danger file_error-container"></div>
           </div>
         </div>
         <div class="button-container">
-          <button type="submit" class="submit">Post Song</button>
+          <button type="submit" class="submit" >Post Song</button>
           <button type="reset" id="clearForm">Clear Form</button>
         </div>
       </form>
