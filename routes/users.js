@@ -83,6 +83,9 @@ router.post("/", async (req, res) => {
       bio,
       interested,
     } = userPostData;
+    if (typeof interested == "string") {
+      interested = interested.split();
+    }
     if (
       firstName &&
       lastName &&
