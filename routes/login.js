@@ -4,6 +4,7 @@ const data = require("../data");
 const userData = data.users;
 const bcrypt = require("bcrypt");
 const url = require("url");
+const xss = require("xss");
 
 router.get("/", async (req, res) => {
   // if logged in, redirect to user's profile
@@ -11,17 +12,18 @@ router.get("/", async (req, res) => {
     console.log("why i am i here");
     res.redirect("users/" + req.session.user._id);
   } else {
-    res.render("users/login", { 
+    res.render("users/login", {
       title: "Login Page",
-      logged_in : ((req.session && req.session.user) ? true : false) 
+      logged_in: req.session && req.session.user ? true : false,
     });
-  } 
+  }
 });
 
 router.post("/", async (req, res) => {
   const userPostData = req.body;
   try {
-    let { email, password } = userPostData;
+    const email = xss(userPostData.email);
+    const password = userPostData.password;
     if (email && password) {
       const newUser = await userData.getUserByEmail(userPostData.email);
       if (newUser == null) {

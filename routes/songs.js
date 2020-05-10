@@ -10,6 +10,7 @@ const commentData = data.comments;
 const { ObjectId } = require("mongodb");
 const multer = require("multer");
 const GridFsStorage = require("multer-gridfs-storage");
+const xss = require("xss");
 
 // Use existing mongo connection for GridFS
 const mongoConnection = require("../config/mongoConnection");
@@ -179,29 +180,20 @@ router.post("/", upload.single("file"), async (req, res) => {
   let genreList = [];
 
   if (!Array.isArray(songInfo.genre)) {
-    genreList.push(songInfo.genre);
+    genreList.push(xss(songInfo.genre));
   } else {
-    genreList = songInfo.genre;
-  }
-
-  if (!songInfo.genre || !Array.isArray(songInfo.genre)) {
-    res
-      .status(400)
-      .json({ error: "You must provide a array of genre in the song" });
-    return;
+    genreList = xss(songInfo.genre);
   }
 
   try {
     const newSong = await songData.addSong(
       file.id,
-      songInfo.title,
+      xss(songInfo.title),
       genreList,
       req.session.user._id
     );
     await userData.addSongToUser(req.session.user._id, String(newSong._id)); //changed
     res.redirect(`songs/${newSong._id}`);
-
-    res.status(200).json(newSong);
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
@@ -254,7 +246,7 @@ router.get("/dislike/:id", async (req, res) => {
 });
 
 router.patch("/:id", async (req, res) => {
-  const updatedData = req.body;
+  let updatedData = req.body;
   try {
     let x = await songData.getSongById(req.params.id);
   } catch (e) {
@@ -263,6 +255,9 @@ router.patch("/:id", async (req, res) => {
   }
 
   try {
+    updatedData.title = xss(updatedData.title);
+    updatedData.genre = xss(updatedData.genre);
+
     const updatedSong = await songData.updateSong(req.params.id, updatedData);
     res.json(updatedSong);
   } catch (e) {

@@ -4,6 +4,7 @@ const data = require("../data");
 const userData = data.users;
 const bcrypt = require("bcrypt"); //Importing the NPM bcrypt package.
 const salt = 10;
+const xss = require("xss");
 
 router.get("/new", async (req, res) => {
   try {
@@ -83,6 +84,20 @@ router.post("/", async (req, res) => {
       bio,
       interested,
     } = userPostData;
+
+    firstName = xss(firstName);
+    lastName = xss(lastName);
+    email = xss(email);
+    gender = xss(gender);
+    city = xss(city);
+    state = xss(state);
+    age = xss(age);
+    bio = xss(bio);
+    interested = xss(interested);
+
+    if (typeof interested == "string") {
+      interested = interested.split();
+    }
     if (
       firstName &&
       lastName &&
@@ -127,7 +142,7 @@ router.patch("/:id", async (req, res) => {
     return;
   }
   try {
-    const {
+    let {
       firstName,
       lastName,
       email,
@@ -138,6 +153,17 @@ router.patch("/:id", async (req, res) => {
       bio,
       interested,
     } = userPostData;
+
+    firstName = xss(firstName);
+    lastName = xss(lastName);
+    email = xss(email);
+    gender = xss(gender);
+    city = xss(city);
+    state = xss(state);
+    age = xss(age);
+    bio = xss(bio);
+    interested = xss(interested);
+
     const updatedUser = await userData.updateUser(
       req.params.id,
       firstName,
@@ -160,7 +186,9 @@ router.patch("/:id", async (req, res) => {
 router.post("/addSongToPlaylist", async (req, res) => {
   const userPostData = req.body;
   try {
-    const { id, songId } = userPostData;
+    const id = xss(userPostData.id);
+    const songId = xss(userPostData.songId);
+
     let idFound = await ifUserPresent(id);
 
     if (!idFound) {
@@ -181,7 +209,9 @@ router.post("/addSongToPlaylist", async (req, res) => {
 router.post("/removeSongFromPlaylist", async (req, res) => {
   const userPostData = req.body;
   try {
-    const { id, songId } = userPostData;
+    const id = xss(userPostData.id);
+    const songId = xss(userPostData.songId);
+
     let idFound = await ifUserPresent(id);
 
     if (!idFound) {
@@ -202,7 +232,9 @@ router.post("/removeSongFromPlaylist", async (req, res) => {
 router.post("/addLikedSong", async (req, res) => {
   const userPostData = req.body;
   try {
-    const { id, songId } = userPostData;
+    const id = xss(userPostData.id);
+    const songId = xss(userPostData.songId);
+
     let idFound = await ifUserPresent(id);
 
     if (!idFound) {
@@ -223,7 +255,9 @@ router.post("/addLikedSong", async (req, res) => {
 router.post("/removeLikedSong", async (req, res) => {
   const userPostData = req.body;
   try {
-    const { id, songId } = userPostData;
+    const id = xss(userPostData.id);
+    const songId = xss(userPostData.songId);
+
     let idFound = await ifUserPresent(id);
 
     if (!idFound) {
@@ -245,7 +279,9 @@ router.post("/removeLikedSong", async (req, res) => {
 router.post("/addDisLikedSong", async (req, res) => {
   const userPostData = req.body;
   try {
-    const { id, songId } = userPostData;
+    const id = xss(userPostData.id);
+    const songId = xss(userPostData.songId);
+
     let idFound = await ifUserPresent(id);
 
     if (!idFound) {
@@ -266,7 +302,9 @@ router.post("/addDisLikedSong", async (req, res) => {
 router.post("/removeDisLikedSong", async (req, res) => {
   const userPostData = req.body;
   try {
-    const { id, songId } = userPostData;
+    const id = xss(userPostData.id);
+    const songId = xss(userPostData.songId);
+
     let idFound = await ifUserPresent(id);
 
     if (!idFound) {
@@ -288,7 +326,9 @@ router.post("/removeDisLikedSong", async (req, res) => {
 router.post("/addSongToUser", async (req, res) => {
   const userPostData = req.body;
   try {
-    const { id, songId } = userPostData;
+    const id = xss(userPostData.id);
+    const songId = xss(userPostData.songId);
+
     let idFound = await ifUserPresent(id);
 
     if (!idFound) {
@@ -309,7 +349,9 @@ router.post("/addSongToUser", async (req, res) => {
 router.post("/removeSongFromUser", async (req, res) => {
   const userPostData = req.body;
   try {
-    const { id, songId } = userPostData;
+    const id = xss(userPostData.id);
+    const songId = xss(userPostData.songId);
+
     let idFound = await ifUserPresent(id);
 
     if (!idFound) {
@@ -331,7 +373,9 @@ router.post("/removeSongFromUser", async (req, res) => {
 router.post("/updatePassword", async (req, res) => {
   const userPostData = req.body;
   try {
-    const { id, password, newPass } = userPostData;
+    const id = xss(userPostData.id);
+    const password = userPostData.password;
+    const newPass = userPostData.newPass;
 
     let idFound = await ifUserPresent(id);
     if (!idFound) {
