@@ -248,7 +248,11 @@ describe("Users DB Collection", function () {
         "bio",
         ["interested1", "interestes2"]
       );
-      updatePassword = await data.users.updatePassword(newUser._id, "NewPass");
+      updatePassword = await data.users.updatePassword(
+        newUser._id,
+        "password",
+        "NewPass"
+      );
       expect(updatePassword).to.have.keys(
         "_id",
         "firstName",
@@ -262,7 +266,6 @@ describe("Users DB Collection", function () {
         "bio",
         "interested"
       );
-      expect(updatePassword.password.toString()).to.equal("NewPass");
     });
 
     it("should reject promise with error on empty password ", async function () {

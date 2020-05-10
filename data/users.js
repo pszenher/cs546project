@@ -111,7 +111,7 @@ module.exports = {
       interested: interested,
     };
 
-    const existingUser = await this.getUserByEmail(email);
+    const existingUser = await this.getUserByEmail(email.toLowerCase());
     if (existingUser != null) {
       throw `User with this Email already Exists`;
     }
@@ -133,7 +133,6 @@ module.exports = {
     city,
     state,
     age,
-    password,
     bio,
     interested
   ) {
@@ -169,15 +168,14 @@ module.exports = {
       if (typeof state != "string") throw { errocode: 400, field: "state" };
       updateBody.state = state;
     }
+
     if (age) {
-      if (typeof age != "number") throw { errocode: 400, field: "age" };
-      updateBody.age = age;
+      if (typeof age == "string") age = Number(age);
+      if (age < 0)
+        throw { errocode: 400, field: "Age cannot be negative number" };
+      else updateBody.age = age;
     }
-    if (password) {
-      if (typeof password != "string")
-        throw { errocode: 400, field: "password" };
-      updateBody.password = password;
-    }
+
     if (bio) {
       if (typeof bio != "string") throw { errocode: 400, field: "bio" };
       updateBody.bio = bio;
@@ -225,6 +223,7 @@ module.exports = {
       objId = ObjectId.createFromHexString(objId);
     }
     if (!password) throw `Please provide new password`;
+    password = await bcrypt.hash(password, salt);
     const userCollection = await users();
     const updatePassword = {
       password: password,

@@ -8,6 +8,7 @@
         <a {{#if logged_in}} href="/logout">Log Out {{else}} href="/login">Log In {{/if}} </a>
         <a {{#if logged_in}} style="display:none;" {{/if}} href="/users/new">Create an Account</a>
         <a {{#if logged_in}} style="display:inline;" {{else}} style="display:none;" {{/if}} href="/songs/new">Post a Song</a>
+        <a {{#if logged_in}} style="display:inline;" {{else}} style="display:none;" {{/if}} href="/users/profile">Profile</a>
     </div>
 </header>
 <h1>Grapevine</h1>
@@ -20,12 +21,12 @@
         
         $('#play_song').on('click', function (e) {
             const song_id = $(this).data("value")
-        //alert("Your values are :"+ $(this).data("value"));
-        $.get("/songs/url/" + song_id.toString(), function(data, status){
-        x.style.display = "block";
+            //alert("Your values are :"+ $(this).data("value"));
+            $.get("/songs/url/" + song_id.toString(), function(data, status){
+                x.style.display = "block";
         
-        $("#audio_id").attr("src", data._url);
-        });        
+                $("#audio_id").attr("src", data._url);
+            });        
         }); 
     
     });

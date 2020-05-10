@@ -130,6 +130,7 @@ router.get("/url/:id", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const songList = await songData.getAllSongs();
+
     if (req.session.user == undefined) {
       res.render("songs/index", {
         songs: songList,

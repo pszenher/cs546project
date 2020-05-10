@@ -2,13 +2,40 @@ const express = require("express");
 const router = express.Router();
 const data = require("../data");
 const userData = data.users;
+const bcrypt = require("bcrypt"); //Importing the NPM bcrypt package.
+const salt = 10;
 
 router.get("/new", async (req, res) => {
   try {
-    if(req.session && req.session.user){
-      res.redirect("./"+req.session.user._id);
+    if (req.session && req.session.user) {
+      res.redirect("./" + req.session.user._id);
     } else {
-      res.render("users/new", { logged_in : ((req.session && req.session.user) ? true : false) });
+      res.render("users/new", {
+        logged_in: req.session && req.session.user ? true : false,
+      });
+    }
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+router.get("/update_pass", async (req, res) => {
+  try {
+    res.render("users/password", { logged_in: true, user: req.session.user });
+    /*if(req.session && req.session.user){
+      res.render("users/password", { logged_in :  true  ,user : req.session.user});
+     }else{
+      res.render("users/new", { logged_in :  false });
+     }*/
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+router.get("/profile", async (req, res) => {
+  try {
+    if (req.session && req.session.user) {
+      res.render("users/profile", { logged_in: true, user: req.session.user });
+    } else {
+      res.render("users/new", { logged_in: false });
     }
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -19,9 +46,9 @@ router.get("/:id", async (req, res) => {
   try {
     const user = await userData.getUserById(req.params.id);
     user.password = "*****";
-    res.render("users/single", { 
+    res.render("users/single", {
       user: user,
-      logged_in : ((req.session && req.session.user) ? true : false) 
+      logged_in: req.session && req.session.user ? true : false,
     });
     //res.json(user);
   } catch (e) {
@@ -31,9 +58,9 @@ router.get("/:id", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const userList = await userData.getAllUsers();
-    res.render("users/index", { 
+    res.render("users/index", {
       users: userList,
-      logged_in : ((req.session && req.session.user) ? true : false) 
+      logged_in: req.session && req.session.user ? true : false,
     });
     //res.json(userList);
   } catch (e) {
@@ -80,9 +107,9 @@ router.post("/", async (req, res) => {
         bio,
         interested
       );
-      res.render("users/single",{
-        user:newUser,
-        logged_in : ((req.session && req.session.user) ? true : false)
+      res.render("users/single", {
+        user: newUser,
+        logged_in: req.session && req.session.user ? true : false,
       });
     } else {
       res.status(400).send({ error: "Bad Request" });
@@ -108,7 +135,6 @@ router.patch("/:id", async (req, res) => {
       city,
       state,
       age,
-      password,
       bio,
       interested,
     } = userPostData;
@@ -121,7 +147,6 @@ router.patch("/:id", async (req, res) => {
       city,
       state,
       age,
-      password,
       bio,
       interested
     );
@@ -305,17 +330,23 @@ router.post("/removeSongFromUser", async (req, res) => {
 
 router.post("/updatePassword", async (req, res) => {
   const userPostData = req.body;
-
   try {
-    const { id, password } = userPostData;
+    const { id, password, newPass } = userPostData;
+
     let idFound = await ifUserPresent(id);
     if (!idFound) {
       res.status(404).send({ error: "User not found" });
       return;
     }
     if (id && password) {
-      const userPassword = await userData.updatePassword(id, password);
-      res.json(userPassword);
+      const user = await userData.getUserById(id);
+      passwordMatch = await bcrypt.compare(password, user.password);
+      if (passwordMatch) {
+        const userPassword = await userData.updatePassword(id, newPass);
+        res.json({ msg: true });
+      } else {
+        res.json({ msg: false });
+      }
     } else {
       res.status(400).send({ error: "Bad Request" });
     }
