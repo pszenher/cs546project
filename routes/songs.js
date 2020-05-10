@@ -184,13 +184,6 @@ router.post("/", upload.single("file"), async (req, res) => {
     genreList = songInfo.genre;
   }
 
-  if (!songInfo.genre || !Array.isArray(songInfo.genre)) {
-    res
-      .status(400)
-      .json({ error: "You must provide a array of genre in the song" });
-    return;
-  }
-
   try {
     const newSong = await songData.addSong(
       file.id,
@@ -200,8 +193,6 @@ router.post("/", upload.single("file"), async (req, res) => {
     );
     await userData.addSongToUser(req.session.user._id, String(newSong._id)); //changed
     res.redirect(`songs/${newSong._id}`);
-
-    res.status(200).json(newSong);
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
