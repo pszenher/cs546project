@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const xss = require("xss");
 
 const data = require("../data");
 const commentData = data.comments;
@@ -66,7 +67,10 @@ router.post("/", async (req, res) => {
   }
 
   try {
-    const { songId, userId, content } = newCommentData;
+    let { songId, userId, content } = newCommentData;
+    songId = xss(songId);
+    userId = xss(userId);
+    content = xss(content);
     const newComment = await commentData.addComment(songId, userId, content);
 
     await songData.addRemoveCommentFromSong(songId, newComment._id, "add");
