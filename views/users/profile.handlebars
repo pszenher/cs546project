@@ -1,0 +1,153 @@
+<!-- users/new.handlebars -->
+<!-- For adding new user to the database -->
+<script> 
+  $(document).ready(function(){
+    // Let's start writing AJAX calls!
+      var myProfileForm = $('#new-user-form');
+     
+  
+      myProfileForm.submit(function (event) {
+        event.preventDefault();
+        $('#msg').hide();
+        var firstName = $('#first-name').val();
+        var lastName = $('#last-name').val();
+        var email = $('#email').val();
+        
+        var rock = $('#rock-checkbox').val()
+        var pop = $('#pop-checkbox').val()
+        var indie = $('#indie-checkbox').val() 
+        var classical = $('#classical-checkbox').val() 
+        var interested =[]
+       if ($('#rock-checkbox').is(":checked")){
+           interested.push("rock")
+        }
+        if ($('#pop-checkbox').is(":checked")){
+           interested.push("pop")
+        }
+        if ($('#indie-checkbox').is(":checked")){
+           interested.push("indie")
+        }
+        if ($('#classical-checkbox').is(":checked")){
+           interested.push("classical")
+        }
+      
+        var gender = $('#gender').val();
+        var city = $('#city').val();
+        var state = $('#state').val();
+        var age = $('#age').val();
+        var bio = $('#bio').val();
+        var id = $("#first-name").data("value")
+        var json = JSON.stringify({
+        		"firstName": firstName,
+            "lastName": lastName,
+            "email": email,
+            "gender": gender,
+            "city": city,
+            "state": state,
+            "age": age,
+            "bio": bio,           
+            "interested": interested	
+        })
+
+        var requestConfig = {
+          method: 'PATCH',
+          url: '/users/'+id,
+          contentType: 'application/json',
+          data: json
+        }
+        $.ajax(requestConfig).then(function (responseMessage) {
+          $('#msg').show();
+        });
+    })
+  });
+
+</script>
+<header>
+    <div class="navbar" >
+        <a href="/songs">Home</a>
+        <a href="/songs/uploaded">Songs</a>
+        <a {{#if logged_in}} href="/logout">Log Out {{else}} href="/login">Log In {{/if}} </a>
+        <a {{#if logged_in}} style="display:none;" {{/if}} href="/users/new">Create an Account</a>
+        <a {{#if logged_in}} style="display:inline;" {{else}} style="display:none;" {{/if}} href="/songs/new">Post a Song</a>
+        <a {{#if logged_in}} style="display:inline;" {{else}} style="display:none;" {{/if}} href="/users/profile">Profile</a>
+    </div>
+</header>
+<h1>Grapevine</h1>
+<main>
+  <section>
+    <article class="new-user">
+      <div id="msg" >
+         <p>Profile updated successfully </p>
+      </div>
+      <h2>Update Profile</h2>
+      <form id="new-user-form">
+        <div id="user-questions">
+          <div id="user-questions1" class="sub-entry">
+            
+            <div class="input-container">
+              <label for="first-name">First Name</label>
+              <input type="text" id="first-name"  name="firstName" placeholder="First Name" class="full-width-input" value={{user.firstName}}  data-value={{user._id}}/>
+            </div>
+
+            <div class="input-container">
+              <label for="last-name">Last Name</label>
+              <input type="text" id="last-name" name="lastName" placeholder="Last Name" class="full-width-input" value={{user.lastName}} />
+            </div>
+
+            <div class="input-container">
+              <label for="email">Email</label>
+              <input type="text" id="email" name="email" placeholder="Email" class="full-width-input" value={{user.email}} />
+            </div>
+
+
+            <div class="input-container" id='checkbox-container'>
+              <p>What music are you interested in?</p>
+              <input type="checkbox" id="rock-checkbox" name="interested" value="rock">
+              <label for="rock-checkbox">Rock</label><br>
+              <input type="checkbox" id="pop-checkbox" name="interested" value="pop">
+              <label for="pop-checkbox">Pop</label><br>
+              <input type="checkbox" id="indie-checkbox" name="interested" value="indie">
+              <label for="indie-checkbox">Indie</label><br>
+              <input type="checkbox" id="classical-checkbox" name="interested" value="classical">
+              <label for="classical-checkbox">Classical</label><br>
+            </div>
+          </div>
+
+          <div id="user-questions2" class="sub-entry">
+            <div class="input-container">
+              <label for="gender">Gender</label>
+              <input type="text" id="gender" name="gender" placeholder="Gender" class="full-width-input" value={{user.gender}} />
+            </div>
+
+            <div class="input-container">
+              <label for="city">City</label>
+              <input type="text" id="city" name="city" placeholder="City" class="full-width-input" value={{user.city}} />
+            </div>
+
+            <div class="input-container">
+              <label for="state">State</label>
+              <input type="text" id="state" name="state" placeholder="State" class="full-width-input" value={{user.state}} />
+            </div>
+
+            <div class="input-container">
+              <label for="age">Age</label>
+              <input type="number" id="age" name="age" placeholder="Age" class="full-width-input"value={{user.age}}  />
+            </div>
+
+            <div class="input-container" id="bio-container">
+              <label for="bio">Biography</label>
+              <textarea id="bio" name="bio" rows="4" placeholder="Biography" class="full-width-input" value={{user.bio}}> {{user.bio}}</textarea>
+            </div>
+          </div>
+          
+          <div class="button-container">
+            <button type="submit" class="submit">Update</button>
+          </div>
+          <a href="/users/update_pass"> Update password</a>
+          <br>
+        </div>
+      </form>
+    </article>
+  </section>
+</main>
+<footer>Created by Meghana Bhat, Kirsten Meidlinger, Ashish Negi and Paul Szenher</footer>

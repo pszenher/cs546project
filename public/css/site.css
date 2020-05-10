@@ -31,7 +31,7 @@ h2 {
 }
 
 .visible-nav {
-  display:block;
+  display: block;
 }
 
 a:link {
@@ -283,4 +283,15 @@ footer {
 
 .fa-thumbs-o-down:hover {
   color: rebeccapurple;
+}
+
+#msg {
+  color: green;
+  text-align: center;
+  display: none;
+}
+#msgFail {
+  color: red;
+  text-align: center;
+  display: none;
 }
