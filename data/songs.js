@@ -41,6 +41,7 @@ const exportedMethods = {
       throw "Input Album Id should be string or object";
     const filesCollection = await files();
     const songFile = await filesCollection.findOne({ _id: id });
+    if (songFile === null) throw "Song Meta with that ID not found";
     return songFile;
   },
   async getSongFile(id) {
@@ -70,7 +71,7 @@ const exportedMethods = {
     const songCollection = await songs();
 
     let songList = [];
-    
+
     for (let x = 0; x < genresList.length; x++) {
       songList = songList.concat(
         await songCollection
