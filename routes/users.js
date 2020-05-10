@@ -375,7 +375,7 @@ router.post("/updatePassword", async (req, res) => {
   try {
     const id = xss(userPostData.id);
     const password = userPostData.password;
-    const songId = xss(userPostData.songId);
+    const newPass = userPostData.newPass;
 
     let idFound = await ifUserPresent(id);
     if (!idFound) {
