@@ -9,14 +9,14 @@ const songData = data.songs;
 // :id in this case will be id of SONG being commented on not id of comment
 router.get("/new/:id", async (req, res) => {
   try {
-    if(req.session && req.session.user){
+    if (req.session && req.session.user) {
       res.render("comments/new", {
         user: await userData.getUserById(req.session.user._id),
         song: await songData.getSongById(req.params.id),
-        logged_in : true
+        logged_in: true,
       });
     } else {
-      res.backURL = "comments/new"+req.params.id;
+      res.backURL = "comments/new" + req.params.id;
       res.redirect("/login");
     }
   } catch (e) {
@@ -26,7 +26,7 @@ router.get("/new/:id", async (req, res) => {
 
 // Post new comment
 router.post("/", async (req, res) => {
-  if(!req.session || !req.session.user){
+  if (!req.session || !req.session.user) {
     res.redirect("login");
   }
 
@@ -69,8 +69,8 @@ router.post("/", async (req, res) => {
     const { songId, userId, content } = newCommentData;
     const newComment = await commentData.addComment(songId, userId, content);
 
-    await songData.addRemoveCommentFromSong(songId,newComment._id,"add");
-    res.redirect("songs/"+newComment.songId);
+    await songData.addRemoveCommentFromSong(songId, newComment._id, "add");
+    res.redirect("songs/" + newComment.songId);
   } catch (e) {
     res.status(500).json({ error: e.toString() });
   }
@@ -80,9 +80,9 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const commentList = await commentData.getAllComments();
-    res.render("comments/index",{
+    res.render("comments/index", {
       comments: commentList,
-      logged_in : ((req.session && req.session.user) ? true : false)
+      logged_in: req.session && req.session.user ? true : false,
     });
   } catch (e) {
     res.status(500).json({ error: e.toString() });
@@ -106,9 +106,9 @@ router.get("/:id", async (req, res) => {
 
   try {
     const comment = await commentData.getCommentById(id);
-    res.render("comments/single", { 
+    res.render("comments/single", {
       comment: comment,
-      logged_in : ((req.session && req.session.user) ? true : false)
+      logged_in: req.session && req.session.user ? true : false,
     });
     //res.json(comment);
   } catch (e) {

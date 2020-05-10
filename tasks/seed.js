@@ -8,7 +8,7 @@ const comments = data.comments;
 
 async function main() {
   console.log("Awaiting connection to database...");
-  const db = await dbConnection.db();
+  const db = await dbConnection();
   console.log("Connected to database");
 
   console.log("Dropping current database...");

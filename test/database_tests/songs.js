@@ -1,15 +1,5 @@
 const common = require("../common.js");
 
-after(async () => {
-  const db = await mongoConnection();
-  await db.music_db.serverConfig.close();
-});
-
-afterEach(async () => {
-  const db = await mongoConnection();
-  await db.music_db.dropDatabase();
-});
-
 describe("Songs DB Collection", function () {
   describe("addSong()", function () {
     it("should return the added song object when passed details", async function () {
