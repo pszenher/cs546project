@@ -20,12 +20,11 @@ router.get("/new", async (req, res) => {
 });
 router.get("/update_pass", async (req, res) => {
   try {
-    res.render("users/password", { logged_in: true, user: req.session.user });
-    /*if(req.session && req.session.user){
-      res.render("users/password", { logged_in :  true  ,user : req.session.user});
-     }else{
-      res.render("users/new", { logged_in :  false });
-     }*/
+    if (req.session && req.session.user) {
+      res.render("users/password", { logged_in: true, user: req.session.user });
+    } else {
+      res.render("users/new", { logged_in: false });
+    }
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
