@@ -3,9 +3,7 @@
 <script> 
   $(document).ready(function(){
     // Let's start writing AJAX calls!
-      var myProfileForm = $('#new-user-form');
-     
-  
+      var myProfileForm = $('#new-user-form'); 
       myProfileForm.submit(function (event) {
         event.preventDefault();
         $('#msg').hide();
@@ -53,12 +51,21 @@
           method: 'PATCH',
           url: '/users/'+id,
           contentType: 'application/json',
-          data: json
+          data: json,
+          success: function(json){
+            $('#msg').show();
+          },error: function (xhr, status, errorThrown) {  
+            $('#msgFail').append(xhr.responseText); 
+            $('#msgFail').show()           
+          }
         }
-        $.ajax(requestConfig).then(function (responseMessage) {
+       /* $.ajax(requestConfig).then(function (responseMessage) {
           $('#msg').show();
-        });
-    })
+        });*/
+        $.ajax(requestConfig);
+    
+     
+  })
   });
 
 </script>
@@ -78,6 +85,9 @@
     <article class="new-user">
       <div id="msg" >
          <p>Profile updated successfully </p>
+      </div>
+      <div id="msgFail" >
+         <p> </p>
       </div>
       <h2>Update Profile</h2>
       <form id="new-user-form">
