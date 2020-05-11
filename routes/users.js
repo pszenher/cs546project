@@ -21,12 +21,11 @@ router.get("/new", async (req, res) => {
 });
 router.get("/update_pass", async (req, res) => {
   try {
-    res.render("users/password", { logged_in: true, user: req.session.user });
-    /*if(req.session && req.session.user){
-      res.render("users/password", { logged_in :  true  ,user : req.session.user});
-     }else{
-      res.render("users/new", { logged_in :  false });
-     }*/
+    if (req.session && req.session.user) {
+      res.render("users/password", { logged_in: true, user: req.session.user });
+    } else {
+      res.render("users/new", { logged_in: false });
+    }
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
@@ -386,10 +385,14 @@ router.post("/updatePassword", async (req, res) => {
       const user = await userData.getUserById(id);
       passwordMatch = await bcrypt.compare(password, user.password);
       if (passwordMatch) {
-        const userPassword = await userData.updatePassword(id, newPass);
-        res.json({ msg: true });
+        try {
+          const userPassword = await userData.updatePassword(id, newPass);
+          res.json({ msg: true });
+        } catch (e) {
+          res.json({ msg: false, errormsg: "Please Provide new Password" });
+        }
       } else {
-        res.json({ msg: false });
+        res.json({ msg: false, errormsg: "Old pass word is Incorrect" });
       }
     } else {
       res.status(400).send({ error: "Bad Request" });
