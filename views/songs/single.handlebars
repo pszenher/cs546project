@@ -34,7 +34,7 @@
     <article class="song">
         <!-- Needs to be reformatted, everything is shown just for testing purposes, FIX index.handlebars TOO -->
         <div class="song">
-            <h2 class="song-title">{{song.title}} uploaded by {{song.author}}</h2> <!-- how to get author name -->
+            <h2 class="song-title">{{song.title}} uploaded by <a href="/users/{{user._id}}">{{user.firstName}} {{user.lastName}}</a></h2> <!-- how to get author name -->
             <ul class="song-info">
                 {{!-- {{!-- <li>Id: {{song._id}}</li> --}} 
                 {{!-- <li>File: {{song.file}}</li> --}}
@@ -43,7 +43,7 @@
                 <li>Dislikes: {{song.dislike_cnt}}</li>
             </ul>
             {{!-- <p>{{user}}</p> --}}
-            {{#if user}}
+            {{#if logged_in}}
             {{!-- <p>you are entered as users</p> --}}
             <i  onclick="location.href='../songs/like/{{song._id}}'" class="fa fa-thumbs-up"></i>
             <i  onclick="location.href='../songs/dislike/{{song._id}}'" class="fa fa-thumbs-o-down"></i>

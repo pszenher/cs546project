@@ -20,7 +20,7 @@
         <!-- Needs to be reformatted, everything is shown just for testing purposes, FIX single.handlebars TOO -->
         <div class="song">
             <!-- Make this a link that redirects to single song page -->
-            <h3 class="song-title" onclick="location.href='/songs/{{_id}}'">{{title}} uploaded by {{author}}</h3> <!-- how to get author name -->
+            <h3 class="song-title" onclick="location.href='/songs/{{_id}}'">{{title}} uploaded by {{artistName}}</h3> <!-- how to get author name -->
             <ul class="song-info">
                 {{!-- <li>Id: {{_id}}</li> --}}
                 {{!-- {{!-- <li>File: {{file}}</li> --}} 
@@ -28,8 +28,7 @@
                 <li>Likes: {{like_cnt}}</li>
                 <li>Dislikes: {{dislike_cnt}}</li>
             </ul>
-            {{!-- <p>{{../user}}</p> --}}
-            {{#if ../user}}
+            {{#if logged_in}}
             {{!-- <p>you are entered as users</p> --}}
             <i  onclick="location.href='./songs/like/{{_id}}'" class="fa fa-thumbs-up"></i>
             <i  onclick="location.href='./songs/dislike/{{_id}}'" class="fa fa-thumbs-o-down"></i>
