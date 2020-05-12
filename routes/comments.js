@@ -17,7 +17,6 @@ router.get("/new/:id", async (req, res) => {
         logged_in: true,
       });
     } else {
-      res.backURL = "comments/new" + req.params.id;
       res.redirect("/login");
     }
   } catch (e) {
@@ -83,10 +82,16 @@ router.post("/", async (req, res) => {
 // Get all comments
 router.get("/", async (req, res) => {
   try {
-    const commentList = await commentData.getAllComments();
+    let commentList = await commentData.getAllComments();
+    let user = null;
+    for(let x=0;x<commentList.length;x++){
+      user = await userData.getUserById(commentList[x].userId);
+      commentList[x].userName = user.firstName + " " + user.lastName;
+    }
+
     res.render("comments/index", {
       comments: commentList,
-      logged_in: req.session && req.session.user ? true : false,
+      logged_in: req.session && req.session.user ? true : false
     });
   } catch (e) {
     res.status(500).json({ error: e.toString() });
@@ -109,10 +114,13 @@ router.get("/:id", async (req, res) => {
   }
 
   try {
-    const comment = await commentData.getCommentById(id);
+    let comment = await commentData.getCommentById(id);
+    let user = await userData.getUserById(comment.userId);
+    comment.userName = user.firstName + " " + user.lastName;
+
     res.render("comments/single", {
       comment: comment,
-      logged_in: req.session && req.session.user ? true : false,
+      logged_in: req.session && req.session.user ? true : false
     });
     //res.json(comment);
   } catch (e) {

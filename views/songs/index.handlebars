@@ -4,7 +4,7 @@
 <header>
     <div class="navbar">
         <a href="/songs">Home</a>
-        <a href="/songs/uploaded">Songs</a>
+        <a {{#if logged_in}} style="display:inline;" {{else}} style="display:none;" {{/if}} href="/songs/uploaded">Songs</a>
         <a {{#if logged_in}} href="/logout">Log Out {{else}} href="/login">Log In {{/if}} </a>
         <a {{#if logged_in}} style="display:none;" {{/if}} href="/users/new">Create an Account</a>
         <a {{#if logged_in}} style="display:inline;" {{else}} style="display:none;" {{/if}} href="/songs/new">Post a Song</a>
@@ -20,7 +20,7 @@
         <!-- Needs to be reformatted, everything is shown just for testing purposes, FIX single.handlebars TOO -->
         <div class="song">
             <!-- Make this a link that redirects to single song page -->
-            <h3 class="song-title" onclick="location.href='/songs/{{_id}}'">{{title}} uploaded by {{author}}</h3> <!-- how to get author name -->
+            <h3 class="song-title" onclick="location.href='/songs/{{_id}}'">{{title}} uploaded by {{artistName}}</h3> <!-- how to get author name -->
             <ul class="song-info">
                 {{!-- <li>Id: {{_id}}</li> --}}
                 {{!-- {{!-- <li>File: {{file}}</li> --}} 
@@ -28,14 +28,13 @@
                 <li>Likes: {{like_cnt}}</li>
                 <li>Dislikes: {{dislike_cnt}}</li>
             </ul>
-            {{!-- <p>{{../user}}</p> --}}
-            {{#if ../user}}
+            {{#if ../logged_in}}
             {{!-- <p>you are entered as users</p> --}}
-            <i  onclick="location.href='./songs/like/{{_id}}'" class="fa fa-thumbs-up"></i>
-            <i  onclick="location.href='./songs/dislike/{{_id}}'" class="fa fa-thumbs-o-down"></i>
+            <i  onclick="location.href='/songs/like/{{_id}}'" class="fa fa-thumbs-up"></i>
+            <i  onclick="location.href='/songs/dislike/{{_id}}'" class="fa fa-thumbs-o-down"></i>
             {{else}}
-            <i onclick="location.href='./login'" class="fa fa-thumbs-up" id="like_songs"></i>
-            <i onclick="location.href='./login'" class="fa fa-thumbs-o-down" id="dislike_songs"></i>
+            <i onclick="location.href='/login'" class="fa fa-thumbs-up" id="like_songs"></i>
+            <i onclick="location.href='/login'" class="fa fa-thumbs-o-down" id="dislike_songs"></i>
             {{/if}}
 
             <a href= "/songs/{{_id}}"> Play </a>
