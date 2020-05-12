@@ -28,18 +28,13 @@
             
             <div class="input-container">
               <label for="first-name">First Name</label>
-              <input type="text" id="first-name"  name="firstName" placeholder="First Name" class="full-width-input" value={{user.firstName}}  data-value={{user._id}}/>
+              <input type="text" id="first-name"  name="firstName" placeholder="First Name" class="full-width-input" value="{{user.firstName}}"  data-value={{user._id}}/>
             </div>
 
             <div class="input-container">
               <label for="last-name">Last Name</label>
-              <input type="text" id="last-name" name="lastName" placeholder="Last Name" class="full-width-input" value={{user.lastName}} />
+              <input type="text" id="last-name" name="lastName" placeholder="Last Name" class="full-width-input" value="{{user.lastName}}" />
             </div>
-
-            {{!-- <div class="input-container">
-              <label for="email">Email</label>
-              <input type="text" id="email" name="email" placeholder="Email" class="full-width-input" value={{user.email}} />
-            </div> --}}
 
 
             <div class="input-container" id='checkbox-container'>
@@ -58,27 +53,27 @@
           <div id="user-questions2" class="sub-entry">
             <div class="input-container">
               <label for="gender">Gender</label>
-              <input type="text" id="gender" name="gender" placeholder="Gender" class="full-width-input" value={{user.gender}} />
+              <input type="text" id="gender" name="gender" placeholder="Gender" class="full-width-input" value="{{user.gender}}"/>
             </div>
 
             <div class="input-container">
               <label for="city">City</label>
-              <input type="text" id="city" name="city" placeholder="City" class="full-width-input" value={{user.city}} />
+              <input type="text" id="city" name="city" placeholder="City" class="full-width-input" value="{{user.city}}" />
             </div>
 
             <div class="input-container">
               <label for="state">State</label>
-              <input type="text" id="state" name="state" placeholder="State" class="full-width-input" value={{user.state}} />
+              <input type="text" id="state" name="state" placeholder="State" class="full-width-input" value="{{user.state}}" />
             </div>
 
             <div class="input-container">
               <label for="age">Age</label>
-              <input type="number" id="age" name="age" placeholder="Age" class="full-width-input"value={{user.age}}  />
+              <input type="number" id="age" name="age" placeholder="Age" class="full-width-input"value="{{user.age}}"  />
             </div>
 
             <div class="input-container" id="bio-container">
               <label for="bio">Biography</label>
-              <textarea id="bio" name="bio" rows="4" placeholder="Biography" class="full-width-input" value={{user.bio}}> {{user.bio}}</textarea>
+              <textarea id="bio" name="bio" rows="4" placeholder="Biography" class="full-width-input" value="{{user.bio}}"> {{user.bio}}</textarea>
             </div>
           </div>
           
