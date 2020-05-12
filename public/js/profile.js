@@ -1,6 +1,6 @@
 $(document).ready(function () {
   // Let's start writing AJAX calls!
-  var myProfileForm = $("#new-user-form");
+  var myProfileForm = $("#update-user-form");
   myProfileForm.submit(function (event) {
     event.preventDefault();
     $("#msg").hide();
