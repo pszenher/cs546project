@@ -28,6 +28,17 @@ app.set("view engine", "handlebars");
 
 configRoutes(app);
 
+app.use(function (err, req, res, next) {
+  try {
+    res.render("." + req.url, {
+      hasErrors: true,
+      errors: [err.message],
+    });
+  } catch (e) {
+    res.status(500).send(err);
+  }
+});
+
 app.listen(3000, () => {
   console.log("We've now got a server!");
   console.log("Your routes will be running on http://localhost:3000");
