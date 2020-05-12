@@ -213,9 +213,10 @@ router.post("/", upload.single("file"), async (req, res) => {
   let file = req.file; //file
 
   if (!file) {
-    res
-      .status(400)
-      .json({ error: "you must provide song file (smaller than 100MB)" });
+    res.render("songs/new", {
+      errors: ["Song file must be MP3 type and smaller than 100MB"],
+    });
+    return;
   }
 
   if (!songInfo) {
@@ -256,6 +257,16 @@ router.post("/", upload.single("file"), async (req, res) => {
     res.redirect(`songs/${newSong._id}`);
   } catch (e) {
     res.status(500).json({ error: e.message });
+  }
+});
+
+router.use(function (err, req, res, next) {
+  try {
+    res.render("songs/new", {
+      errors: [err.message],
+    });
+  } catch (e) {
+    res.status(500).send(err);
   }
 });
 
