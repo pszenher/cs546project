@@ -1,10 +1,43 @@
+const fs = require("fs");
 const dbConnection = require("../config/mongoConnection");
 const ObjectId = require("mongodb").ObjectId;
+const multer = require("multer");
+const GridFsStorage = require("multer-gridfs-storage");
+const MockExpressRequest = require("mock-express-request");
+const FormData = require("form-data");
 
 const data = require("../data/");
 const users = data.users;
 const songs = data.songs;
 const comments = data.comments;
+
+async function uploadFileGridFS(multerHandle, filename) {
+  if (typeof multerHandle !== "object")
+    throw new TypeError(
+      "Expected object type for multerHandle, got: " + typeof multerHandle
+    );
+  if (typeof filename !== "string")
+    throw new TypeError(
+      "Expecetd string type for filename, got: " + typeof filename
+    );
+
+  const form = new FormData();
+  form.append(filename, fs.createReadStream(filename));
+
+  const request = new MockExpressRequest({
+    method: "POST",
+    host: "localhost",
+    url: "",
+    headers: form.getHeaders(),
+  });
+
+  await form.pipe(request);
+  return new Promise((resolve, reject) => {
+    multerHandle.single(filename)(request, {}, () => {
+      resolve(request.file);
+    });
+  });
+}
 
 async function main() {
   console.log("Awaiting connection to database...");
@@ -13,6 +46,10 @@ async function main() {
 
   console.log("Dropping current database...");
   await db.dropDatabase();
+
+  console.log("Configuring GridFS connection...");
+  const storage = new GridFsStorage({ db: db });
+  const upload = multer({ storage });
 
   console.log("Seeding new database...");
   const testUser1 = await users.addUser(
@@ -54,43 +91,63 @@ async function main() {
     ["Alternative"]
   );
 
+  const testUser1Song1Data = await uploadFileGridFS(
+    upload,
+    "./tasks/seed_data/Good_God.mp3"
+  );
   const testUser1Song1 = await songs.addSong(
-    ObjectId(),
-    "Test Jam #1",
-    ["Rock"],
+    testUser1Song1Data.id,
+    "Good God",
+    ["Pop"],
     testUser1._id
   );
   await users.addSongToUser(testUser1._id, testUser1Song1._id);
 
+  const testUser1Song2Data = await uploadFileGridFS(
+    upload,
+    "./tasks/seed_data/Hangtime.mp3"
+  );
   const testUser1Song2 = await songs.addSong(
-    ObjectId(),
-    "Test Jam #2",
-    ["Pop", "Rock"],
+    testUser1Song2Data.id,
+    "Hangtime",
+    ["Hip-hop", "Trap"],
     testUser1._id
   );
   await users.addSongToUser(testUser1._id, testUser1Song2._id);
 
+  const testUser2Song1Data = await uploadFileGridFS(
+    upload,
+    "./tasks/seed_data/Hustle_Muscle.mp3"
+  );
   const testUser2Song1 = await songs.addSong(
-    ObjectId(),
-    "no tears left to cry",
-    ["Pop", "R&B"],
-    testUser1._id
+    testUser2Song1Data.id,
+    "Hustle Muscle",
+    ["Trap"],
+    testUser2._id
   );
   await users.addSongToUser(testUser2._id, testUser2Song1._id);
 
+  const testUser2Song2Data = await uploadFileGridFS(
+    upload,
+    "./tasks/seed_data/Sad_Circus.mp3"
+  );
   const testUser2Song2 = await songs.addSong(
-    ObjectId(),
-    "Good as Hell",
-    ["Pop"],
-    testUser1._id
+    testUser2Song2Data.id,
+    "Sad Circus",
+    ["R&B"],
+    testUser2._id
   );
   await users.addSongToUser(testUser2._id, testUser2Song2._id);
 
+  const testUser2Song3Data = await uploadFileGridFS(
+    upload,
+    "./tasks/seed_data/They_Say.mp3"
+  );
   const testUser2Song3 = await songs.addSong(
-    ObjectId(),
-    "7 rings",
-    ["Pop"],
-    testUser1._id
+    testUser2Song3Data.id,
+    "They Say",
+    ["Indie"],
+    testUser2._id
   );
   await users.addSongToUser(testUser2._id, testUser2Song3._id);
 
