@@ -34,6 +34,9 @@
     let state_error_container = document.getElementById("state_user-container");
     let age_error_container = document.getElementById("age_user-container");
     let bio_error_container = document.getElementById("bio_user-container");
+    let backend_error_container = document.getElementById(
+      "email_backend_checking"
+    );
 
     userForm.addEventListener("submit", (event) => {
       event.preventDefault();
@@ -63,7 +66,10 @@
         // const pop_input_value = pop_input.value;
         // const indie_input_value = indie_input.value;
         // const classical_input_value = classical_input.value;
-
+        if (backend_error_container) {
+          // console.log("errors")
+          backend_error_container.hidden = false;
+        }
         console.log(rock_input.checked);
         console.log(pop_input.checked);
         console.log(indie_input.checked);
@@ -78,6 +84,9 @@
           first_error_container.hidden = false;
           flag = 1;
           console.log(first_error_container);
+          if (backend_error_container) {
+            backend_error_container.hidden = true;
+          }
         }
 
         if (!last_name_value) {
@@ -85,6 +94,9 @@
           last_error_container.hidden = false;
           flag = 1;
           console.log(last_error_container);
+          if (backend_error_container) {
+            backend_error_container.hidden = true;
+          }
         }
 
         if (!email_value) {
@@ -92,6 +104,9 @@
           email_error_container.hidden = false;
           flag = 1;
           console.log(email_error_container);
+          if (backend_error_container) {
+            backend_error_container.hidden = true;
+          }
         }
 
         if (!password_value) {
@@ -99,6 +114,9 @@
           password_error_container.hidden = false;
           flag = 1;
           console.log(password_error_container);
+          if (backend_error_container) {
+            backend_error_container.hidden = true;
+          }
         }
 
         if (
@@ -111,6 +129,9 @@
           interest_error_container.hidden = false;
           flag = 1;
           console.log(interest_error_container);
+          if (backend_error_container) {
+            backend_error_container.hidden = true;
+          }
         }
 
         if (!gender_value) {
@@ -118,6 +139,9 @@
           gender_error_container.hidden = false;
           flag = 1;
           console.log(gender_error_container);
+          if (backend_error_container) {
+            backend_error_container.hidden = true;
+          }
         }
 
         if (!city_value) {
@@ -125,6 +149,9 @@
           city_error_container.hidden = false;
           flag = 1;
           console.log(city_error_container);
+          if (backend_error_container) {
+            backend_error_container.hidden = true;
+          }
         }
 
         if (!state_value) {
@@ -132,6 +159,9 @@
           state_error_container.hidden = false;
           flag = 1;
           console.log(state_error_container);
+          if (backend_error_container) {
+            backend_error_container.hidden = true;
+          }
         }
 
         if (!age_value) {
@@ -139,6 +169,9 @@
           age_error_container.hidden = false;
           flag = 1;
           console.log(age_error_container);
+          if (backend_error_container) {
+            backend_error_container.hidden = true;
+          }
         }
 
         if (!biography_value) {
@@ -146,6 +179,9 @@
           bio_error_container.hidden = false;
           flag = 1;
           console.log(bio_error_container);
+          if (backend_error_container) {
+            backend_error_container.hidden = true;
+          }
         }
 
         if (flag == 0) {

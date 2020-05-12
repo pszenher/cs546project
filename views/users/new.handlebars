@@ -16,6 +16,9 @@
   <section>
     <article class="new-user">
       <h2>Create an Account</h2>
+      {{#if errors}}
+          <div class="alert alert-danger" id="email_backend_checking">{{errors}}</div>
+      {{/if}}
       <form method="POST" id="new-user-form">
         <div id="user-questions">
           <div id="user-questions1" class="sub-entry">

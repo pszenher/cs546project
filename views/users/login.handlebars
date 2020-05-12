@@ -15,6 +15,9 @@
     <section>
         <article class="login">
             <h2>Login Page</h2>
+            {{#if errors}}
+                <div class="alert alert-danger" id="backend_checking">{{errors}}</div>
+            {{/if}}
             <form method="POST" id="login-form">
                 <div id="login-questions">
                     <div class="input-container">
