@@ -13,7 +13,7 @@ router.get("/new", async (req, res) => {
     } else {
       res.render("users/new", {
         logged_in: false,
-        user: null
+        user: null,
       });
     }
   } catch (e) {
@@ -128,7 +128,8 @@ router.post("/", async (req, res) => {
       res.render("users/single", {
         user: newUser,
         logged_in: req.session && req.session.user ? true : false,
-        logged_in_user: req.session && req.session.user ? req.session.user : null,
+        logged_in_user:
+          req.session && req.session.user ? req.session.user : null,
       });
     } else {
       res.status(400).send({ error: "Bad Request" });
@@ -400,7 +401,16 @@ router.post("/updatePassword", async (req, res) => {
         res.json({ msg: false, errormsg: "Old password is Incorrect" });
       }
     } else {
-      res.json({ msg: false, errormsg: "Both the fileds are empty" });
+      if (
+        (password == "" || password == null) &&
+        (newPass == "" || newPass == null)
+      ) {
+        res.json({ msg: false, errormsg: "Both the fileds are empty" });
+      } else if (password == "" || password == null) {
+        res.json({ msg: false, errormsg: "Please enter old password" });
+      } else {
+        res.json({ msg: false, errormsg: "It is a bad Request" });
+      }
     }
   } catch (e) {
     res.status(500).send({ error: e });
