@@ -397,10 +397,10 @@ router.post("/updatePassword", async (req, res) => {
           res.json({ msg: false, errormsg: "Please Provide new Password" });
         }
       } else {
-        res.json({ msg: false, errormsg: "Old pass word is Incorrect" });
+        res.json({ msg: false, errormsg: "Old password is Incorrect" });
       }
     } else {
-      res.status(400).send({ error: "Bad Request" });
+      res.json({ msg: false, errormsg: "Both the fileds are empty" });
     }
   } catch (e) {
     res.status(500).send({ error: e });
