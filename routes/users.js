@@ -157,7 +157,6 @@ router.patch("/:id", async (req, res) => {
     let {
       firstName,
       lastName,
-      // email,
       gender,
       city,
       state,
@@ -168,7 +167,6 @@ router.patch("/:id", async (req, res) => {
 
     firstName = xss(firstName);
     lastName = xss(lastName);
-    // email = xss(email);
     gender = xss(gender);
     city = xss(city);
     state = xss(state);
@@ -180,7 +178,6 @@ router.patch("/:id", async (req, res) => {
       req.params.id,
       firstName,
       lastName,
-      // email,
       gender,
       city,
       state,
@@ -195,147 +192,6 @@ router.patch("/:id", async (req, res) => {
     console.log(e);
   }
 });
-
-router.post("/addSongToPlaylist", async (req, res) => {
-  const userPostData = req.body;
-  try {
-    const id = xss(userPostData.id);
-    const songId = xss(userPostData.songId);
-
-    let idFound = await ifUserPresent(id);
-
-    if (!idFound) {
-      res.status(404).send({ error: "User not found" });
-      return;
-    }
-    if (id && songId) {
-      const user = await userData.addSongToPlaylist(id, songId);
-      res.json(user);
-    } else {
-      res.status(400).send({ error: "Bad Request" });
-    }
-  } catch (e) {
-    res.status(500).send({ error: e });
-    console.log(e);
-  }
-});
-router.post("/removeSongFromPlaylist", async (req, res) => {
-  const userPostData = req.body;
-  try {
-    const id = xss(userPostData.id);
-    const songId = xss(userPostData.songId);
-
-    let idFound = await ifUserPresent(id);
-
-    if (!idFound) {
-      res.status(404).send({ error: "User not found" });
-      return;
-    }
-    if (id && songId) {
-      const user = await userData.removeSongFromPlaylist(id, songId);
-      res.json(user);
-    } else {
-      res.status(400).send({ error: "Bad Request" });
-    }
-  } catch (e) {
-    res.status(500).send({ error: e });
-    console.log(e);
-  }
-});
-router.post("/addLikedSong", async (req, res) => {
-  const userPostData = req.body;
-  try {
-    const id = xss(userPostData.id);
-    const songId = xss(userPostData.songId);
-
-    let idFound = await ifUserPresent(id);
-
-    if (!idFound) {
-      res.status(404).send({ error: "User not found" });
-      return;
-    }
-    if (id && songId) {
-      const user = await userData.addLikedSong(id, songId);
-      res.json(user);
-    } else {
-      res.status(400).send({ error: "Bad Request" });
-    }
-  } catch (e) {
-    res.status(500).send({ error: e });
-    console.log(e);
-  }
-});
-router.post("/removeLikedSong", async (req, res) => {
-  const userPostData = req.body;
-  try {
-    const id = xss(userPostData.id);
-    const songId = xss(userPostData.songId);
-
-    let idFound = await ifUserPresent(id);
-
-    if (!idFound) {
-      res.status(404).send({ error: "User not found" });
-      return;
-    }
-    if (id && songId) {
-      const user = await userData.removeLikedSong(id, songId);
-      res.json(user);
-    } else {
-      res.status(400).send({ error: "Bad Request" });
-    }
-  } catch (e) {
-    res.status(500).send({ error: e });
-    console.log(e);
-  }
-});
-
-router.post("/addDisLikedSong", async (req, res) => {
-  const userPostData = req.body;
-  try {
-    const id = xss(userPostData.id);
-    const songId = xss(userPostData.songId);
-
-    let idFound = await ifUserPresent(id);
-
-    if (!idFound) {
-      res.status(404).send({ error: "User not found" });
-      return;
-    }
-    if (id && songId) {
-      const user = await userData.addDisLikedSong(id, songId);
-      res.json(user);
-    } else {
-      res.status(400).send({ error: "Bad Request" });
-    }
-  } catch (e) {
-    res.status(500).send({ error: e });
-    console.log(e);
-  }
-});
-router.post("/removeDisLikedSong", async (req, res) => {
-  const userPostData = req.body;
-  try {
-    const id = xss(userPostData.id);
-    const songId = xss(userPostData.songId);
-
-    let idFound = await ifUserPresent(id);
-
-    if (!idFound) {
-      res.status(404).send({ error: "User not found" });
-      return;
-    }
-    if (id && songId) {
-      const user = await userData.removeDisLikedSong(id, songId);
-      res.json(user);
-    } else {
-      res.status(400).send({ error: "Bad Request" });
-    }
-  } catch (e) {
-    res.status(500).send({ error: e });
-    console.log(e);
-  }
-});
-
 router.post("/addSongToUser", async (req, res) => {
   const userPostData = req.body;
   try {
@@ -423,19 +279,6 @@ router.post("/updatePassword", async (req, res) => {
   } catch (e) {
     res.status(500).send({ error: e });
     console.log(e);
-  }
-});
-router.delete("/:id", async (req, res) => {
-  let idFound = await ifUserPresent(req.params.id);
-  if (idFound) {
-    try {
-      const deletedUser = await userData.removeUser(req.params.id);
-      res.json(deletedUser);
-    } catch (e) {
-      res.status(500).send({ error: e });
-    }
-  } else {
-    res.status(404).send({ error: "User not found" });
   }
 });
 

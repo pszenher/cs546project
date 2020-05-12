@@ -321,47 +321,4 @@ router.get("/dislike/:id", async (req, res) => {
   res.redirect(`/songs/${req.params.id}`);
 });
 
-router.patch("/:id", async (req, res) => {
-  let updatedData = req.body;
-  try {
-    let x = await songData.getSongById(req.params.id);
-  } catch (e) {
-    res.status(404).json({ error: "Song not found" });
-    return;
-  }
-
-  try {
-    updatedData.title = xss(updatedData.title);
-    updatedData.genre = xss(updatedData.genre);
-
-    const updatedSong = await songData.updateSong(req.params.id, updatedData);
-    res.json(updatedSong);
-  } catch (e) {
-    console.log(e);
-    res.status(400).json({ error: e });
-  }
-});
-
-router.delete("/:id", async (req, res) => {
-  try {
-    deleted_record = await songData.getSongById(req.params.id);
-    output_record = {};
-    output_record.deleted = true;
-    output_record.data = deleted_record;
-  } catch (e) {
-    console.log(e);
-    res.status(404).json({ error: "Song not found" });
-    return;
-  }
-
-  try {
-    await songData.removeSong(req.params.id);
-    await userData.removeSongFromUser(deleted_record.author, req.params.id);
-    res.json(output_record);
-  } catch (e) {
-    console.log(e);
-    res.sendStatus(500);
-  }
-});
-
 module.exports = router;
