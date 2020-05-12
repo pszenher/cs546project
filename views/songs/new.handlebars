@@ -16,8 +16,11 @@
 <main>
   <section>
     <article class="new-song">
-      <h2>Post a Song</h2>
-      <form method="POST" class="new-song-form" id="new_song_form" enctype="multipart/form-data">
+    <h2>Post a Song</h2>
+    {{#if errors}}
+      <div class="alert alert-danger" id="file_backend_checking">{{errors}}</div>
+    {{/if}}
+    <form method="POST" class="new-song-form" id="new_song_form" enctype="multipart/form-data">
         <div id="song-questions">
           <div class="sub-entry">
             <div class="input-container">
