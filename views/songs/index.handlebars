@@ -28,7 +28,7 @@
                 <li>Likes: {{like_cnt}}</li>
                 <li>Dislikes: {{dislike_cnt}}</li>
             </ul>
-            {{#if logged_in}}
+            {{#if ../logged_in}}
             {{!-- <p>you are entered as users</p> --}}
             <i  onclick="location.href='/songs/like/{{_id}}'" class="fa fa-thumbs-up"></i>
             <i  onclick="location.href='/songs/dislike/{{_id}}'" class="fa fa-thumbs-o-down"></i>

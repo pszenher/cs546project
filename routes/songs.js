@@ -40,8 +40,10 @@ router.get("/new", async (req, res) => {
   }
 });
 
+// songs uploaded by a specific user with this
 router.get("/user/:id", async (req,res) => {
   try {
+    console.log("reached user/id");
     const user = await userData.getUserById(req.params.id);
     if(user != undefined) {
       let songList = await songData.getSongByUser(req.params.id);
@@ -231,6 +233,7 @@ router.post("/", upload.single("file"), async (req, res) => {
 });
 
 router.get("/like/:id", async (req, res) => {
+  console.log("reached like/id");
   let checkLikeDislike = await userData.checkLikeDislike(
     req.session.user._id,
     req.params.id
@@ -254,6 +257,7 @@ router.get("/like/:id", async (req, res) => {
 });
 
 router.get("/dislike/:id", async (req, res) => {
+  console.log("reached dislike/id");
   let checkLikeDislike = await userData.checkLikeDislike(
     req.session.user._id,
     req.params.id
