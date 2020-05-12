@@ -15,22 +15,30 @@
 <h1>Grapevine</h1>
 <main>
     <script>
-    $(document).ready(function(){
-        let x = document.getElementById("audio_tag");
-        
-        x.style.display = "none";
-        
-        $('#play_song').on('click', function (e) {
-            const song_id = $(this).data("value")
-            //alert("Your values are :"+ $(this).data("value"));
-            $.get("/songs/url/" + song_id.toString(), function(data, status){
-                x.style.display = "block";
-        
-                $("#audio_id").attr("src", data._url);
-            });        
-        }); 
-    
-    });
+     $(document).ready(function(){
+         let x = document.getElementById("audio_tag");
+         
+         x.style.display = "none";
+         
+         $('#play_song').on('click', function (e) {
+             const song_id = $(this).data("value")
+             //alert("Your values are :"+ $(this).data("value"));
+             $.get("/songs/url/" + song_id.toString(), function(data, status){
+                 x.style.display = "block";
+                 
+                 $("#audio_id").attr("src", data._url);
+             });        
+         }); 
+         $('#download_song').on('click', function (e) {
+             const song_id = $(this).data("value")
+             $.get("/songs/url/" + song_id.toString(), function(data, status){
+                 var a = document.createElement("a");
+                 a.href = data._url;
+                 a.setAttribute("download", "song.mp3");
+                 a.click();
+             });
+         });
+     });
     </script>
     <article class="song">
         <!-- Needs to be reformatted, everything is shown just for testing purposes, FIX index.handlebars TOO -->
@@ -52,10 +60,11 @@
             {{/if}}
 
             {{!-- <audio controls src={{song._url}} type="audio/mpeg" />  --}}
+            <button type="button" id="download_song" data-value="{{song._id}}">Download</button>
             <button type="button" id="play_song" data-value="{{song._id}}" >Play</button>
             <div id="audio_tag" >
-                    <audio id ="audio_id"controls src="" type="audio/mpeg" /> 
-                </div>
+                <audio id ="audio_id"controls src="" type="audio/mpeg" /> 
+            </div>
             <button type="button" id="comment-button" onclick="location.href='/comments/new/{{song._id}}'">Add a Comment</button>
             {{#each comments}}
             <article class="comment">
