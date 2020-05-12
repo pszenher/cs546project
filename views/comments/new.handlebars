@@ -19,7 +19,7 @@
   <section>
     <article class="new-comment">
       <h1 id="comment-page-title">Leave a Comment on {{song.title}}</h1>
-      <form action="/comments" method="POST" class="new-comment-form">
+      <form method="POST" id="new_comment_form" class="new-comment-form">
         <div class="comment-questions">
           <input type="hidden" id="userId" name="userId" value="{{user._id}}">
           <input type="hidden" id="songId" name="songId" value="{{song._id}}">
@@ -28,6 +28,7 @@
             <label for="comment-content">Comment Content</label>
             <textarea id="comment-content" name="content" rows="4" placeholder="Comment Content" class="full-width-input"></textarea>
           </div>
+          <div class="alert alert-danger" id="comment_box-container" hidden>* Comment not provided</div>
           <div class="button-container">
             <button type="submit" class="submit">Post Comment</button>
           </div>
@@ -48,3 +49,4 @@
   </section>
 </main>
 <footer>Created by Meghana Bhat, Kirsten Meidlinger, Ashish Negi and Paul Szenher</footer>
+<script src="/js/comment.js"></script>
