@@ -189,9 +189,6 @@ module.exports = {
       { _id: id },
       { $set: updateBody }
     );
-    if (updatedInfo.modifiedCount === 0) {
-      throw `could not Update Liked  song successfully`;
-    }
 
     return await this.getUserById(id);
   },
