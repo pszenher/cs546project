@@ -157,7 +157,6 @@ router.patch("/:id", async (req, res) => {
     let {
       firstName,
       lastName,
-      // email,
       gender,
       city,
       state,
@@ -168,7 +167,6 @@ router.patch("/:id", async (req, res) => {
 
     firstName = xss(firstName);
     lastName = xss(lastName);
-    // email = xss(email);
     gender = xss(gender);
     city = xss(city);
     state = xss(state);
@@ -180,7 +178,6 @@ router.patch("/:id", async (req, res) => {
       req.params.id,
       firstName,
       lastName,
-      // email,
       gender,
       city,
       state,
