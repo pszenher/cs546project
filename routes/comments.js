@@ -91,7 +91,8 @@ router.get("/", async (req, res) => {
 
     res.render("comments/index", {
       comments: commentList,
-      logged_in: req.session && req.session.user ? true : false
+      logged_in: req.session && req.session.user ? true : false,
+      user: await userData.getUserById(req.session.user._id)
     });
   } catch (e) {
     res.status(500).json({ error: e.toString() });
@@ -122,7 +123,6 @@ router.get("/:id", async (req, res) => {
       comment: comment,
       logged_in: req.session && req.session.user ? true : false
     });
-    //res.json(comment);
   } catch (e) {
     res.status(404).json({ message: "Comment with id '" + id + "' not found" });
   }
