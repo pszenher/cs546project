@@ -2,6 +2,7 @@ const mongoCollections = require("../config/mongoCollections");
 const songs = mongoCollections.songs;
 const files = mongoCollections.files;
 const gridChunks = mongoCollections.chunks;
+const userData = require("./users");
 const { ObjectId } = require("mongodb");
 
 const id_check = async function (id) {
@@ -252,7 +253,7 @@ const exportedMethods = {
     const songList = await songCollection.find({ author: id }).toArray();
 
     return songList;
-  },
+  }
 };
 
 module.exports = exportedMethods;
