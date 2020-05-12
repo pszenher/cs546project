@@ -41,7 +41,6 @@ router.post("/", async (req, res) => {
       if (passwordMatch) {
         req.session.user = newUser;
         res.redirect("users/" + newUser._id);
-        // res.json(newUser);
       } else {
         // res.status(401).send({ error: "Email or password is wrong" });
         res.render("users/login", {

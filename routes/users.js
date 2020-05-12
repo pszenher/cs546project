@@ -12,7 +12,8 @@ router.get("/new", async (req, res) => {
       res.redirect("./" + req.session.user._id);
     } else {
       res.render("users/new", {
-        logged_in: req.session && req.session.user ? true : false,
+        logged_in: false,
+        user: null,
       });
     }
   } catch (e) {
@@ -24,7 +25,7 @@ router.get("/update_pass", async (req, res) => {
     if (req.session && req.session.user) {
       res.render("users/password", { logged_in: true, user: req.session.user });
     } else {
-      res.render("users/new", { logged_in: false });
+      res.render("users/new", { logged_in: false, user: null });
     }
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -35,7 +36,7 @@ router.get("/profile", async (req, res) => {
     if (req.session && req.session.user) {
       res.render("users/profile", { logged_in: true, user: req.session.user });
     } else {
-      res.render("users/new", { logged_in: false });
+      res.render("users/new", { logged_in: false, user: null });
     }
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -49,18 +50,21 @@ router.get("/:id", async (req, res) => {
     res.render("users/single", {
       user: user,
       logged_in: req.session && req.session.user ? true : false,
+      logged_in_user: req.session && req.session.user ? req.session.user : null,
     });
     //res.json(user);
   } catch (e) {
     res.status(404).json({ error: "User not found" });
   }
 });
+
 router.get("/", async (req, res) => {
   try {
     const userList = await userData.getAllUsers();
     res.render("users/index", {
       users: userList,
       logged_in: req.session && req.session.user ? true : false,
+      user: req.session && req.session.user ? req.session.user : null,
     });
     //res.json(userList);
   } catch (e) {
@@ -125,6 +129,8 @@ router.post("/", async (req, res) => {
         res.render("users/single", {
           user: newUser,
           logged_in: req.session && req.session.user ? true : false,
+          logged_in_user:
+            req.session && req.session.user ? req.session.user : null,
         });
       } catch (e) {
         res.render("users/new", {
@@ -399,10 +405,19 @@ router.post("/updatePassword", async (req, res) => {
           res.json({ msg: false, errormsg: "Please Provide new Password" });
         }
       } else {
-        res.json({ msg: false, errormsg: "Old pass word is Incorrect" });
+        res.json({ msg: false, errormsg: "Old password is Incorrect" });
       }
     } else {
-      res.status(400).send({ error: "Bad Request" });
+      if (
+        (password == "" || password == null) &&
+        (newPass == "" || newPass == null)
+      ) {
+        res.json({ msg: false, errormsg: "Both the fileds are empty" });
+      } else if (password == "" || password == null) {
+        res.json({ msg: false, errormsg: "Please enter old password" });
+      } else {
+        res.json({ msg: false, errormsg: "It is a bad Request" });
+      }
     }
   } catch (e) {
     res.status(500).send({ error: e });

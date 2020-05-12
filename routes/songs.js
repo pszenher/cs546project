@@ -19,7 +19,19 @@ const mongoConnection = require("../config/mongoConnection");
 const storage = new GridFsStorage({ db: mongoConnection() });
 
 // Set multer storage engine to the newly created object
-const upload = multer({ storage });
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 100000000,
+  },
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype == "audio/mpeg") {
+      cb(null, true);
+    } else {
+      cb(null, false);
+    }
+  },
+});
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
@@ -27,7 +39,7 @@ router.use(bodyParser.urlencoded({ extended: true }));
 router.get("/new", async (req, res) => {
   try {
     if (req.session && req.session.user) {
-      let user = await userData.getUserById(req.session.user._id);
+      let user = req.session.user;
       res.render("songs/new", {
         user: user,
         logged_in: req.session && req.session.user ? true : false,
@@ -41,23 +53,27 @@ router.get("/new", async (req, res) => {
 });
 
 // songs uploaded by a specific user with this
-router.get("/user/:id", async (req,res) => {
+router.get("/user/:id", async (req, res) => {
   try {
-    console.log("reached user/id");
-    const user = await userData.getUserById(req.params.id);
-    if(user != undefined) {
-      let songList = await songData.getSongByUser(req.params.id);
-      let user = null;
-      for (let song of songList) {
-        user = await userData.getUserById(song.author);
-        song.artistName = user.firstName + " " + user.lastName;
+    if (req.session && req.session.user) {
+      const user = await userData.getUserById(req.params.id);
+      if (user != undefined) {
+        let songList = await songData.getSongByUser(req.params.id);
+        let user = null;
+        for (let song of songList) {
+          user = await userData.getUserById(song.author);
+          song.artistName = user.firstName + " " + user.lastName;
+        }
+        res.render("songs/index", {
+          songs: songList,
+          logged_in: true,
+          user: req.session.user,
+        });
+      } else {
+        res.status(500).json("error: user does not exist");
       }
-      res.render("songs/index", {
-        songs: songList,
-        logged_in: true
-      });
     } else {
-      res.status(500).json("error: user does not exist");
+      res.redirect("/login");
     }
   } catch (e) {
     res.status(500).json("error: no songs by this user");
@@ -67,7 +83,7 @@ router.get("/user/:id", async (req,res) => {
 router.get("/uploaded", async (req, res) => {
   try {
     if (req.session.user == undefined) {
-      res.render("users/login");
+      res.redirect("/login");
       return;
     }
 
@@ -81,12 +97,14 @@ router.get("/uploaded", async (req, res) => {
       res.render("songs/index", {
         songs: songList,
         logged_in: false,
+        user: null,
         // users: await songData.getUsersBySongs(songList)
       });
     } else {
       res.render("songs/index", {
         songs: songList,
         logged_in: true,
+        user: req.session.user,
         // users: await songData.getUsersBySongs(songList)
       });
     }
@@ -113,8 +131,11 @@ router.get("/:id", async (req, res) => {
 
     let commentIds = song.comment_id;
     let comments = [];
+    let user = null;
     for (let x = 0; x < commentIds.length; x++) {
       comments[x] = await commentData.getCommentById(commentIds[x]);
+      user = await userData.getUserById(comments[x].userId);
+      comments[x].userName = user.firstName + " " + user.lastName;
     }
 
     if (req.session.user == undefined) {
@@ -122,14 +143,16 @@ router.get("/:id", async (req, res) => {
         song: song,
         comments: comments,
         logged_in: false,
-        user: await userData.getUserById(song.author)
+        user: await userData.getUserById(song.author),
+        logged_in_user: null,
       });
     } else {
       res.render("songs/single", {
         song: song,
         comments: comments,
         logged_in: true,
-        user: await userData.getUserById(song.author)
+        user: await userData.getUserById(song.author),
+        logged_in_user: req.session.user,
       });
     }
   } catch (e) {
@@ -169,12 +192,14 @@ router.get("/", async (req, res) => {
       res.render("songs/index", {
         songs: songList,
         logged_in: false,
+        user: null,
         // users: await songsData.getUsersBySongs(songList)
       });
     } else {
       res.render("songs/index", {
         songs: songList,
         logged_in: true,
+        user: req.session.user,
         // users: await songData.getUsersBySongs(songList)
       });
     }
@@ -188,7 +213,9 @@ router.post("/", upload.single("file"), async (req, res) => {
   let file = req.file; //file
 
   if (!file) {
-    res.status(400).json({ error: "you must provide song file" });
+    res
+      .status(400)
+      .json({ error: "you must provide song file (smaller than 100MB)" });
   }
 
   if (!songInfo) {
@@ -233,7 +260,6 @@ router.post("/", upload.single("file"), async (req, res) => {
 });
 
 router.get("/like/:id", async (req, res) => {
-  console.log("reached like/id");
   let checkLikeDislike = await userData.checkLikeDislike(
     req.session.user._id,
     req.params.id
@@ -257,7 +283,6 @@ router.get("/like/:id", async (req, res) => {
 });
 
 router.get("/dislike/:id", async (req, res) => {
-  console.log("reached dislike/id");
   let checkLikeDislike = await userData.checkLikeDislike(
     req.session.user._id,
     req.params.id
