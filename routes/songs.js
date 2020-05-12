@@ -208,14 +208,16 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", upload.single("file"), async (req, res) => {
+router.post("/new", upload.single("file"), async (req, res) => {
   let songInfo = req.body;
   let file = req.file; //file
 
   if (!file) {
-    res
-      .status(400)
-      .json({ error: "you must provide song file (smaller than 100MB)" });
+    res.render("songs/new", {
+      hasErrors: true,
+      errors: ["you must provide song file (smaller than 100MB)"],
+    });
+    return;
   }
 
   if (!songInfo) {

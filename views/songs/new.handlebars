@@ -17,7 +17,7 @@
   <section>
     <article class="new-song">
       <h2>Post a Song</h2>
-      <form action="/songs" method="POST" class="new-song-form" enctype="multipart/form-data">
+      <form action="/songs/new" method="POST" class="new-song-form" enctype="multipart/form-data">
         <div id="song-questions">
           <div class="sub-entry">
             <div class="input-container">
@@ -50,7 +50,6 @@
           <button type="reset" id="clearForm">Clear Form</button>
         </div>
       </form>
-      <!-- implement error list later
     {{#if hasErrors}}
     <ul class="error-list">
       {{#each errors}}
@@ -60,7 +59,6 @@
       {{/each}}
     </ul>
     {{/if}}
-    -->
     </article>
   </section>
 </main>

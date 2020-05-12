@@ -295,3 +295,8 @@ footer {
   text-align: center;
   display: none;
 }
+
+.error-list {
+  color: red;
+  text-align: center;
+}
