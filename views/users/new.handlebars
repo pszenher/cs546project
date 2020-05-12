@@ -16,28 +16,32 @@
   <section>
     <article class="new-user">
       <h2>Create an Account</h2>
-      <form action="/users" method="POST" id="new-user-form">
+      <form method="POST" id="new-user-form">
         <div id="user-questions">
           <div id="user-questions1" class="sub-entry">
             <div class="input-container">
               <label for="first-name">First Name</label>
               <input type="text" id="first-name" name="firstName" placeholder="First Name" class="full-width-input" />
             </div>
-
+            <div class="alert alert-danger" id="first_name-container" hidden>* First name not provided</div>
+            
             <div class="input-container">
               <label for="last-name">Last Name</label>
               <input type="text" id="last-name" name="lastName" placeholder="Last Name" class="full-width-input" />
             </div>
+            <div class="alert alert-danger" id="last_name-container" hidden>* Last name not provided</div>
 
             <div class="input-container">
               <label for="email">Email</label>
               <input type="text" id="email" name="email" placeholder="Email" class="full-width-input" />
             </div>
+            <div class="alert alert-danger" id="email_user-container" hidden>* Email Id not provided</div>
 
             <div class="input-container">
               <label for="password">Password</label>
               <input type="text" id="password" name="password" placeholder="Password" class="full-width-input" />
             </div>
+            <div class="alert alert-danger" id="password_user-container" hidden>* Password not provided</div>
 
             <div class="input-container" id='checkbox-container'>
               <p>What music are you interested in?</p>
@@ -50,6 +54,7 @@
               <input type="checkbox" id="classical-checkbox" name="interested" value="classical">
               <label for="classical-checkbox">Classical</label><br>
             </div>
+            <div class="alert alert-danger" id="Interest_user-container" hidden>* Select atleast one genre</div>
           </div>
 
           <div id="user-questions2" class="sub-entry">
@@ -57,26 +62,31 @@
               <label for="gender">Gender</label>
               <input type="text" id="gender" name="gender" placeholder="Gender" class="full-width-input" />
             </div>
+            <div class="alert alert-danger" id="gender_user-container" hidden>* Gender not provided</div>
 
             <div class="input-container">
               <label for="city">City</label>
-              <input type="text" id="state" name="city" placeholder="City" class="full-width-input" />
+              <input type="text" id="city" name="city" placeholder="City" class="full-width-input" />
             </div>
+            <div class="alert alert-danger" id="city_user-container" hidden>* City not provided</div>
 
             <div class="input-container">
               <label for="state">State</label>
               <input type="text" id="state" name="state" placeholder="State" class="full-width-input" />
             </div>
+            <div class="alert alert-danger" id="state_user-container" hidden>* State not provided</div>
 
             <div class="input-container">
               <label for="age">Age</label>
               <input type="number" id="age" name="age" placeholder="Age" class="full-width-input" />
             </div>
+            <div class="alert alert-danger" id="age_user-container" hidden>* Age not provided</div>
 
             <div class="input-container" id="bio-container">
               <label for="bio">Biography</label>
               <textarea id="bio" name="bio" rows="4" placeholder="Biography" class="full-width-input"></textarea>
             </div>
+            <div class="alert alert-danger" id="bio_user-container" hidden>* Biography not provided</div>
           </div>
           
           <div class="button-container">
@@ -93,3 +103,4 @@
   </section>
 </main>
 <footer>Created by Meghana Bhat, Kirsten Meidlinger, Ashish Negi and Paul Szenher</footer>
+<script src="/js/user.js"></script>
