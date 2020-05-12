@@ -128,7 +128,7 @@ module.exports = {
     id,
     firstName,
     lastName,
-    email,
+    // email,
     gender,
     city,
     state,
@@ -142,7 +142,9 @@ module.exports = {
       id = ObjectId.createFromHexString(id);
     }
     let updateBody = {};
-
+    if (typeof interested == "string") {
+      interested = interested.split(",");
+    }
     if (firstName) {
       if (typeof firstName != "string") throw `400 - Name is not a string`;
       updateBody.firstName = firstName;
@@ -152,13 +154,13 @@ module.exports = {
         throw { errocode: 400, field: "lastName" };
       updateBody.lastName = lastName;
     }
-    if (email) {
-      if (typeof email != "string") throw { errocode: 400, field: "email" };
-      updateBody.email = email;
-    }
+    // if (email) {
+    //   if (typeof email != "string") throw { errocode: 400, field: "email" };
+    //   updateBody.email = email;
+    // }
     if (gender) {
       if (typeof gender != "string") throw { errocode: 400, field: "gender" };
-      updateBody.gender = lastName;
+      updateBody.gender = gender;
     }
     if (city) {
       if (typeof city != "string") throw { errocode: 400, field: "city" };
