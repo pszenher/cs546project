@@ -17,14 +17,14 @@
   <section>
     <article class="new-song">
       <h2>Post a Song</h2>
-      <form action="/songs" method="POST" class="new-song-form" enctype="multipart/form-data">
+      <form method="POST" class="new-song-form" id="new_song_form" enctype="multipart/form-data">
         <div id="song-questions">
           <div class="sub-entry">
             <div class="input-container">
               <label for="song-title">Song Title</label>
               <input type="text" id="song-title" name="title" placeholder="Song Title" class="full-width-input" />
             </div>
-
+            <div class="alert alert-danger" id="title_error-container" hidden>* Song Title not provided</div>
             <input type="hidden" id="userId" name="userId" value={{user._id}}>
             
             <div class="input-container" id='song-checkbox-container'>
@@ -38,15 +38,16 @@
               <input type="checkbox" id="classical-checkbox" name="genre" value="classical">
               <label for="classical-checkbox">Classical</label><br>
             </div>
-
+            <div class="alert alert-danger" id="genre_error-container" hidden>* Genre not provided</div>
             <div id="file-container" class="input-container">
               <label for="song-file">File</label>
               <input type="file" name="file" id="song-file" class="full-width-input" accept=".mp3"/>
             </div>
+            <div class="alert alert-danger" id="file_error-container" hidden>* .mp3 Song File not provided</div>
           </div>
         </div>
         <div class="button-container">
-          <button type="submit" class="submit">Post Song</button>
+          <button type="submit" class="submit" id="song_post_submit">Post Song</button>
           <button type="reset" id="clearForm">Clear Form</button>
         </div>
       </form>
@@ -65,3 +66,8 @@
   </section>
 </main>
 <footer>Created by Meghana Bhat, Kirsten Meidlinger, Ashish Negi and Paul Szenher</footer>
+<script src="/js/songs.js"></script>
+{{!-- write whole code
+https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault
+https://developer.mozilla.org/en-US/docs/Web/API/Event/stopPropagation
+ --}}

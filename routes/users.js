@@ -113,24 +113,31 @@ router.post("/", async (req, res) => {
       bio &&
       Array.isArray(interested)
     ) {
-      const newUser = await userData.addUser(
-        firstName,
-        lastName,
-        email,
-        gender,
-        city,
-        state,
-        age,
-        password,
-        bio,
-        interested
-      );
-      res.render("users/single", {
-        user: newUser,
-        logged_in: req.session && req.session.user ? true : false,
-        logged_in_user:
-          req.session && req.session.user ? req.session.user : null,
-      });
+      try {
+        const newUser = await userData.addUser(
+          firstName,
+          lastName,
+          email,
+          gender,
+          city,
+          state,
+          age,
+          password,
+          bio,
+          interested
+        );
+        res.render("users/single", {
+          user: newUser,
+          logged_in: req.session && req.session.user ? true : false,
+          logged_in_user:
+            req.session && req.session.user ? req.session.user : null,
+        });
+      } catch (e) {
+        res.render("users/new", {
+          logged_in: req.session && req.session.user ? true : false,
+          errors: typeof e === "string" ? e : e.message,
+        });
+      }
     } else {
       res.status(400).send({ error: "Bad Request" });
     }

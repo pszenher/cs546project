@@ -16,19 +16,24 @@
     <section>
         <article class="login">
             <h2>Login Page</h2>
-            <form action="/login" method="POST" id="login-form">
+            {{#if errors}}
+                <div class="alert alert-danger" id="backend_checking">{{errors}}</div>
+            {{/if}}
+            <form method="POST" id="login-form">
                 <div id="login-questions">
                     <div class="input-container">
                         <label for="email">Email</label>
                         <input type="text" id="email" name="email" placeholder="email" class="full-width-input" />
                     </div>
+                    <div class="alert alert-danger" id="email_error-container" hidden>* Email_id not provided</div>
                     <div class="input-container">
                         <label for="password">Password</label>
                         <input type="password" id="password" name="password" placeholder="password" class="full-width-input" />
                     </div>
+                    <div class="alert alert-danger" id="password_error-container" hidden>* Password not provided</div>
                 </div>
                 <div class="button-container">
-                    <button type="submit">Submit</button>
+                    <button type="submit" id="login_form_submit">Submit</button>
                 </div>
                 <p id="sign-up-link">Don't have an account? <a href="users/new">Sign Up</a></p>
             </form>
@@ -36,3 +41,4 @@
     </section>
 </main>
 <footer>Created by Meghana Bhat, Kirsten Meidlinger, Ashish Negi and Paul Szenher</footer>
+<script src="/js/login.js"></script>

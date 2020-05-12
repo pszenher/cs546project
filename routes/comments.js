@@ -84,7 +84,7 @@ router.get("/", async (req, res) => {
   try {
     let commentList = await commentData.getAllComments();
     let user = null;
-    for(let x=0;x<commentList.length;x++){
+    for (let x = 0; x < commentList.length; x++) {
       user = await userData.getUserById(commentList[x].userId);
       commentList[x].userName = user.firstName + " " + user.lastName;
     }
@@ -92,7 +92,7 @@ router.get("/", async (req, res) => {
     res.render("comments/index", {
       comments: commentList,
       logged_in: req.session && req.session.user ? true : false,
-      user: await userData.getUserById(req.session.user._id)
+      user: await userData.getUserById(req.session.user._id),
     });
   } catch (e) {
     res.status(500).json({ error: e.toString() });
@@ -121,7 +121,7 @@ router.get("/:id", async (req, res) => {
 
     res.render("comments/single", {
       comment: comment,
-      logged_in: req.session && req.session.user ? true : false
+      logged_in: req.session && req.session.user ? true : false,
     });
   } catch (e) {
     res.status(404).json({ message: "Comment with id '" + id + "' not found" });

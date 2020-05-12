@@ -27,7 +27,12 @@ router.post("/", async (req, res) => {
     if (email && password) {
       const newUser = await userData.getUserByEmail(userPostData.email);
       if (newUser == null) {
-        res.status(401).send({ error: "Email or password is wrong " });
+        res.render("users/login", {
+          title: "Login Page",
+          logged_in: req.session && req.session.user ? true : false,
+          errors: "Email or password is wrong",
+        });
+        return;
       }
       passwordMatch = await bcrypt.compare(
         userPostData.password,
@@ -35,9 +40,19 @@ router.post("/", async (req, res) => {
       );
       if (passwordMatch) {
         req.session.user = newUser;
+
+        const fiveminutes = new Date();
+        fiveminutes.setMinutes(fiveminutes.getMinutes() + 5);
+        req.session.cookie.expires = fiveminutes;
         res.redirect("users/" + newUser._id);
       } else {
-        res.status(401).send({ error: "Email or password is wrong" });
+        // res.status(401).send({ error: "Email or password is wrong" });
+        res.render("users/login", {
+          title: "Login Page",
+          logged_in: req.session && req.session.user ? true : false,
+          errors: "Email or password is wrong",
+        });
+        return;
       }
     } else {
       res.status(400).send({ error: "Bad Request" });

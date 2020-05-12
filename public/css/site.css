@@ -295,3 +295,9 @@ footer {
   text-align: center;
   display: none;
 }
+
+.alert.alert-danger {
+  color: red;
+  text-align: center;
+  /* position: relative; */
+}
