@@ -33,11 +33,34 @@ router.get("/new", async (req, res) => {
         logged_in: req.session && req.session.user ? true : false,
       });
     } else {
-      res.backURL = "songs/new";
       res.redirect("/login");
     }
   } catch (e) {
     res.status(500).json({ error: e.message });
+  }
+});
+
+// songs uploaded by a specific user with this
+router.get("/user/:id", async (req,res) => {
+  try {
+    console.log("reached user/id");
+    const user = await userData.getUserById(req.params.id);
+    if(user != undefined) {
+      let songList = await songData.getSongByUser(req.params.id);
+      let user = null;
+      for (let song of songList) {
+        user = await userData.getUserById(song.author);
+        song.artistName = user.firstName + " " + user.lastName;
+      }
+      res.render("songs/index", {
+        songs: songList,
+        logged_in: true
+      });
+    } else {
+      res.status(500).json("error: user does not exist");
+    }
+  } catch (e) {
+    res.status(500).json("error: no songs by this user");
   }
 });
 
@@ -48,18 +71,23 @@ router.get("/uploaded", async (req, res) => {
       return;
     }
 
-    const songList = await songData.getSongByUser(req.session.user._id);
+    let songList = await songData.getSongByUser(req.session.user._id);
+    let user = null;
+    for (let song of songList) {
+      user = await userData.getUserById(song.author);
+      song.artistName = user.firstName + " " + user.lastName;
+    }
     if (req.session.user == undefined) {
       res.render("songs/index", {
         songs: songList,
-        user: false,
         logged_in: false,
+        // users: await songData.getUsersBySongs(songList)
       });
     } else {
       res.render("songs/index", {
         songs: songList,
-        user: true,
         logged_in: true,
+        // users: await songData.getUsersBySongs(songList)
       });
     }
   } catch (e) {
@@ -93,15 +121,15 @@ router.get("/:id", async (req, res) => {
       res.render("songs/single", {
         song: song,
         comments: comments,
-        user: false,
         logged_in: false,
+        user: await userData.getUserById(song.author)
       });
     } else {
       res.render("songs/single", {
         song: song,
         comments: comments,
-        user: true,
         logged_in: true,
+        user: await userData.getUserById(song.author)
       });
     }
   } catch (e) {
@@ -130,19 +158,24 @@ router.get("/url/:id", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const songList = await songData.getAllSongs();
+    let songList = await songData.getAllSongs();
+    let user = null;
+    for (let song of songList) {
+      user = await userData.getUserById(song.author);
+      song.artistName = user.firstName + " " + user.lastName;
+    }
 
     if (req.session.user == undefined) {
       res.render("songs/index", {
         songs: songList,
-        user: false,
         logged_in: false,
+        // users: await songsData.getUsersBySongs(songList)
       });
     } else {
       res.render("songs/index", {
         songs: songList,
-        user: true,
         logged_in: true,
+        // users: await songData.getUsersBySongs(songList)
       });
     }
   } catch (e) {
@@ -200,6 +233,7 @@ router.post("/", upload.single("file"), async (req, res) => {
 });
 
 router.get("/like/:id", async (req, res) => {
+  console.log("reached like/id");
   let checkLikeDislike = await userData.checkLikeDislike(
     req.session.user._id,
     req.params.id
@@ -223,6 +257,7 @@ router.get("/like/:id", async (req, res) => {
 });
 
 router.get("/dislike/:id", async (req, res) => {
+  console.log("reached dislike/id");
   let checkLikeDislike = await userData.checkLikeDislike(
     req.session.user._id,
     req.params.id
