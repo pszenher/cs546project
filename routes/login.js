@@ -41,12 +41,10 @@ router.post("/", async (req, res) => {
       if (passwordMatch) {
         req.session.user = newUser;
 
-        const fiveminutes = new Date();
-        fiveminutes.setMinutes(fiveminutes.getMinutes() + 5);
-        req.session.cookie.expires = fiveminutes;
+        const hour = 3600000;
+        req.session.cookie.maxAge = hour;
         res.redirect("users/" + newUser._id);
       } else {
-        // res.status(401).send({ error: "Email or password is wrong" });
         res.render("users/login", {
           title: "Login Page",
           logged_in: req.session && req.session.user ? true : false,
