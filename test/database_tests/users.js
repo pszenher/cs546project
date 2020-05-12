@@ -114,7 +114,6 @@ describe("Users DB Collection", function () {
         newUser._id,
         "NewName",
         "lastName",
-        "email",
         "gender",
         "city",
         "state",

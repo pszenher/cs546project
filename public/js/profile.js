@@ -1,12 +1,26 @@
 $(document).ready(function () {
   // Let's start writing AJAX calls!
+  var oldinterested = $("#rock-checkbox").data("value").split(",");
+  console.log(oldinterested);
+  if (oldinterested.includes("rock")) {
+    $("#rock-checkbox").prop("checked", true);
+  }
+  if (oldinterested.includes("pop")) {
+    $("#pop-checkbox").prop("checked", true);
+  }
+  if (oldinterested.includes("indie")) {
+    $("#indie-checkbox").prop("checked", true);
+  }
+  if (oldinterested.includes("classical")) {
+    $("#classical-checkbox").prop("checked", true);
+  }
   var myProfileForm = $("#update-user-form");
   myProfileForm.submit(function (event) {
     event.preventDefault();
     $("#msg").hide();
     var firstName = $("#first-name").val();
     var lastName = $("#last-name").val();
-    var email = $("#email").val();
+    // var email = $("#email").val();
 
     var interested = [];
     if ($("#rock-checkbox").is(":checked")) {
@@ -31,7 +45,6 @@ $(document).ready(function () {
     var json = JSON.stringify({
       firstName: firstName,
       lastName: lastName,
-      email: email,
       gender: gender,
       city: city,
       state: state,

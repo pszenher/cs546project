@@ -99,7 +99,7 @@ router.post("/", async (req, res) => {
     interested = xss(interested);
 
     if (typeof interested == "string") {
-      interested = interested.split();
+      interested = interested.split(",");
     }
     if (
       firstName &&
@@ -157,7 +157,7 @@ router.patch("/:id", async (req, res) => {
     let {
       firstName,
       lastName,
-      email,
+      // email,
       gender,
       city,
       state,
@@ -168,7 +168,7 @@ router.patch("/:id", async (req, res) => {
 
     firstName = xss(firstName);
     lastName = xss(lastName);
-    email = xss(email);
+    // email = xss(email);
     gender = xss(gender);
     city = xss(city);
     state = xss(state);
@@ -180,7 +180,7 @@ router.patch("/:id", async (req, res) => {
       req.params.id,
       firstName,
       lastName,
-      email,
+      // email,
       gender,
       city,
       state,
@@ -188,6 +188,7 @@ router.patch("/:id", async (req, res) => {
       bio,
       interested
     );
+    req.session.user = updatedUser;
     res.json(updatedUser);
   } catch (e) {
     res.status(500).send({ error: e });
