@@ -53,21 +53,21 @@ async function main() {
 
   console.log("Seeding new database...");
   const testUser1 = await users.addUser(
-    "Test",
-    "McTest",
+    "Ashish",
+    "Negi",
     "tmctest@email.com",
     "Male",
     "New York City",
     "NY",
-    20,
+    23,
     "password",
     "Hello I am Test McTest",
     ["Rock"]
   );
 
   const testUser2 = await users.addUser(
-    "Ariana",
-    "Grande",
+    "Megahna",
+    "Manikal",
     "agrande@mail.com",
     "Female",
     "Hoboken",
@@ -89,6 +89,19 @@ async function main() {
     "password",
     "Hello I am Kirsten Meidlinger",
     ["Alternative"]
+  );
+
+  const testUser4 = await users.addUser(
+    "Paul",
+    "Szenher",
+    "pszenher@stevens.edu",
+    "Male",
+    "New York",
+    "NY",
+    21,
+    "password",
+    "Hello I am Paul Szenher",
+    ["Rock"]
   );
 
   const testUser1Song1Data = await uploadFileGridFS(
@@ -170,6 +183,17 @@ async function main() {
   await songs.addRemoveCommentFromSong(
     testUser2Song1._id,
     testUser3Comment1._id,
+    "add"
+  );
+
+  const testUser4Comment1 = await comments.addComment(
+    testUser2Song1._id,
+    testUser4._id,
+    "This song is very intersting"
+  );
+  await songs.addRemoveCommentFromSong(
+    testUser2Song1._id,
+    testUser4Comment1._id,
     "add"
   );
 
