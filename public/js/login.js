@@ -5,7 +5,7 @@
 
   if (loginForm) {
     const email = document.getElementById("email");
-    const pass = document.getElementsById("password");
+    const pass = document.getElementById("password");
 
     let email_error_container = document.getElementById(
       "email_error-container"
@@ -43,9 +43,9 @@
 
         if (flag == 0) {
           console.log("entered in flag");
-          // loginForm.action ="/login"
+          loginForm.action = "/login";
           console.log(loginForm);
-          // loginForm.submit()
+          loginForm.submit();
         }
       } catch (e) {
         const message = typeof e === "string" ? e : e.message;
@@ -53,4 +53,4 @@
       }
     });
   }
-});
+})();
