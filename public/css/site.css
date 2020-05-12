@@ -46,6 +46,7 @@ a:visited {
 
 .input-container {
   margin-top: 5px;
+  width:300px;
 }
 
 .button-container {
@@ -76,7 +77,7 @@ input[type="checkbox"] + label {
 .input-container > label {
   display: inline-block;
   clear: left;
-  width: 30%;
+  width: 35%;
   text-align: right;
 }
 
@@ -109,6 +110,12 @@ ul.user-info {
   padding: 0;
 }
 
+.sub-entry {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 /* Post a Song */
 
 #song-questions {
@@ -126,6 +133,7 @@ ul.user-info {
 
 #file-container {
   margin-top: 5px;
+  width:500px;
 }
 
 #song-checkbox-container {
