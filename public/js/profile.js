@@ -1,7 +1,6 @@
 $(document).ready(function () {
   // Let's start writing AJAX calls!
   var oldinterested = $("#rock-checkbox").data("value").split(",");
-  console.log(oldinterested);
   if (oldinterested.includes("rock")) {
     $("#rock-checkbox").prop("checked", true);
   }
