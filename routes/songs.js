@@ -120,8 +120,11 @@ router.get("/:id", async (req, res) => {
 
     let commentIds = song.comment_id;
     let comments = [];
+    let user = null;
     for (let x = 0; x < commentIds.length; x++) {
       comments[x] = await commentData.getCommentById(commentIds[x]);
+      user = await userData.getUserById(comments[x].userId);
+      comments[x].userName = user.firstName + " " + user.lastName;
     }
 
     if (req.session.user == undefined) {

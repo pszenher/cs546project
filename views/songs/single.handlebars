@@ -56,13 +56,12 @@
             <div id="audio_tag" >
                     <audio id ="audio_id"controls src="" type="audio/mpeg" /> 
                 </div>
-            <button type="button" id="comment-button" onclick="location.href='../comments/new/{{song._id}}'">Add a Comment</button>
+            <button type="button" id="comment-button" onclick="location.href='/comments/new/{{song._id}}'">Add a Comment</button>
             {{#each comments}}
             <article class="comment">
-                <!-- Needs to be reformatted, everything is shown just for testing purposes, FIX single.handlebars TOO -->
                 <hr>
                 <p id="comment-content">"{{content}}"</p>
-                <label for="comment-content" id="comment-label">from {{userId}}</label>
+                <label for="comment-content" id="comment-label">from {{userName}}</label>
             </article>
             {{/each}}
             <hr>   
