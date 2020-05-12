@@ -19,7 +19,19 @@ const mongoConnection = require("../config/mongoConnection");
 const storage = new GridFsStorage({ db: mongoConnection() });
 
 // Set multer storage engine to the newly created object
-const upload = multer({ storage });
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 100000000,
+  },
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype == "audio/mpeg") {
+      cb(null, true);
+    } else {
+      cb(null, false);
+    }
+  },
+});
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
@@ -41,11 +53,11 @@ router.get("/new", async (req, res) => {
 });
 
 // songs uploaded by a specific user with this
-router.get("/user/:id", async (req,res) => {
+router.get("/user/:id", async (req, res) => {
   try {
-    if(req.session && req.session.user){
+    if (req.session && req.session.user) {
       const user = await userData.getUserById(req.params.id);
-      if(user != undefined) {
+      if (user != undefined) {
         let songList = await songData.getSongByUser(req.params.id);
         let user = null;
         for (let song of songList) {
@@ -55,7 +67,7 @@ router.get("/user/:id", async (req,res) => {
         res.render("songs/index", {
           songs: songList,
           logged_in: true,
-          user: req.session.user
+          user: req.session.user,
         });
       } else {
         res.status(500).json("error: user does not exist");
@@ -85,14 +97,14 @@ router.get("/uploaded", async (req, res) => {
       res.render("songs/index", {
         songs: songList,
         logged_in: false,
-        user: null
+        user: null,
         // users: await songData.getUsersBySongs(songList)
       });
     } else {
       res.render("songs/index", {
         songs: songList,
         logged_in: true,
-        user: req.session.user
+        user: req.session.user,
         // users: await songData.getUsersBySongs(songList)
       });
     }
@@ -132,7 +144,7 @@ router.get("/:id", async (req, res) => {
         comments: comments,
         logged_in: false,
         user: await userData.getUserById(song.author),
-        logged_in_user: null
+        logged_in_user: null,
       });
     } else {
       res.render("songs/single", {
@@ -140,7 +152,7 @@ router.get("/:id", async (req, res) => {
         comments: comments,
         logged_in: true,
         user: await userData.getUserById(song.author),
-        logged_in_user: req.session.user
+        logged_in_user: req.session.user,
       });
     }
   } catch (e) {
@@ -180,14 +192,14 @@ router.get("/", async (req, res) => {
       res.render("songs/index", {
         songs: songList,
         logged_in: false,
-        user: null
+        user: null,
         // users: await songsData.getUsersBySongs(songList)
       });
     } else {
       res.render("songs/index", {
         songs: songList,
         logged_in: true,
-        user: req.session.user
+        user: req.session.user,
         // users: await songData.getUsersBySongs(songList)
       });
     }
@@ -201,7 +213,9 @@ router.post("/", upload.single("file"), async (req, res) => {
   let file = req.file; //file
 
   if (!file) {
-    res.status(400).json({ error: "you must provide song file" });
+    res
+      .status(400)
+      .json({ error: "you must provide song file (smaller than 100MB)" });
   }
 
   if (!songInfo) {
