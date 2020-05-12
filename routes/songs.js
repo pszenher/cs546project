@@ -33,7 +33,6 @@ router.get("/new", async (req, res) => {
         logged_in: req.session && req.session.user ? true : false,
       });
     } else {
-      res.backURL = "songs/new";
       res.redirect("/login");
     }
   } catch (e) {
@@ -43,24 +42,20 @@ router.get("/new", async (req, res) => {
 
 router.get("/user/:id", async (req,res) => {
   try {
-    if(req.session && req.session.user){
-      const user = await userData.getUserById(req.params.id);
-      if(user != undefined) {
-        let songList = await songData.getSongByUser(req.params.id);
-        let user = null;
-        for (let song of songList) {
-          user = await userData.getUserById(song.author);
-          song.artistName = user.firstName + " " + user.lastName;
-        }
-        res.render("songs/index", {
-          songs: songList,
-          logged_in: true
-        });
-      } else {
-        res.status(500).json("error: user does not exist");
+    const user = await userData.getUserById(req.params.id);
+    if(user != undefined) {
+      let songList = await songData.getSongByUser(req.params.id);
+      let user = null;
+      for (let song of songList) {
+        user = await userData.getUserById(song.author);
+        song.artistName = user.firstName + " " + user.lastName;
       }
+      res.render("songs/index", {
+        songs: songList,
+        logged_in: true
+      });
     } else {
-      res.redirect("/login");
+      res.status(500).json("error: user does not exist");
     }
   } catch (e) {
     res.status(500).json("error: no songs by this user");

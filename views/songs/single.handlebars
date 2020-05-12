@@ -4,7 +4,7 @@
 <header>
     <div class="navbar">
         <a href="/songs">Home</a>
-        <a href="/songs/uploaded">Songs</a>
+        <a {{#if logged_in}} style="display:inline;" {{else}} style="display:none;" {{/if}} href="/songs/uploaded">Songs</a>
         <a {{#if logged_in}} href="/logout">Log Out {{else}} href="/login">Log In {{/if}} </a>
         <a {{#if logged_in}} style="display:none;" {{/if}} href="/users/new">Create an Account</a>
         <a {{#if logged_in}} style="display:inline;" {{else}} style="display:none;" {{/if}} href="/songs/new">Post a Song</a>
@@ -36,8 +36,6 @@
         <div class="song">
             <h2 class="song-title">{{song.title}} uploaded by <a href="/users/{{user._id}}">{{user.firstName}} {{user.lastName}}</a></h2> <!-- how to get author name -->
             <ul class="song-info">
-                {{!-- {{!-- <li>Id: {{song._id}}</li> --}} 
-                {{!-- <li>File: {{song.file}}</li> --}}
                 <li>Genres: {{song.genre}}</li>
                 <li>Likes: {{song.like_cnt}}</li>
                 <li>Dislikes: {{song.dislike_cnt}}</li>
@@ -45,11 +43,11 @@
             {{!-- <p>{{user}}</p> --}}
             {{#if logged_in}}
             {{!-- <p>you are entered as users</p> --}}
-            <i  onclick="location.href='../songs/like/{{song._id}}'" class="fa fa-thumbs-up"></i>
-            <i  onclick="location.href='../songs/dislike/{{song._id}}'" class="fa fa-thumbs-o-down"></i>
+            <i  onclick="location.href='/songs/like/{{song._id}}'" class="fa fa-thumbs-up"></i>
+            <i  onclick="location.href='/songs/dislike/{{song._id}}'" class="fa fa-thumbs-o-down"></i>
             {{else}}
-            <i onclick="location.href='../login'" class="fa fa-thumbs-up" ></i>
-            <i onclick="location.href='../login'" class="fa fa-thumbs-o-down"></i>
+            <i onclick="location.href='/login'" class="fa fa-thumbs-up" ></i>
+            <i onclick="location.href='/login'" class="fa fa-thumbs-o-down"></i>
             {{/if}}
 
             {{!-- <audio controls src={{song._url}} type="audio/mpeg" />  --}}
