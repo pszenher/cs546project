@@ -243,13 +243,7 @@ router.post("/", upload.single("file"), async (req, res) => {
     return;
   }
 
-  let genreList = [];
-
-  if (!Array.isArray(songInfo.genre)) {
-    genreList.push(xss(songInfo.genre));
-  } else {
-    genreList = xss(songInfo.genre);
-  }
+  const genreList = xss(songInfo.genre).split(",");
 
   try {
     const newSong = await songData.addSong(
@@ -261,7 +255,8 @@ router.post("/", upload.single("file"), async (req, res) => {
     await userData.addSongToUser(req.session.user._id, String(newSong._id)); //changed
     res.redirect(`songs/${newSong._id}`);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    res.status(500).json({ error: e.toString() });
+    return;
   }
 });
 
