@@ -213,9 +213,14 @@ router.post("/", upload.single("file"), async (req, res) => {
   let file = req.file; //file
 
   if (!file) {
-    res.render("songs/new", {
-      errors: ["Song file must be MP3 type and smaller than 100MB"],
-    });
+    if (req.session.user == undefined) {
+      res.redirect("/login");
+    } else {
+      res.render("songs/new", {
+        errors: ["Song file must be MP3 type and smaller than 100MB"],
+        logged_in: true,
+      });
+    }
     return;
   }
 

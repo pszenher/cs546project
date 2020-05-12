@@ -18,6 +18,9 @@
       "genre_error-container"
     );
     let file_error_container = document.getElementById("file_error-container");
+    let song_backend_error_container = document.getElementById(
+      "file_backend_checking"
+    );
 
     SongForm.addEventListener("submit", (event) => {
       event.preventDefault();
@@ -33,6 +36,9 @@
         // const indie_input_value = indie_input.value;
         // const classical_input_value = classical_input.value;
         const song_file_value = song_file.value;
+        if (song_backend_error_container) {
+          song_backend_error_container.hidden = false;
+        }
 
         console.log(song_title_value);
         console.log(rock_input.checked);
@@ -49,6 +55,9 @@
           title_error_container.hidden = false;
           flag = 1;
           console.log(title_error_container);
+          if (song_backend_error_container) {
+            song_backend_error_container.hidden = true;
+          }
         }
 
         if (
@@ -61,6 +70,9 @@
           genre_error_container.hidden = false;
           flag = 1;
           console.log(title_error_container);
+          if (song_backend_error_container) {
+            song_backend_error_container.hidden = true;
+          }
         }
 
         if (!song_file_value) {
@@ -68,6 +80,9 @@
           file_error_container.hidden = false;
           flag = 3;
           console.log(title_error_container);
+          if (song_backend_error_container) {
+            song_backend_error_container.hidden = true;
+          }
         }
 
         if (flag == 0) {
