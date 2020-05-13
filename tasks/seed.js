@@ -62,7 +62,7 @@ async function main() {
     23,
     "password",
     "Hello I am Test McTest",
-    ["Rock"]
+    ["rock"]
   );
 
   const testUser2 = await users.addUser(
@@ -75,7 +75,7 @@ async function main() {
     26,
     "password",
     "Hello I am Ariana Grande",
-    ["Pop"]
+    ["pop"]
   );
 
   const testUser3 = await users.addUser(
@@ -101,7 +101,7 @@ async function main() {
     21,
     "password",
     "Hello I am Paul Szenher",
-    ["Rock"]
+    ["rock"]
   );
 
   const testUser1Song1Data = await uploadFileGridFS(
@@ -111,7 +111,7 @@ async function main() {
   const testUser1Song1 = await songs.addSong(
     testUser1Song1Data.id,
     "Good God",
-    ["Pop"],
+    ["pop"],
     testUser1._id
   );
   await users.addSongToUser(testUser1._id, testUser1Song1._id);
@@ -123,7 +123,7 @@ async function main() {
   const testUser1Song2 = await songs.addSong(
     testUser1Song2Data.id,
     "Hangtime",
-    ["Hip-hop", "Trap"],
+    ["indie", "rock"],
     testUser1._id
   );
   await users.addSongToUser(testUser1._id, testUser1Song2._id);
@@ -135,7 +135,7 @@ async function main() {
   const testUser2Song1 = await songs.addSong(
     testUser2Song1Data.id,
     "Hustle Muscle",
-    ["Trap"],
+    ["rock"],
     testUser2._id
   );
   await users.addSongToUser(testUser2._id, testUser2Song1._id);
@@ -159,7 +159,7 @@ async function main() {
   const testUser2Song3 = await songs.addSong(
     testUser2Song3Data.id,
     "They Say",
-    ["Indie"],
+    ["indie"],
     testUser2._id
   );
   await users.addSongToUser(testUser2._id, testUser2Song3._id);
