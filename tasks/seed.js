@@ -66,7 +66,7 @@ async function main() {
   );
 
   const testUser2 = await users.addUser(
-    "Megahna",
+    "Meghana",
     "Manikal",
     "agrande@mail.com",
     "Female",
@@ -88,7 +88,7 @@ async function main() {
     20,
     "password",
     "Hello I am Kirsten Meidlinger",
-    ["Alternative"]
+    ["indie","rock"]
   );
 
   const testUser4 = await users.addUser(
@@ -147,7 +147,7 @@ async function main() {
   const testUser2Song2 = await songs.addSong(
     testUser2Song2Data.id,
     "Sad Circus",
-    ["R&B"],
+    ["pop"],
     testUser2._id
   );
   await users.addSongToUser(testUser2._id, testUser2Song2._id);
